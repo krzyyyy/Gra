@@ -16,9 +16,6 @@
     <Filter Include="Resource Files\Pomurnik">
       <UniqueIdentifier>{5d3efb32-7129-4856-a866-136a6b914de6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\Pomurnik\Skills">
-      <UniqueIdentifier>{bd084be4-dad8-4a25-b5a5-0bdb39ecd2ee}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -28,6 +25,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Pomurnik.h">
+      <Filter>Resource Files\Pomurnik</Filter>
+    </ClInclude>
+    <ClInclude Include="Attributes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -39,6 +39,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Pomurnik.cpp">
+      <Filter>Resource Files\Pomurnik</Filter>
+    </ClCompile>
+    <ClCompile Include="Attributes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

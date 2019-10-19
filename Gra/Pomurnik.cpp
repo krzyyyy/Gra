@@ -1,14 +1,10 @@
 #include "pch.h"
 #include "Pomurnik.h"
-#include "ISkill.h"
 
 
 Pomurnik::Pomurnik():skill( skills::normAtack)
 {
-	setLife(200);
-	setConcentration(100);
-	setDefense(20);
-	setDamage(40);
+
 }
 
 bool Pomurnik::attack(ICharacter & obj)
