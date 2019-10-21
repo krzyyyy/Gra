@@ -11,6 +11,8 @@ Attributes::Attributes(double life_, double concentration_, double armor_, doubl
 
 }
 
+
+
 Attributes::~Attributes()
 {
 }
@@ -29,5 +31,10 @@ void Attributes::passRound()
 	if (armorT == 0)armorM = 0;
 	if (damageT == 0)damageM = 0;
 	if (dodgeT == 0)dodgeM = 0;
+}
+
+bool Attributes::isAlive()
+{
+	return life>0;
 }
 

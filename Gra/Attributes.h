@@ -4,8 +4,10 @@ class Attributes
 public:
 	Attributes(double life_, double concentration_, double armor_,
 		double damage_, double dodge_);
+	Attributes& operator =(const Attributes&) = default;
 	~Attributes();
 	void passRound();
+	bool isAlive();
 	//get group
 	double getLife() { return life; }
 	double getConcentration() { return concentration; }
@@ -24,6 +26,12 @@ public:
 	double getArmorT() { return  armorT; }
 	double getDamageT() { return  damageT; }
 	double getDodgeT() { return  damageT; }
+	//get current attributes 
+	double getLifeC() { return life*(1 + lifeM); }
+	double getConcentrationC() { return concentration*(1 + concentrationM); }
+	double getArmorC() { return armor*(1 + armorM); }
+	double getDamageC() { return damage*(1 + damage); }
+	double getDodgeC() { return dodge*(1 + damage); }
 	//set group
 	void setLife(double l) { life = l; }
 	void setConcentration(double c) { concentration = c; }
@@ -42,6 +50,7 @@ public:
 	void setArmorT(int a) { armorT = a; }
 	void setDamageT(int d) { damageT = d; }
 	void setDodgeT(int d) { dodgeT = d; }
+	
 private:
 	//attributes
 	double life;
