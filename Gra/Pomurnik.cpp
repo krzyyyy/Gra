@@ -16,14 +16,14 @@ bool Pomurnik::action(std::unique_ptr<ICharacter>& obj)
 
 bool Pomurnik::isAbleToAction()
 {
-	if(std::get<3>(chosenSkill)<attributes.getConcentrationC())
+	if(std::get<3>(chosenSkill)<getConcentrationC())
 		return false;
 	return true;
 }
 
 void Pomurnik::payForAction()
 {
-	this->attributes.setConcentration(this->attributes.getConcentration / (1 + this->attributes.getConcentrationM()));
+	this->setConcentration(this->getConcentration / (1 + this->getConcentrationM()));
 }
 
 std::function<void(std::unique_ptr<ICharacter>&)> Pomurnik::skillFactory()
@@ -42,18 +42,24 @@ std::function<void(std::unique_ptr<ICharacter>&)> Pomurnik::skillFactory()
 
 bool Pomurnik::charge(std::unique_ptr<ICharacter> &obj)
 {
-	auto damage = this->attributes.getDamageC();
-	auto armor = obj->attributes.getArmorC();
+	auto damage = this->getDamageC()*2;
+	auto armor = obj->getArmorC()*0.5;
+	auto realDamage = damage * (1 - armor);
+	obj->setLife()
+
+
 }
 
 bool Pomurnik::metamorph(std::unique_ptr<ICharacter> &obj)
 {
-	if (obj.get() != this || attributes.getConcentration() < 20)
+	if (obj.get() != this)
 		return false;
-	attributes.setConcentration(attributes.getConcentrationC() - 20);
-	attributes.setArmorM(-0.5);
-	attributes.setConcentrationM(0.5);
-	attributes.setDamageM(1);
+	setArmorM(-0.5);
+	setConcentrationM(0.5);
+	setDamageM(1);
+	setArmorT(4);
+	setConcentrationT(4);
+	setDamageT(4);
 	return true;
 }
 

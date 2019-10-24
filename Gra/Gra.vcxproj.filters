@@ -27,7 +27,7 @@
     <ClInclude Include="Pomurnik.h">
       <Filter>Resource Files\Pomurnik</Filter>
     </ClInclude>
-    <ClInclude Include="Attributes.h">
+    <ClInclude Include="Attribute.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -41,10 +41,10 @@
     <ClCompile Include="Pomurnik.cpp">
       <Filter>Resource Files\Pomurnik</Filter>
     </ClCompile>
-    <ClCompile Include="Attributes.cpp">
+    <ClCompile Include="ICharacter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ICharacter.cpp">
+    <ClCompile Include="Attribute.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

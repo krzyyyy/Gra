@@ -151,13 +151,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Attributes.h" />
+    <ClInclude Include="Attribute.h" />
     <ClInclude Include="ICharacter.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Pomurnik.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Attributes.cpp" />
+    <ClCompile Include="Attribute.cpp" />
     <ClCompile Include="Gra.cpp" />
     <ClCompile Include="ICharacter.cpp" />
     <ClCompile Include="pch.cpp">
