@@ -1,11 +1,11 @@
 #pragma once
 #include "pch.h"
-#include "Attributes.h"
-class ICharacter: public Attributes
+#include "Attribute.h"
+#include <unordered_map>
+enum class attributC {live =0, concentration =1, armor=2, damage=3, dodge=4};
+class ICharacter: public std::unordered_multimap<attributC, Attribute>
 {
 public:
-	ICharacter(double life_, double concentration_, double armor_,
-		double damage_, double dodge_);
 	virtual bool action(std::unique_ptr<ICharacter> &obj) = 0;
 	virtual bool protect() = 0;
 	virtual bool isAbleToAction() =0;

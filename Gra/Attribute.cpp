@@ -37,3 +37,14 @@ void Attribute::passRound()
 	}
 
 }
+
+bool Attribute::operator>=(double v)
+{
+	auto final_mod = 1.;
+	for (auto mod : modifiers)
+		final_mod *= std::get<0>(mod);
+	if (modifiers.empty())final_mod = 0;
+	return value >= v / (1 + final_mod);
+}
+
+

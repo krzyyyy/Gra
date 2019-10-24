@@ -4,11 +4,10 @@ class Attribute
 {
 public:
 
-	Attribute(std::string n, double v) :name(n), value(v) {};
+	Attribute( double v) : value(v) {};
 	
 	// get functions 
 	double getValue() { return value; }
-	std::string getName() { return name; }
 	modifierT getModifier(std::size_t idx);
 	// changing values functions
 	Attribute& operator -(double v);
@@ -17,9 +16,10 @@ public:
 	void addMod(modifierT mod) { modifiers.push_back(mod); }
 	void delMod(std::size_t idx) { modifiers.erase(modifiers.begin() + idx); }
 	void passRound();
+	// is able
+	bool operator>=(double v);
 
 private:
-	const std::string name;
 	double value;
 	std::vector<modifierT> modifiers;
 };

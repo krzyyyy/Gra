@@ -75,9 +75,18 @@ bool Pomurnik::protect(std::unique_ptr<ICharacter>& obj)
 
 
 
-Pomurnik::Pomurnik():ICharacter(200, 100, 10, 20, 5) {
+Pomurnik::Pomurnik() :ICharacter() {
+	//set skills
 	skillsInfo.push_back(skillInfo("normAttack", true, false, 0));
 	skillsInfo.push_back(skillInfo("charge", true, false, 20));
 	skillsInfo.push_back(skillInfo("metamorph", false, true, 10));
 	skillsInfo.push_back(skillInfo("protect", false, true, 0));
+
+	//set params
+	this->insert({ attributC::live, Attribute(200) });
+	this->insert({ attributC::concentration, Attribute(100) });
+	this->insert({ attributC::armor, Attribute(0.2) });
+	this->insert({ attributC::damage, Attribute(30) });
+	this->insert({ attributC::dodge, Attribute(0.05) });
+
 }
