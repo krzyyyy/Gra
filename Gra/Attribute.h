@@ -7,11 +7,12 @@ public:
 	Attribute( double v) : value(v) {};
 	
 	// get functions 
-	double getValue() { return value; }
+	
+	double getValueC();
 	modifierT getModifier(std::size_t idx);
 	// changing values functions
-	Attribute& operator -(double v);
-	Attribute& operator +(double v);
+	Attribute& operator -=(double v);
+	Attribute& operator +=(double v);
 	//adding and deleting modifiers
 	void addMod(modifierT mod) { modifiers.push_back(mod); }
 	void delMod(std::size_t idx) { modifiers.erase(modifiers.begin() + idx); }
@@ -22,6 +23,8 @@ public:
 private:
 	double value;
 	std::vector<modifierT> modifiers;
+protected:
+	double getValue() { return value; }
 };
 
 

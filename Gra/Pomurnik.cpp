@@ -10,21 +10,9 @@ bool Pomurnik::action(std::unique_ptr<ICharacter>& obj)
 	auto skill = skillFactory();
 	if (obj->isDodge()) return false;
 	skill(obj);
-	payForAction();
 	return true;
 }
 
-bool Pomurnik::isAbleToAction()
-{
-	if(std::get<3>(chosenSkill)<getConcentrationC())
-		return false;
-	return true;
-}
-
-void Pomurnik::payForAction()
-{
-	this->setConcentration(this->getConcentration / (1 + this->getConcentrationM()));
-}
 
 std::function<void(std::unique_ptr<ICharacter>&)> Pomurnik::skillFactory()
 {
@@ -42,36 +30,20 @@ std::function<void(std::unique_ptr<ICharacter>&)> Pomurnik::skillFactory()
 
 bool Pomurnik::charge(std::unique_ptr<ICharacter> &obj)
 {
-	auto damage = this->getDamageC()*2;
-	auto armor = obj->getArmorC()*0.5;
+	auto damage = (*this)[attributC::damage].getValueC()*2;
+	auto armor = (*obj)[attributC::armor].getValueC()*0.5;
 	auto realDamage = damage * (1 - armor);
-	obj->setLife()
-
-
+	(*obj)[attributC::live] -= realDamage;
 }
 
 bool Pomurnik::metamorph(std::unique_ptr<ICharacter> &obj)
 {
-	if (obj.get() != this)
-		return false;
-	setArmorM(-0.5);
-	setConcentrationM(0.5);
-	setDamageM(1);
-	setArmorT(4);
-	setConcentrationT(4);
-	setDamageT(4);
+	(*this)[attributC::armor].addMod(modifierT(-0.5, 4));
+	(*this)[attributC::concentration].addMod(modifierT(-0.5, 4));
+	(*this)[attributC::damage].addMod(modifierT(1, 4));
 	return true;
 }
 
-bool Pomurnik::normAtack(std::unique_ptr<ICharacter> &obj)
-{
-
-}
-
-bool Pomurnik::protect(std::unique_ptr<ICharacter>& obj)
-{
-
-}
 
 
 

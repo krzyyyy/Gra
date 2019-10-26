@@ -1,17 +1,25 @@
 #include "pch.h"
 #include "ICharacter.h"
 
-ICharacter::ICharacter(double life_, double concentration_, double armor_, double damage_, double dodge_):
-	
-{
 
-}
 
 
 bool ICharacter::isDodge()
 {
 	auto r = ((double)rand() / (RAND_MAX)) + 1;
-	if (r >= attributes.getDodgeC())
+	auto dodgePro = (*this)[attributC::dodge];
+	if (dodgePro>=r)
 		return true;
 	return false;
+}
+bool ICharacter::normAtack(std::unique_ptr<ICharacter> &obj)
+{
+	auto damage = (*this)[attributC::damage].getValueC();
+	auto armor = (*obj)[attributC::armor].getValueC();
+	(*obj)[attributC::armor] -= damage * (1 - armor);
+}
+
+bool ICharacter::protect(std::unique_ptr<ICharacter>& obj)
+{
+
 }

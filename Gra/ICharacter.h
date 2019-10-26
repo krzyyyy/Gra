@@ -3,17 +3,15 @@
 #include "Attribute.h"
 #include <unordered_map>
 enum class attributC {live =0, concentration =1, armor=2, damage=3, dodge=4};
-class ICharacter: public std::unordered_multimap<attributC, Attribute>
+class ICharacter: public std::unordered_map<attributC, Attribute>
 {
 public:
 	virtual bool action(std::unique_ptr<ICharacter> &obj) = 0;
-	virtual bool protect() = 0;
-	virtual bool isAbleToAction() =0;
-	virtual void payForAction() = 0;
 	//ICharacter& operator=(const ICharacter&) = default;
 
 	bool isDodge();
-
+	bool normAtack(std::unique_ptr<ICharacter> &obj);
+	bool protect(std::unique_ptr<ICharacter> &obj);
 	
 
 	
