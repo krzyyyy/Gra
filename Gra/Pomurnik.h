@@ -9,7 +9,7 @@ public:
 	bool action(std::unique_ptr<ICharacter> &obj);
 	
 private:
-	skillInfo chosenSkill;
+	//skillInfo chosenSkill;
 	std::function<void(std::unique_ptr<ICharacter>&)> skillFactory();
 	bool charge(std::unique_ptr<ICharacter> &obj);
 	bool metamorph(std::unique_ptr<ICharacter> &obj);

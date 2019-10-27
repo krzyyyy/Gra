@@ -5,11 +5,14 @@ class Attribute
 public:
 
 	Attribute( double v) : value(v) {};
-	
+	Attribute() :value(0) {};
+	/*Attribute(Attribute& atr) :value(atr.value), modifiers(atr.modifiers) {};
+	Attribute(Attribute&&atr) = default;*/
 	// get functions 
 	
 	double getValueC();
 	modifierT getModifier(std::size_t idx);
+	std::size_t getModifierNum() { return modifiers.size(); };
 	// changing values functions
 	Attribute& operator -=(double v);
 	Attribute& operator +=(double v);
@@ -19,6 +22,8 @@ public:
 	void passRound();
 	// is able
 	bool operator>=(double v);
+	//otrher 
+	std::string toString();
 
 private:
 	double value;

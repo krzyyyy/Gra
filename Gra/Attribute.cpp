@@ -52,4 +52,14 @@ bool Attribute::operator>=(double v)
 	return value >= v / final_mod;
 }
 
+std::string Attribute::toString()
+{
+	std::string str;
+	str += typeid(*this).name();
+	str += ": " + std::to_string((this->getValueC())) + "\n";
+	for (int i = 0; i < modifiers.size(); i++)
+		str += "modifier: " + std::to_string(modifiers[i].first) + "  tours: " + std::to_string(modifiers[i].second) + "\n";
+	return str;
+}
+
 

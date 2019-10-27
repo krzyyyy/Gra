@@ -16,6 +16,9 @@
     <Filter Include="Resource Files\Pomurnik">
       <UniqueIdentifier>{5d3efb32-7129-4856-a866-136a6b914de6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Galadrie">
+      <UniqueIdentifier>{879a69ec-049d-4c96-bdb7-710ddd4385b2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -29,6 +32,9 @@
     </ClInclude>
     <ClInclude Include="Attribute.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Galadriela.h">
+      <Filter>Resource Files\Galadrie</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -46,6 +52,9 @@
     </ClCompile>
     <ClCompile Include="Attribute.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Galadriela.cpp">
+      <Filter>Resource Files\Galadrie</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

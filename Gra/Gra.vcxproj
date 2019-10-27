@@ -152,12 +152,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Attribute.h" />
+    <ClInclude Include="Galadriela.h" />
     <ClInclude Include="ICharacter.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Pomurnik.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Attribute.cpp" />
+    <ClCompile Include="Galadriela.cpp" />
     <ClCompile Include="Gra.cpp" />
     <ClCompile Include="ICharacter.cpp" />
     <ClCompile Include="pch.cpp">

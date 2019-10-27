@@ -3,10 +3,32 @@
 
 #include "pch.h"
 #include <iostream>
+#include "Pomurnik.h"
+#include "Galadriela.h"
+#include "ICharacter.h"
 
 int main()
 {
-    std::cout << "Hello World!\n"; 
+	int tourConter = 0;
+	std::vector<std::string> names({ "pomurnik", "galadiera" });
+	std::vector<std::unique_ptr<ICharacter>> characters;
+	characters.push_back(std::make_unique<Pomurnik>());
+	characters.push_back(std::make_unique<Galadriela>());
+	int player = 0;
+	int skill = 0;
+	while (!characters[player%2]->isDead() && !characters[(player+1) % 2]->isDead()) {
+		std::cout << "Podaj numer skilla:  ";
+		std::cin >> skill;
+		if (characters[player % 2]->setSkill(skill))
+			characters[player % 2]->action(characters[(player + 1) % 2]);
+		else
+			continue;
+		std::cout <<"Aggresor: "+names[player % 2 ]+"\n"<< characters[player % 2]->toString();
+		std::cout <<"Defender: "+names[(player + 1) % 2] +"\n"<< characters[(player+1) % 2]->toString();
+		std::cout << player++ << std::endl;
+		
+		characters[(player + 1) % 2]->passRound();
+	}
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

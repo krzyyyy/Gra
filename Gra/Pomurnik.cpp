@@ -10,6 +10,7 @@ bool Pomurnik::action(std::unique_ptr<ICharacter>& obj)
 	auto skill = skillFactory();
 	if (obj->isDodge()) return false;
 	skill(obj);
+	(*this)[attributC::concentration] -= std::get<3>(chosenSkill);
 	return true;
 }
 
@@ -34,6 +35,7 @@ bool Pomurnik::charge(std::unique_ptr<ICharacter> &obj)
 	auto armor = (*obj)[attributC::armor].getValueC()*0.5;
 	auto realDamage = damage * (1 - armor);
 	(*obj)[attributC::live] -= realDamage;
+	return true;
 }
 
 bool Pomurnik::metamorph(std::unique_ptr<ICharacter> &obj)

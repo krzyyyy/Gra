@@ -14,4 +14,5 @@
 #include <vector>
 #include <functional>
 #include <random>
+#include <string>
 #endif //PCH_H
