@@ -24,6 +24,9 @@
     <ClInclude Include="IField.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CharacterSlot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -36,6 +39,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="IField.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterSlot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

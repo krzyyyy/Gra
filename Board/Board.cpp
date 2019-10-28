@@ -5,11 +5,11 @@
 #include <iostream>
 #include "Button.h"
 
-
 int main()
 {
 	cv::namedWindow("main", cv::WINDOW_AUTOSIZE | cv::WINDOW_GUI_NORMAL);
-    
+	cv::waitKey();
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
