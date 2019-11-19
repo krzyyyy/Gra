@@ -3,8 +3,8 @@
 //#include "ICharacter.h"
 
 //using skillImpl = decltype(std::mem_fn(ICharacter::normAtack));
-class ICharacter;
-using skillImpl = std::function<void(ICharacter&, std::unique_ptr<ICharacter> &)>;
+class Character;
+using skillImpl = std::function<void(std::unique_ptr<Character> &)>;
 
 class Skill
 {

@@ -1,4 +1,5 @@
 #pragma once
+#include "pch.h"
 using  modifierT = std::pair<double, int>;
 class Attribute
 {

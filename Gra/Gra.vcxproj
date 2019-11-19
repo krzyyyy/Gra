@@ -106,6 +106,9 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <EnableModules>true</EnableModules>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -153,6 +156,7 @@
   <ItemGroup>
     <ClInclude Include="Attribute.h" />
     <ClInclude Include="Galadriela.h" />
+    <ClInclude Include="Character.h" />
     <ClInclude Include="ICharacter.h" />
     <ClInclude Include="Skill.h" />
     <ClInclude Include="pch.h" />
@@ -162,7 +166,7 @@
     <ClCompile Include="Attribute.cpp" />
     <ClCompile Include="Galadriela.cpp" />
     <ClCompile Include="Gra.cpp" />
-    <ClCompile Include="ICharacter.cpp" />
+    <ClCompile Include="Character.cpp" />
     <ClCompile Include="Skill.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

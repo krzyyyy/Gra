@@ -5,40 +5,28 @@
 
 
 
-bool Pomurnik::action(std::unique_ptr<ICharacter>& obj)
-{
-	auto skill = skillFactory();
-	if (obj->isDodge()) return false;
-	skill(obj);
-	//(*this)[attributC::concentration] -= std::get<3>(chosenSkill);
-	return true;
-}
+//bool Pomurnik::action(std::unique_ptr<Character>& obj)
+//{
+//	obj->getAttribute(attributC::live) -= 40;
+//	if (obj->isDodge()) return false;
+//	auto fn = chosenSkill->getFn();
+//	fn(static_cast<Pomurnik&>(*this), obj);
+//	attributes[attributC::concentration] -= chosenSkill->getCost();
+//	return true;
+//}
 
 
-std::function<void(std::unique_ptr<ICharacter>&)> Pomurnik::skillFactory()
-{
-	//std::function<void(std::unique_ptr<ICharacter>&)> skillPtr = nullptr; [=](std::unique_ptr<ICharacter> obj) {this->normAtack(obj); };
-	//if (std::get<0>(chosenSkill)=="normAttack")
-	//	skillPtr = [=](std::unique_ptr<ICharacter> &obj) {this->normAtack(obj); };
-	//else if (std::get<0>(chosenSkill) == "charge")
-	//	skillPtr = [=](std::unique_ptr<ICharacter> &obj) {this->charge(obj); };
-	//else if (std::get<0>(chosenSkill) == "metamorph")
-	//	skillPtr = [=](std::unique_ptr<ICharacter> &obj) {this->metamorph(obj); };
-	//else if (std::get<0>(chosenSkill) == "protect")
-	//	skillPtr = [=](std::unique_ptr<ICharacter> &obj) {this->protect(obj); };
-	return nullptr;
-}
 
-bool Pomurnik::charge(std::unique_ptr<ICharacter> &obj)
+bool Pomurnik::charge(std::unique_ptr<Character> &obj)
 {
 	auto damage = attributes[attributC::damage].getValueC()*2;
 	auto armor = obj->getAttribute(attributC::armor).getValueC()*0.5;
 	auto realDamage = damage * (1 - armor);
-	obj->getAttribute(attributC::live) -= realDamage;
+	obj->hurt(realDamage);
 	return true;
 }
 
-bool Pomurnik::metamorph(std::unique_ptr<ICharacter> &obj)
+bool Pomurnik::metamorph(std::unique_ptr<Character> &obj)
 {
 	attributes[attributC::armor].addMod(modifierT(-0.5, 4));
 	attributes[attributC::concentration].addMod(modifierT(-0.5, 4));
@@ -49,13 +37,17 @@ bool Pomurnik::metamorph(std::unique_ptr<ICharacter> &obj)
 
 
 
-Pomurnik::Pomurnik() :ICharacter() {
-	//set skills
-	//skillsInfo.push_back(skillInfo("normAttack", true, false, 0));
-	//skillsInfo.push_back(skillInfo("charge", true, false, 20));
-	//skillsInfo.push_back(skillInfo("metamorph", false, true, 10));
-	//skillsInfo.push_back(skillInfo("protect", false, true, 0));
+Pomurnik::Pomurnik() :Character() {
+	Skill _metamorph = Skill("Metamorph", false, true, 50, [this](std::unique_ptr<Character> &obj) {
+		this->metamorph(obj);
+	});
+	skills.push_back(_metamorph);
+	Skill _charge = Skill("Charge", true, false, 30, [this]( std::unique_ptr<Character> &obj) {
+		this->charge(obj);
+	});
+	skills.push_back(_charge);
 
+	//Skill _normAttack()
 	//set params
 	attributes.insert({ attributC::live, Attribute(200) });
 	attributes.insert({ attributC::concentration, Attribute(100) });

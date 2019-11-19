@@ -5,15 +5,15 @@
 #include <iostream>
 #include "Pomurnik.h"
 #include "Galadriela.h"
-#include "ICharacter.h"
+#include "Character.h"
 
 int main()
 {
 	int tourConter = 0;
-	std::vector<std::string> names({ "galadiera", "pomurnik"  });
-	std::vector<std::unique_ptr<ICharacter>> characters;
-	characters.push_back(std::make_unique<Galadriela>());
+	std::vector<std::string> names({ "pomurnik",  "galadiera" });
+	std::vector<std::unique_ptr<Character>> characters;
 	characters.push_back(std::make_unique<Pomurnik>());
+	characters.push_back(std::make_unique<Galadriela>());
 	int player = 0;
 	int skill = 0;
 	while (!characters[player%2]->isDead() && !characters[(player+1) % 2]->isDead()) {

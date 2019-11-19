@@ -37,11 +37,11 @@ void Attribute::passRound()
 {
 	for (auto it = modifiers.begin(); it != modifiers.end();it++) {
 		--std::get<1>(*it);
-		if (std::get<1>(*it) == 0) {
-			modifiers.erase(it--);
-		}
 	}
-
+	modifiers.erase(std::remove_if(modifiers.begin(), modifiers.end(), [](auto it) {
+		auto[mod, time] = it;
+		return time == 0;
+	}), modifiers.end());
 }
 
 bool Attribute::operator>=(double v)
@@ -55,7 +55,6 @@ bool Attribute::operator>=(double v)
 std::string Attribute::toString()
 {
 	std::string str;
-	str += typeid(*this).name();
 	str += ": " + std::to_string((this->getValueC())) + "\n";
 	for (int i = 0; i < modifiers.size(); i++)
 		str += "modifier: " + std::to_string(modifiers[i].first) + "  tours: " + std::to_string(modifiers[i].second) + "\n";
