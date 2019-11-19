@@ -154,6 +154,7 @@
     <ClInclude Include="Attribute.h" />
     <ClInclude Include="Galadriela.h" />
     <ClInclude Include="ICharacter.h" />
+    <ClInclude Include="Skill.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Pomurnik.h" />
   </ItemGroup>
@@ -162,6 +163,7 @@
     <ClCompile Include="Galadriela.cpp" />
     <ClCompile Include="Gra.cpp" />
     <ClCompile Include="ICharacter.cpp" />
+    <ClCompile Include="Skill.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

@@ -10,10 +10,10 @@
 int main()
 {
 	int tourConter = 0;
-	std::vector<std::string> names({ "pomurnik", "galadiera" });
+	std::vector<std::string> names({ "galadiera", "pomurnik"  });
 	std::vector<std::unique_ptr<ICharacter>> characters;
-	characters.push_back(std::make_unique<Pomurnik>());
 	characters.push_back(std::make_unique<Galadriela>());
+	characters.push_back(std::make_unique<Pomurnik>());
 	int player = 0;
 	int skill = 0;
 	while (!characters[player%2]->isDead() && !characters[(player+1) % 2]->isDead()) {

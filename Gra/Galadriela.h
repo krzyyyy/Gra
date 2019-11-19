@@ -8,7 +8,7 @@ public:
 	bool action(std::unique_ptr<ICharacter> &obj);
 private:
 	
-	std::function<void(std::unique_ptr<ICharacter>&)> skillFactory();
+	//std::function<void(std::unique_ptr<ICharacter>&)> skillFactory();
 	bool glossyFinish(std::unique_ptr<ICharacter>& obj);
 	bool hitOfLight(std::unique_ptr<ICharacter>& obj);
 
