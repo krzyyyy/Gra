@@ -154,9 +154,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Attribute.h" />
+    <ClInclude Include="AttributeBarParam.h" />
+    <ClInclude Include="AttributeParam.h" />
+    <ClInclude Include="Effect.h" />
     <ClInclude Include="Galadriela.h" />
     <ClInclude Include="Character.h" />
+    <ClInclude Include="IAttribute.h" />
     <ClInclude Include="ICharacter.h" />
     <ClInclude Include="IInteraction.h" />
     <ClInclude Include="Interaction.h" />
@@ -165,7 +168,9 @@
     <ClInclude Include="Pomurnik.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Attribute.cpp" />
+    <ClCompile Include="AttributeBarParam.cpp" />
+    <ClCompile Include="AttributeParam.cpp" />
+    <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Galadriela.cpp" />
     <ClCompile Include="Gra.cpp" />
     <ClCompile Include="Character.cpp" />

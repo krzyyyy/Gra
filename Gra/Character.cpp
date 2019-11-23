@@ -68,6 +68,11 @@ void Character::passRound()
 		attributes[at].passRound();
 }
 
+Skill Character::getSkill()
+{
+	return *chosenSkill;
+}
+
 void Character::setAttributeMod(attributC at, modifierT mod)
 {
 	attributes[at].addMod(mod);

@@ -27,9 +27,6 @@
     <ClInclude Include="Pomurnik.h">
       <Filter>Resource Files\Pomurnik</Filter>
     </ClInclude>
-    <ClInclude Include="Attribute.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Galadriela.h">
       <Filter>Resource Files\Galadrie</Filter>
     </ClInclude>
@@ -48,6 +45,18 @@
     <ClInclude Include="Interaction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IAttribute.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AttributeParam.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AttributeBarParam.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -59,9 +68,6 @@
     <ClCompile Include="Pomurnik.cpp">
       <Filter>Resource Files\Pomurnik</Filter>
     </ClCompile>
-    <ClCompile Include="Attribute.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Galadriela.cpp">
       <Filter>Resource Files\Galadrie</Filter>
     </ClCompile>
@@ -72,6 +78,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Interaction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AttributeParam.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AttributeBarParam.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
