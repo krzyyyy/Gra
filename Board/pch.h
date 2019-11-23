@@ -11,5 +11,6 @@
 
 // TODO: add headers that you want to pre-compile here
 #include "opencv2/opencv.hpp"
+#include <functional>
 #include <iostream>
 #endif //PCH_H

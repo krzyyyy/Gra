@@ -3,11 +3,24 @@
 
 #include "pch.h"
 #include <iostream>
+#include "CharacterSlot.h"
 #include "Button.h"
+#include "IField.h"
 
 int main()
 {
-	cv::namedWindow("main", cv::WINDOW_AUTOSIZE | cv::WINDOW_GUI_NORMAL);
+	cv::namedWindow("main", cv::WINDOW_AUTOSIZE );
+	cv::Mat img(800, 1500, CV_64FC3);
+	//CharacterSlot chSlot(cv::Rect(200, 200, 30, 40), cv::Scalar(0.5, 0.8, 0.1));
+	//Button button(cv::Rect(400, 400, 400, 300), "przycisk", cv::Scalar(0.2, 0.7, 0.5));
+	std::vector<std::unique_ptr<IField>> object;
+	object.push_back(std::make_unique<CharacterSlot>(CharacterSlot(cv::Rect(200, 200, 30, 40), cv::Scalar(0.5, 0.8, 0.1))));
+	object.push_back(std::make_unique<Button>(Button(cv::Rect(400, 400, 400, 300), "przycisk", cv::Scalar(0.2, 0.7, 0.5))));
+
+	std::for_each(object.begin(), object.end(), [img](auto &elem) {
+		elem->draw(img);
+	});
+	cv::imshow("main", img);
 	cv::waitKey();
 
 }

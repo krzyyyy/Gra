@@ -1,16 +1,15 @@
 #pragma once
-#include "IField.h"
+#include "Field.h"
 class Button :
-	public IField
+	public Field
 {
 public:
-	Button(cv::Rect rect) :place(rect) {};
+	Button(cv::Rect r, std::string i, cv::Scalar c) :Field(r, c), info(i) {};
+	void draw(cv::InputOutputArray img);
 	~Button();
-
-	bool isClicked(cv::Point pt);
-	virtual void action(void * fn)=0;
-	void draw(cv::InputOutputArray img, cv::Scalar color = cv::Scalar(50, 220, 60),int thicknes = 3 );
+	
 private:
-	cv::Rect place;
+	std::string info;
+	std::function<void()> run;
 };
 

@@ -4,10 +4,6 @@
 
 
 
-CharacterSlot::CharacterSlot(std::unique_ptr<ICharacter>& obj, cv::Mat & img)
-{
-
-}
 
 bool CharacterSlot::isClicked(cv::Point pt)
 {
@@ -17,6 +13,7 @@ bool CharacterSlot::isClicked(cv::Point pt)
 void CharacterSlot::action()
 {
 }
+
 
 CharacterSlot::~CharacterSlot()
 {
