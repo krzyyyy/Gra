@@ -5,12 +5,12 @@
 Galadriela::Galadriela()
 {
 
-	Skill _glossyFinish = Skill("Gllosy Finish", true, false, 50, [this]( std::unique_ptr<Character> &obj) {
-		this->glossyFinish(obj);
+	Skill _glossyFinish = Skill("Gllosy Finish", true, false, 50, [this]() {
+		return this->glossyFinish();
 	});
 	skills.push_back(_glossyFinish);
-	Skill _hitOfLight = Skill("Hit Of Light", true, false, 30, [this]( std::unique_ptr<Character> &obj) {
-		this->hitOfLight(obj);
+	Skill _hitOfLight = Skill("Hit Of Light", true, false, 30, [this]( ) {
+		return this->hitOfLight();
 	});
 	skills.push_back(_hitOfLight);
 
@@ -36,17 +36,17 @@ Galadriela::~Galadriela()
 //}
 
 
-bool Galadriela::glossyFinish(std::unique_ptr<Character>& obj)
+double Galadriela::glossyFinish()
 {
-	auto damage = 50.;
-	obj->setAttributeMod(attributC::concentration, modifierT(-0.5, 4));
-	obj->hurt( damage);
-	return true;
+	//auto damage = 50.;
+	//obj->setAttributeMod(attributC::concentration, modifierT(-0.5, 4));
+	//obj->hurt( damage);
+	return 50.;
 }
 
-bool Galadriela::hitOfLight(std::unique_ptr<Character>& obj)
+double Galadriela::hitOfLight()
 {
-	auto damage = 30;
-	obj->hurt( damage);
-	return true;
+	//auto damage = 30;
+	//obj->hurt( damage);
+	return 30.;
 }

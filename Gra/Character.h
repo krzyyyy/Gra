@@ -14,8 +14,8 @@ public:
 
 	bool isDodge();
 	bool isDead() { return attributes[attributC::live].getValueC() <= 0; };
-	void normAtack(std::unique_ptr<Character> &obj);
-	bool protect(std::unique_ptr<Character> &obj);
+	double normAtack();
+	double protect();
 	
 	std::string toString();
 	bool setSkill(int skill);

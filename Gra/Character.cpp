@@ -6,12 +6,12 @@
 
 Character::Character()
 {
-	Skill _normAttack = Skill("Normal Attack", true, false, 0., [this]( std::unique_ptr<Character> &obj) {
-		this->normAtack(obj); 
+	Skill _normAttack = Skill("Normal Attack", true, false, 0., [this]() {
+		return this->normAtack(); 
 	});
 	skills.push_back(_normAttack);
-	Skill _protect = Skill("Protect", false, true, 0., [this]( std::unique_ptr<Character> &obj) {
-		this->protect(obj); });
+	Skill _protect = Skill("Protect", false, true, 0., [this]() {
+		return this->protect(); });
 	skills.push_back(_protect);
 }
 
@@ -19,7 +19,7 @@ bool Character::action(std::unique_ptr<Character>& obj)
 {
 	if (obj->isDodge()) return false;
 	auto fn = chosenSkill->getFn();
-	fn( obj);
+	//fn( obj);
 	attributes[attributC::concentration] -= chosenSkill->getCost();
 	return true;
 }
@@ -32,17 +32,15 @@ bool Character::isDodge()
 		return true;
 	return false;
 }
-void Character::normAtack(std::unique_ptr<Character> &obj)
+double Character::normAtack()
 {
-	auto damage = attributes[attributC::damage].getValueC();
-	auto armor = obj->attributes[attributC::armor].getValueC();
-	obj->attributes[attributC::live] -= damage * (1 - armor);
+	return attributes[attributC::damage].getValueC();
 }
 
-bool Character::protect(std::unique_ptr<Character>& obj)
+double Character::protect()
 {
-	obj->attributes[attributC::armor].addMod(modifierT(0.5, 1));
-	return true;
+	this->attributes[attributC::armor].addMod(modifierT(0.5, 1));
+	return 0.;
 }
 
 std::string Character::toString()

@@ -11,7 +11,7 @@ public:
 private:
 	//skillInfo chosenSkill;
 	//std::function<void(std::unique_ptr<Character>&)> skillFactory();
-	bool charge(std::unique_ptr<Character> &obj);
-	bool metamorph(std::unique_ptr<Character> &obj);
+	double charge();
+	double metamorph();
 };
 

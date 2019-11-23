@@ -5,10 +5,22 @@
 
 
 
-bool CharacterSlot::isClicked(cv::Point pt)
+CharacterSlot::CharacterSlot(cv::Rect r, cv::Scalar c, std::string path): Field(r, c)
 {
-	return false;
+	load(path);
 }
+
+void CharacterSlot::draw(cv::Mat &img)
+{
+	mainImage.copyTo(img(place));
+}
+
+void CharacterSlot::load(std::string path)
+{
+	mainImage = cv::imread(path + "/main.jpg");
+	cv::resize(mainImage, mainImage,place.size(), 0, 0);
+}
+
 
 void CharacterSlot::action()
 {

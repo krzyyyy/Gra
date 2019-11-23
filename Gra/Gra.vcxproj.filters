@@ -42,6 +42,12 @@
     <ClInclude Include="ICharacter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="IInteraction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Interaction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -63,6 +69,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Character.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Interaction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

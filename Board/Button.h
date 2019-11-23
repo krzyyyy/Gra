@@ -5,7 +5,7 @@ class Button :
 {
 public:
 	Button(cv::Rect r, std::string i, cv::Scalar c) :Field(r, c), info(i) {};
-	void draw(cv::InputOutputArray img);
+	void draw(cv::Mat &img);
 	~Button();
 	
 private:

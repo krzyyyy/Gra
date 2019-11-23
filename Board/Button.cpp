@@ -10,7 +10,7 @@ Button::~Button()
 }
 
 
-void Button::draw(cv::InputOutputArray img)
+void Button::draw(cv::Mat &img)
 {
 	int baseline = 0;
 	auto size = cv::getTextSize(info, cv::FONT_HERSHEY_DUPLEX, 1,1, &baseline);

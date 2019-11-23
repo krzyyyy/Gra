@@ -19,7 +19,7 @@ void Field::action()
 
 }
 
-void Field::draw(cv::InputOutputArray img)
+void Field::draw(cv::Mat &img)
 {
 	cv::rectangle(img, place, color);
 }

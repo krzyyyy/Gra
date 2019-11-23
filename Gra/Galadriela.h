@@ -9,8 +9,8 @@ public:
 private:
 	
 	//std::function<void(std::unique_ptr<ICharacter>&)> skillFactory();
-	bool glossyFinish(std::unique_ptr<Character>& obj);
-	bool hitOfLight(std::unique_ptr<Character>& obj);
+	double glossyFinish();
+	double hitOfLight();
 
 };
 

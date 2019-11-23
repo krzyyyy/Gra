@@ -7,7 +7,7 @@ public:
 	~Field();
 	bool isClicked(cv::Point pt);
 	void action();
-	void draw(cv::InputOutputArray img);
+	void draw(cv::Mat &img);
 
 protected:
 	cv::Rect place;

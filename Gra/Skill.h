@@ -2,9 +2,8 @@
 #include "pch.h"
 //#include "ICharacter.h"
 
-//using skillImpl = decltype(std::mem_fn(ICharacter::normAtack));
 class Character;
-using skillImpl = std::function<void(std::unique_ptr<Character> &)>;
+using skillImpl = std::function<double()>;
 
 class Skill
 {

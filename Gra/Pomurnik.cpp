@@ -17,33 +17,30 @@
 
 
 
-bool Pomurnik::charge(std::unique_ptr<Character> &obj)
+double Pomurnik::charge()
 {
 	auto damage = attributes[attributC::damage].getValueC()*2;
-	auto armor = obj->getAttribute(attributC::armor).getValueC()*0.5;
-	auto realDamage = damage * (1 - armor);
-	obj->hurt(realDamage);
-	return true;
+	return damage;
 }
 
-bool Pomurnik::metamorph(std::unique_ptr<Character> &obj)
+double Pomurnik::metamorph()
 {
 	attributes[attributC::armor].addMod(modifierT(-0.5, 4));
 	attributes[attributC::concentration].addMod(modifierT(-0.5, 4));
 	attributes[attributC::damage].addMod(modifierT(1, 4));
-	return true;
+	return 0.;
 }
 
 
 
 
 Pomurnik::Pomurnik() :Character() {
-	Skill _metamorph = Skill("Metamorph", false, true, 50, [this](std::unique_ptr<Character> &obj) {
-		this->metamorph(obj);
+	Skill _metamorph = Skill("Metamorph", false, true, 50, [this]() {
+		return this->metamorph();
 	});
 	skills.push_back(_metamorph);
-	Skill _charge = Skill("Charge", true, false, 30, [this]( std::unique_ptr<Character> &obj) {
-		this->charge(obj);
+	Skill _charge = Skill("Charge", true, false, 30, [this]( ) {
+		return this->charge();
 	});
 	skills.push_back(_charge);
 
