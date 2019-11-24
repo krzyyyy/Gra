@@ -8,10 +8,18 @@ bool Interaction::action(std::unique_ptr<Character>& ofenser, std::unique_ptr<Ch
 	
 	if (target->isDodge()) 
 		return true;
+	// normal atacks
 	auto skill = ofenser->getSkill();
-	auto armor = target->getAttribute(attributC::armor);
-	double damage = (1 - armor.getValueC)*skill;
-	target->hurt(damage);
+	auto effFn = skill.getFn();
+	double attack = effFn().getDamage();
+	double armor = target->getAttrib(attributC::armor);
+	double damage = (1 - armor)*attack;
+	target->modifAttr(attributC::live, 0., damage);
+	// adding effects
+	auto effect = effFn();
+	target->addEffect(effect);
+
+
 	return true;
 }
 

@@ -15,40 +15,53 @@ Character::Character()
 	skills.push_back(_protect);
 }
 
-bool Character::action(std::unique_ptr<Character>& obj)
-{
-	if (obj->isDodge()) return false;
-	auto fn = chosenSkill->getFn();
-	//fn( obj);
-	attributes[attributC::concentration] -= chosenSkill->getCost();
-	return true;
-}
 
 bool Character::isDodge()
 {
 	auto r = ((double)rand() / (RAND_MAX)) + 1;
-	auto dodgePro = attributes[attributC::dodge];
+	auto dodgePro = attributes[attributC::dodge]->getValue();
 	if (dodgePro>=r)
 		return true;
 	return false;
 }
-double Character::normAtack()
+bool Character::isDead()
 {
-	return attributes[attributC::damage].getValueC();
+	double live = attributes[attributC::live]->getValue();
+	return  live <=0.;
+}
+Effect Character::normAtack()
+{
+	
+	return attributes[attributC::damage]->getValue;
 }
 
-double Character::protect()
+Effect Character::protect()
 {
-	this->attributes[attributC::armor].addMod(modifierT(0.5, 1));
-	return 0.;
+	auto eff = [](Character & obj) {
+		obj.modifAttr(attributC::armor, 0.5, 0);
+	};
+	
+	return Effect(eff, 1);
+
+}
+
+void Character::init()
+{
+	for (auto at : attributC()) {
+		attributes[at]->init();
+	}
+	for (auto effect : effects) {
+		auto eff = effect.getEffect();
+		eff(*this);
+	}
+
 }
 
 std::string Character::toString()
 {
 	std::string str = "";
-	auto allAttributes = std::vector<attributC>({ attributC::live, attributC::concentration, attributC::armor, attributC::damage, attributC::dodge });
-	for (auto attr : allAttributes) {
-		str += typeid(attr).name()+ attributes[attr].toString();
+	for (auto att : attributC()) {
+		str += typeid(att).name()+ attributes[att]->toString();
 	}
 	return str;
 }
@@ -63,9 +76,12 @@ bool Character::setSkill(int skill)
 
 void Character::passRound()
 {
-	auto attr = std::vector<attributC>({ attributC::live, attributC::concentration, attributC::armor, attributC::damage, attributC::dodge });
-	for (auto at : attr)
-		attributes[at].passRound();
+	for (auto &effect : effects) {
+		effect.passRound();
+	}
+	effects.erase(std::remove_if(effects.begin(), effects.end(), [](auto elem) {
+		return elem.getTime() == 0;
+	}));
 }
 
 Skill Character::getSkill()
@@ -73,17 +89,20 @@ Skill Character::getSkill()
 	return *chosenSkill;
 }
 
-void Character::setAttributeMod(attributC at, modifierT mod)
+double Character::getAttrib(attributC at)
 {
-	attributes[at].addMod(mod);
+
+	return attributes[at]->getValue;
 }
 
-void Character::hurt(double damage)
+void Character::modifAttr(attributC at, double a, double b)
 {
-	attributes[attributC::live] -= damage;
+	attributes[at]->modify(a, b);
 }
 
-void Character::distract(double dist)
+void Character::addEffect(Effect eff)
 {
-	attributes[attributC::concentration] -= dist;
+	eff.getEffect()(*this);
+	effects.push_back(eff);
 }
+

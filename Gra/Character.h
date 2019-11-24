@@ -5,7 +5,7 @@
 #include "Skill.h"
 #include "Effect.h"
 
-enum class attributC {live =0, concentration =1, armor=2, damage=3, dodge=4};
+
 class Character: public ICharacter
 {
 public:
@@ -15,7 +15,7 @@ public:
 	bool isDodge();
 	bool isDead();// { return attributes[attributC::live].getValueC() <= 0; };
 
-	
+	void init();
 	std::string toString();
 	bool setSkill(int skill);
 	void passRound();
@@ -23,10 +23,13 @@ public:
 	//get function
 	std::string getName() { return name; };
 	Skill getSkill();
+	double getAttrib(attributC at);
 	//set function
+	void modifAttr(attributC at, double a, double b);
+	void addEffect(Effect eff);
 private:
-	double normAtack();
-	double protect();
+	Effect normAtack();
+	Effect protect();
 protected:
 
 	std::string name;
@@ -38,3 +41,19 @@ protected:
 
 };
 
+enum class attributC {
+	live = 0,
+	concentration = 1,
+	armor = 2,
+	damage = 3,
+	dodge = 4,
+	first = live,
+	last = dodge
+};
+
+attributC operator++ (attributC& x) {
+	return x = (attributC)(std::underlying_type<attributC>::type(x) + 1);
+}
+attributC operator*(attributC c) { return c; }
+attributC begin(attributC r) { return attributC::first; }
+attributC end(attributC r) { attributC l = attributC::last; return ++l; }

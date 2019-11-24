@@ -5,12 +5,16 @@ class Effect
 {
 public:
 	void passRound();
-	std::function<void(Character&)> getEffect();
-	int detTime() { return time; };
-	Effect(std::function<void(Character&)> &e);
+	// get functions 
+	double getDamage();
+	std::function<void( Character&)> getEffect();
+	int getTime() { return time; };
+	explicit Effect(std::function<void(Character&)> e, int time);
+	explicit Effect(double dam);
 	~Effect();
 private:
 	std::function<void(Character&)> effect;
 	int time;
+	double damage;
 };
 

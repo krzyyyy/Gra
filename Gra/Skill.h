@@ -1,9 +1,11 @@
 #pragma once
 #include "pch.h"
 //#include "ICharacter.h"
+#include "Effect.h"
+
 
 class Character;
-using skillImpl = std::function<double()>;
+using skillImpl = std::function<Effect()>;
 
 class Skill
 {
