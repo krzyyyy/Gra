@@ -19,6 +19,6 @@ public:
 	double getDefautVal() { return defaultVal; };
 private:
 	double val;
-	const double defaultVal;
+	double defaultVal;
 };
 

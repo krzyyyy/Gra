@@ -1,6 +1,6 @@
 #pragma once
 #include "pch.h"
-#include "Attribute.h"
+#include "IAttribute.h"
 #include "ICharacter.h"
 #include "Skill.h"
 #include "Effect.h"
@@ -13,7 +13,7 @@ public:
 	//ICharacter& operator=(const ICharacter&) = default;
 
 	bool isDodge();
-	bool isDead() { return attributes[attributC::live].getValueC() <= 0; };
+	bool isDead();// { return attributes[attributC::live].getValueC() <= 0; };
 
 	
 	std::string toString();
@@ -22,19 +22,15 @@ public:
 
 	//get function
 	std::string getName() { return name; };
-	Attribute getAttribute(attributC at) { return attributes[at]; };
 	Skill getSkill();
 	//set function
-	void setAttributeMod(attributC at, modifierT mod);
-	void hurt(double damage);
-	void distract(double dist);
 private:
 	double normAtack();
 	double protect();
 protected:
 
 	std::string name;
-	std::unordered_map<attributC, Attribute> attributes;
+	std::unordered_map<attributC, std::unique_ptr<IAttribute>> attributes;
 	std::vector<Skill> skills;
 	std::vector<Skill>::iterator chosenSkill;
 	std::vector<Effect> effects;
