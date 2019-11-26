@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "Galadriela.h"
+#include "AttributeBarParam.h"
+#include "AttributeParam.h"
 
 
 Galadriela::Galadriela()
@@ -15,11 +17,12 @@ Galadriela::Galadriela()
 	skills.push_back(_hitOfLight);
 
 	//set params
-	attributes.insert({ attributC::live, Attribute(100) });
-	attributes.insert({ attributC::concentration, Attribute(200) });
-	attributes.insert({ attributC::armor, Attribute(0.1) });
-	attributes.insert({ attributC::damage, Attribute(40) });
-	attributes.insert({ attributC::dodge, Attribute(0.1) });
+
+	attributes[attributC::live] = std::make_unique<AttributeBarParam>(100);
+	attributes[attributC::concentration] = std::make_unique<AttributeBarParam>(200);
+	attributes[attributC::armor] = std::make_unique<AttributeParam>(0.1);
+	attributes[attributC::damage] = std::make_unique<AttributeParam>(40);
+	attributes[attributC::dodge] = std::make_unique<AttributeParam>(0.1);
 }
 
 
@@ -36,17 +39,18 @@ Galadriela::~Galadriela()
 //}
 
 
-double Galadriela::glossyFinish()
+Effect Galadriela::glossyFinish()
 {
-	//auto damage = 50.;
-	//obj->setAttributeMod(attributC::concentration, modifierT(-0.5, 4));
-	//obj->hurt( damage);
-	return 50.;
+	auto effFn = [](Character & obj) {
+		obj.modifAttr(attributC::concentration, -0.5, 4);
+		obj.modifAttr(attributC::live, 0, -50);
+	};
+	Effect eff(effFn, 1);
+	return eff;
 }
 
-double Galadriela::hitOfLight()
+Effect Galadriela::hitOfLight()
 {
-	//auto damage = 30;
-	//obj->hurt( damage);
-	return 30.;
+	double damage  =30.;
+	return Effect(damage);
 }

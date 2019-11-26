@@ -11,7 +11,7 @@ public:
 private:
 	//skillInfo chosenSkill;
 	//std::function<void(std::unique_ptr<Character>&)> skillFactory();
-	double charge();
-	double metamorph();
+	Effect charge();
+	Effect metamorph();
 };
 

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Pomurnik.h"
-
+#include "AttributeBarParam.h"
+#include "AttributeParam.h"
 
 
 
@@ -17,18 +18,27 @@
 
 
 
-double Pomurnik::charge()
+Effect Pomurnik::charge()
 {
-	auto damage = attributes[attributC::damage].getValueC()*2;
-	return damage;
+	auto effFn = [this](Character & obj) {
+		double attack = this->attributes[attributC::damage]->getValue() * 2;
+		double armor = obj.getAttrib(attributC::armor)/2;
+		double damage = (1 - armor)*attack;
+		obj.modifAttr(attributC::live, 0, -damage);
+	};
+	Effect eff(effFn, 1);
+	return eff;
 }
 
-double Pomurnik::metamorph()
+Effect Pomurnik::metamorph()
 {
-	attributes[attributC::armor].addMod(modifierT(-0.5, 4));
-	attributes[attributC::concentration].addMod(modifierT(-0.5, 4));
-	attributes[attributC::damage].addMod(modifierT(1, 4));
-	return 0.;
+	auto effFn = [](Character &obj) {
+		obj.modifAttr(attributC::armor, -0.5, 0);
+		obj.modifAttr(attributC::concentration, -0.5, 0);
+		obj.modifAttr(attributC::damage, 1, 0);
+	};
+	Effect eff(effFn, 4);
+	return eff;
 }
 
 
@@ -46,10 +56,11 @@ Pomurnik::Pomurnik() :Character() {
 
 	//Skill _normAttack()
 	//set params
-	attributes.insert({ attributC::live, Attribute(200) });
-	attributes.insert({ attributC::concentration, Attribute(100) });
-	attributes.insert({ attributC::armor, Attribute(0.2) });
-	attributes.insert({ attributC::damage, Attribute(30) });
-	attributes.insert({ attributC::dodge, Attribute(0.05) });
+	attributes[attributC::live] = std::make_unique<AttributeBarParam>(200);
+	attributes[attributC::concentration] = std::make_unique<AttributeBarParam>(100);
+	attributes[attributC::armor] = std::make_unique<AttributeParam>(0.2);
+	attributes[attributC::damage] = std::make_unique<AttributeParam>(30);
+	attributes[attributC::dodge] = std::make_unique<AttributeParam>(0.05);
+
 
 }
