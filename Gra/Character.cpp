@@ -32,7 +32,7 @@ bool Character::isDead()
 Effect Character::normAtack()
 {
 	
-	return attributes[attributC::damage]->getValue;
+	return Effect(attributes[attributC::damage]->getValue());
 }
 
 Effect Character::protect()
@@ -92,7 +92,7 @@ Skill Character::getSkill()
 double Character::getAttrib(attributC at)
 {
 
-	return attributes[at]->getValue;
+	return attributes[at]->getValue();
 }
 
 void Character::modifAttr(attributC at, double a, double b)

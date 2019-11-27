@@ -5,7 +5,7 @@
 #include "Skill.h"
 #include "Effect.h"
 
-
+enum class attributC;
 class Character: public ICharacter
 {
 public:

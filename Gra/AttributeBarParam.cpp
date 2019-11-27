@@ -2,7 +2,7 @@
 #include "AttributeBarParam.h"
 
 
-AttributeBarParam::AttributeBarParam()
+AttributeBarParam::AttributeBarParam(double v):val(v), defaultVal(v)
 {
 }
 

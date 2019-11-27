@@ -1,5 +1,5 @@
 #pragma once
-#include "pch.h"
+//#include "pch.h"
 #include "Character.h"
 class Pomurnik: public Character
 {

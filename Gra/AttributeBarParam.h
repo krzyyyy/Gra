@@ -5,7 +5,7 @@ class AttributeBarParam: public IAttribute
 {
 public:
 
-	AttributeBarParam();
+	AttributeBarParam(double v);
 	~AttributeBarParam();
 
 	void init();

@@ -1,6 +1,7 @@
 #pragma once
 #include "pch.h"
-#include "Character.h"
+//#include "Character.h"
+class Character;
 class Effect
 {
 public:
