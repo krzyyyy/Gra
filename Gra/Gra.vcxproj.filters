@@ -42,9 +42,6 @@
     <ClInclude Include="IInteraction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Interaction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Effect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -55,6 +52,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AttributeBarParam.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IAction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectInteraction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Attack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -77,9 +83,6 @@
     <ClCompile Include="Character.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Interaction.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Effect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -87,6 +90,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AttributeBarParam.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectInteraction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Attack.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

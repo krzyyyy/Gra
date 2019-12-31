@@ -4,7 +4,8 @@ class Character;
 class ICharacter
 {
 public:
-	virtual bool action(std::unique_ptr<Character> &obj)=0;
+	virtual void init() = 0;
+	virtual void passRound() = 0;
 
 
 };

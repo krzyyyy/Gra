@@ -2,17 +2,23 @@
 #include "Skill.h"
 
 
+using namespace std;
 
 
-
-Skill::Skill(std::string n, bool iA, bool iM, double c, skillImpl f):
-	name(n), isAttack(iA), isMySelf(iM), cost(c), fn(f)
+Skill::Skill(std::string n, bool iA, bool iM, double c, std::unique_ptr<IAction> f):
+	name(n), isAttack(iA), isMySelf(iM), cost(c), fn(move(f))
 {
 }
 
-Skill::Skill():name(""), isAttack(false), isMySelf(false), cost(0.)
+Skill::Skill(const Skill & skill)
 {
+	this->isAttack = skill.isAttack;
+	this->isMySelf = skill.isMySelf;
+	this->cost = skill.cost;
+	this->name = skill.name;
+	this->fn = std::move(skill.fn);
 }
+
 
 Skill::~Skill()
 {
@@ -38,7 +44,7 @@ double Skill::getCost()
 	return cost;
 }
 
-skillImpl Skill::getFn()
+std::unique_ptr<IAction> Skill::getFn()
 {
-	return fn; 
+	return move(fn); 
 }

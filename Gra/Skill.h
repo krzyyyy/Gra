@@ -1,24 +1,24 @@
 #pragma once
 #include "pch.h"
+#include "IAction.h"
 //#include "ICharacter.h"
 //#include "Effect.h"
 
-class Effect;
 class Character;
-using skillImpl = std::function<Effect()>;
 
 class Skill
 {
 public:
-	Skill(std::string n, bool iA, bool iM, double c, skillImpl f);
-	Skill();
+	Skill(std::string n, bool iA, bool iM, double c, std::unique_ptr<IAction> f); 
+	Skill(const Skill & skill);
+	
 	~Skill();
 	//get funnctions
 	std::string getName();
 	bool getIsAttack();
 	bool getIsMySelf();
 	double getCost();
-	skillImpl getFn();
+	std::unique_ptr<IAction> getFn();
 
 	// set funtion
 
@@ -28,7 +28,7 @@ private:
 	bool isAttack;
 	bool isMySelf;
 	double cost;
-	skillImpl fn;
+	std::unique_ptr<IAction> fn;
 	//skillImpl fn;
 };
 

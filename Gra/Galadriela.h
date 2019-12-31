@@ -8,8 +8,8 @@ public:
 	//bool action(std::unique_ptr<Character> &obj);
 private:
 	//std::function<void(std::unique_ptr<ICharacter>&)> skillFactory();
-	Effect glossyFinish();
-	Effect hitOfLight();
+	std::unique_ptr<Effect> glossyFinish();
+	std::unique_ptr<Attack> hitOfLight();
 
 };
 

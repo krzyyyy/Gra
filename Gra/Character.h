@@ -4,8 +4,19 @@
 #include "ICharacter.h"
 #include "Skill.h"
 #include "Effect.h"
+#include "Attack.h"
 
-enum class attributC;
+
+enum class attributC {
+	live = 0,
+	concentration = 1,
+	armor = 2,
+	damage = 3,
+	dodge = 4,
+	first = live,
+	last = dodge
+
+};
 class Character: public ICharacter
 {
 public:
@@ -26,34 +37,17 @@ public:
 	double getAttrib(attributC at);
 	//set function
 	void modifAttr(attributC at, double a, double b);
-	void addEffect(Effect eff);
+	void addEffect(std::unique_ptr<IAction> eff);
 private:
-	Effect normAtack();
-	Effect protect();
+	std::unique_ptr<Attack> normAtack();
+	std::unique_ptr<Effect> protect();
 protected:
 
 	std::string name;
 	std::unordered_map<attributC, std::unique_ptr<IAttribute>> attributes;
 	std::vector<Skill> skills;
 	std::vector<Skill>::iterator chosenSkill;
-	std::vector<Effect> effects;
+	std::vector<std::unique_ptr<IAction>> effects;
 	
-
 };
 
-enum class attributC {
-	live = 0,
-	concentration = 1,
-	armor = 2,
-	damage = 3,
-	dodge = 4,
-	first = live,
-	last = dodge
-};
-
-attributC operator++ (attributC& x) {
-	return x = (attributC)(std::underlying_type<attributC>::type(x) + 1);
-}
-attributC operator*(attributC c) { return c; }
-attributC begin(attributC r) { return attributC::first; }
-attributC end(attributC r) { attributC l = attributC::last; return ++l; }

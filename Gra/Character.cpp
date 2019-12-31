@@ -1,17 +1,20 @@
 #include "pch.h"
 #include "Character.h"
+using namespace std;
 
-
+attributC operator++ (attributC& x) {
+	return x = (attributC)(std::underlying_type<attributC>::type(x) + 1);
+}
+attributC operator*(attributC c) { return c; }
+attributC begin(attributC r) { return attributC::first; }
+attributC end(attributC r) { attributC l = attributC::last; return ++l; }
 
 
 Character::Character()
 {
-	Skill _normAttack = Skill("Normal Attack", true, false, 0., [this]() {
-		return this->normAtack(); 
-	});
+	Skill _normAttack = Skill("Normal Attack", true, false, 0., this->normAtack());
 	skills.push_back(_normAttack);
-	Skill _protect = Skill("Protect", false, true, 0., [this]() {
-		return this->protect(); });
+	Skill _protect = Skill("Protect", false, true, 0., this->protect());
 	skills.push_back(_protect);
 }
 
@@ -29,19 +32,19 @@ bool Character::isDead()
 	double live = attributes[attributC::live]->getValue();
 	return  live <=0.;
 }
-Effect Character::normAtack()
-{
-	
-	return Effect(attributes[attributC::damage]->getValue());
+std::unique_ptr<Attack> Character::normAtack()
+{	
+	//unique_ptr<IAction> ptr = // new Attack(2 * attributes[attributC::damage]->getValue());
+	return make_unique<Attack>(2 * attributes[attributC::damage]->getValue());
 }
 
-Effect Character::protect()
+std::unique_ptr<Effect> Character::protect()
 {
 	auto eff = [](Character & obj) {
 		obj.modifAttr(attributC::armor, 0.5, 0);
 	};
 	
-	return Effect(eff, 1);
+	return make_unique<Effect>(eff, 1);
 
 }
 
@@ -50,9 +53,9 @@ void Character::init()
 	for (auto at : attributC()) {
 		attributes[at]->init();
 	}
-	for (auto effect : effects) {
-		auto eff = effect.getEffect();
-		eff(*this);
+	for (auto &effect : effects) {
+		
+		effect->operator()(*this);
 	}
 
 }
@@ -77,10 +80,10 @@ bool Character::setSkill(int skill)
 void Character::passRound()
 {
 	for (auto &effect : effects) {
-		effect.passRound();
+		effect->passRound();
 	}
 	effects.erase(std::remove_if(effects.begin(), effects.end(), [](auto elem) {
-		return elem.getTime() == 0;
+		return elem->getTime() == 0;
 	}));
 }
 
@@ -100,9 +103,9 @@ void Character::modifAttr(attributC at, double a, double b)
 	attributes[at]->modify(a, b);
 }
 
-void Character::addEffect(Effect eff)
+void Character::addEffect(std::unique_ptr<IAction> eff)
 {
-	eff.getEffect()(*this);
-	effects.push_back(eff);
+	eff->operator()(*this);
+	effects.emplace_back(move(eff));
 }
 

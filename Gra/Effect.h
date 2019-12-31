@@ -1,21 +1,19 @@
 #pragma once
 #include "pch.h"
-//#include "Character.h"
-class Character;
-class Effect
+#include "IAction.h"
+class Effect: public IAction
 {
 public:
+	Effect();
 	void passRound();
 	// get functions 
-	double getDamage();
-	std::function<void( Character&)> getEffect();
+	std::function<void( Character&)> getEffectFn();
 	int getTime() { return time; };
 	explicit Effect(std::function<void(Character&)> e, int time);
-	explicit Effect(double dam);
+	void operator ()(Character & obj);
 	~Effect();
 private:
 	std::function<void(Character&)> effect;
 	int time;
-	double damage;
 };
 

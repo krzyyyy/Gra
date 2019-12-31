@@ -3,6 +3,7 @@
 #include "AttributeBarParam.h"
 #include "AttributeParam.h"
 
+using namespace std;
 
 Galadriela::Galadriela()
 {
@@ -39,18 +40,17 @@ Galadriela::~Galadriela()
 //}
 
 
-Effect Galadriela::glossyFinish()
+std::unique_ptr<Effect> Galadriela::glossyFinish()
 {
 	auto effFn = [](Character & obj) {
 		obj.modifAttr(attributC::concentration, -0.5, 4);
 		obj.modifAttr(attributC::live, 0, -50);
 	};
-	Effect eff(effFn, 1);
-	return eff;
+	return make_unique<Effect>(effFn, 1);
 }
 
-Effect Galadriela::hitOfLight()
+unique_ptr<Attack> Galadriela::hitOfLight()
 {
 	double damage  =30.;
-	return Effect(damage);
+	return make_unique<Attack>(damage);
 }
