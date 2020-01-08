@@ -1,11 +1,10 @@
 #pragma once
-#include "pch.h"
 #include "IAttribute.h"
 #include "ICharacter.h"
+#include "IAction.h"
 #include "Skill.h"
 #include "Effect.h"
 #include "Attack.h"
-
 
 enum class attributC {
 	live = 0,
@@ -21,6 +20,7 @@ class Character: public ICharacter
 {
 public:
 	Character();
+	~Character() = default;
 	//ICharacter& operator=(const ICharacter&) = default;
 
 	bool isDodge();

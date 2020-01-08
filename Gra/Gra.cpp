@@ -10,27 +10,28 @@
 
 int main()
 {
-	int tourConter = 0;
-	EffectInteraction interaction;
-	std::vector<std::string> names({ "pomurnik",  "galadiera" });
-	std::vector<std::unique_ptr<Character>> characters;
-	characters.push_back(std::make_unique<Pomurnik>());
-	characters.push_back(std::make_unique<Galadriela>());
-	int player = 0;
-	int skill = 0;
-	while (!characters[player%2]->isDead() && !characters[(player+1) % 2]->isDead()) {
-		std::cout << "Podaj numer skilla:  ";
-		std::cin >> skill;
-		if (characters[player % 2]->setSkill(skill))
-			interaction.action(characters[player % 2], characters[(player + 1) % 2]);
-		else
-			continue;
-		std::cout <<"Aggresor: "+names[player % 2 ]+"\n"<< characters[player % 2]->toString();
-		std::cout <<"Defender: "+names[(player + 1) % 2] +"\n"<< characters[(player+1) % 2]->toString();
-		std::cout << player++ << std::endl;
-		
-		characters[(player + 1) % 2]->passRound();
-	}
+	//int tourConter = 0;
+	//EffectInteraction interaction;
+	//std::vector<std::string> names({ "pomurnik",  "galadiera" });
+	//std::vector<std::unique_ptr<Character>> characters;
+	//characters.emplace_back(std::make_unique<Pomurnik>());
+	//characters.emplace_back(std::make_unique<Galadriela>());
+	//int player = 0;
+	//int skill = 0;
+	//while (!characters[player%2]->isDead() && !characters[(player+1) % 2]->isDead()) {
+	//	std::cout << "Podaj numer skilla:  ";
+	//	std::cin >> skill;
+	//	if (characters[player % 2]->setSkill(skill))
+	//		interaction.action(characters[player % 2], characters[(player + 1) % 2]);
+	//	else
+	//		continue;
+	//	std::cout <<"Aggresor: "+names[player % 2 ]+"\n"<< characters[player % 2]->toString();
+	//	std::cout <<"Defender: "+names[(player + 1) % 2] +"\n"<< characters[(player+1) % 2]->toString();
+	//	std::cout << player++ << std::endl;
+	//	
+	//	characters[(player + 1) % 2]->passRound();
+	//}
+	return 0;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

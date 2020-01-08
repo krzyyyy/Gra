@@ -12,9 +12,13 @@ attributC end(attributC r) { attributC l = attributC::last; return ++l; }
 
 Character::Character()
 {
-	Skill _normAttack = Skill("Normal Attack", true, false, 0., this->normAtack());
+	Skill _normAttack = Skill("Normal Attack", true, false, 0., [this]() {
+		return this->normAtack();
+	});
 	skills.push_back(_normAttack);
-	Skill _protect = Skill("Protect", false, true, 0., this->protect());
+	Skill _protect = Skill("Protect", false, true, 0., [this]() {
+		return this->protect();
+	});
 	skills.push_back(_protect);
 }
 
@@ -82,9 +86,9 @@ void Character::passRound()
 	for (auto &effect : effects) {
 		effect->passRound();
 	}
-	effects.erase(std::remove_if(effects.begin(), effects.end(), [](auto elem) {
+	effects.erase(std::remove_if(effects.begin(), effects.end(), [](auto &elem) {
 		return elem->getTime() == 0;
-	}));
+	}), effects.end());
 }
 
 Skill Character::getSkill()

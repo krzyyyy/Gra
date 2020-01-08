@@ -6,6 +6,7 @@ class ICharacter
 public:
 	virtual void init() = 0;
 	virtual void passRound() = 0;
+	virtual ~ICharacter() {};
 
 
 };

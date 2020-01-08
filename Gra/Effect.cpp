@@ -2,6 +2,7 @@
 #include "Effect.h"
 #include "Character.h"
 
+
 using namespace std;
 
 Effect::Effect()
