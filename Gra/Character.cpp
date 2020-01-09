@@ -66,9 +66,12 @@ void Character::init()
 
 std::string Character::toString()
 {
+	std::vector<string> attribNames{ "live", "concentration", "armor", "damage", "dodge" };
 	std::string str = "";
+	auto i = 0;
 	for (auto att : attributC()) {
-		str += typeid(att).name()+ attributes[att]->toString();
+		str += attribNames[i]+ attributes[att]->toString();
+		++i;
 	}
 	return str;
 }

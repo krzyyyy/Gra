@@ -6,6 +6,8 @@ bool EffectInteraction::action(std::unique_ptr<Character>& ofenser, std::unique_
 {
 	// adding effects
 	auto skill = ofenser->getSkill();
+	auto effectFunction = skill.getFn();
+	auto gg = effectFunction();
 	target->addEffect(skill.getFn()());
 	return true;
 }

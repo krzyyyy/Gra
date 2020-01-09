@@ -28,7 +28,6 @@ Effect::Effect(std::function<void(Character&)> e, int t): effect(e), time(t)
 void Effect::operator()(Character & obj)
 {
 	effect(obj);
-	obj.addEffect(make_unique<Effect>(*this));
 }
 
 
