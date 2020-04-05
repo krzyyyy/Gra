@@ -5,6 +5,7 @@
 #include "Skill.h"
 #include "Effect.h"
 #include "Attack.h"
+#include <unordered_map>
 
 enum class attributC {
 	live = 0,
