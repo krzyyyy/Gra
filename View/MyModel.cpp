@@ -21,6 +21,9 @@ QVariant MyModel::data(const QModelIndex& index, int role) const
         return QString("Row%1, Column%2")
         .arg(index.row() + 1)
         .arg(index.column() + 1);
+    else if (role == Qt::BackgroundRole) {
+
+    }
 
     return QVariant();
 }

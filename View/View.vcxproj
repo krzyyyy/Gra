@@ -80,6 +80,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CharacterDelegate.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyModel.cpp" />
     <ClCompile Include="View.cpp" />
@@ -95,6 +96,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="MyModel.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CharacterDelegate.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
