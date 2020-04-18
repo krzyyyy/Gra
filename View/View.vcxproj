@@ -81,6 +81,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CharacterDelegate.cpp" />
+    <ClCompile Include="CharacterViewData.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyModel.cpp" />
     <ClCompile Include="View.cpp" />

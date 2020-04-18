@@ -1,5 +1,6 @@
 #pragma once
 #include <QAbstractTableModel>
+#include "CharacterViewData.h"
 class MyModel : public QAbstractTableModel {
     Q_OBJECT
 public:
@@ -8,6 +9,6 @@ public:
     int columnCount(const QModelIndex& parent = QModelIndex()) const override;
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
 private:
-    std::vector<QImage> images;
+    std::vector<std::pair<CharacterViewData, int>> characters;
 };
 

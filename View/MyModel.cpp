@@ -1,22 +1,28 @@
 #include "MyModel.h"
 #include <QImage>
+#include "CharacterViewData.h"
 
 MyModel::MyModel(QObject* parent)
     : QAbstractTableModel(parent)
 {
-    QImage image = QImage();
-    images.push_back(QImage(":/images/galadriela"));
-    images.push_back(QImage(":/images/pomurnik"));
+    auto first_elem = std::pair<CharacterViewData, int>(CharacterViewData("galadriela"), 1);
+    auto second_elem = std::pair<CharacterViewData, int>(CharacterViewData("pomurnik"), 1);
+
+    characters.push_back(first_elem);
+    characters.push_back(second_elem);
+    characters.push_back(second_elem);
+    characters.push_back(second_elem);
+    characters.push_back(first_elem);
 }
 
 int MyModel::rowCount(const QModelIndex& /*parent*/) const
 {
-    return 2;
+    return 1;
 }
 
 int MyModel::columnCount(const QModelIndex& /*parent*/) const
 {
-    return 3;
+    return characters.size();
 }
 
 QVariant MyModel::data(const QModelIndex& index, int role) const
@@ -26,15 +32,16 @@ QVariant MyModel::data(const QModelIndex& index, int role) const
         .arg(index.row() + 1)
         .arg(index.column() + 1);
     else if (role == Qt::BackgroundRole) {
-        QVariant var;
-        if (abs(index.row() - index.column()) % 2 == 0)
-            return images[0];
-        else
-            return images[1];
-        return var;
+        QImage img;
+        auto character_data = characters[index.column()].first;
+        character_data.getQImage(img);
+        return img;
     }
     else if (role == Qt::SizeHintRole) {
-        return images[0].size();
+        QImage img;
+        auto character_data = characters[index.column()].first;
+        character_data.getQImage(img);
+        return img.size();
     }
 
     return QVariant();

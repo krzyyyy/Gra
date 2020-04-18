@@ -5,11 +5,15 @@
 
 class CharacterViewData {
 public:
-	CharacterViewData(QString name);
-
-
+	CharacterViewData(const QString& name_);
+	CharacterViewData() :name(""), valid(false) {};
+	bool load(QString name_);
+	void getQImage(QImage& img_);
 private:
 	bool valid;
+	QImage img;
+	QString name;
+
 
 
 
