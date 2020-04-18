@@ -2,6 +2,7 @@
 #include <QtWidgets/QApplication>
 #include <QTableView>
 #include "MyModel.h"
+#include "CharacterDelegate.h"
 
 int main(int argc, char *argv[])
 {
@@ -10,7 +11,9 @@ int main(int argc, char *argv[])
 	QTableView view;
 	view.setModel(&model);
 	view.show();
-	View w;
-	w.show();
+	CharacterDelegate my_delegate;
+	view.setItemDelegate(&my_delegate);
+	view.resizeColumnsToContents();
+	view.resizeRowsToContents();
 	return a.exec();
 }

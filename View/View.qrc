@@ -1,4 +1,6 @@
 <RCC>
-    <qresource prefix="View">
+    <qresource prefix="/images">
+        <file alias="galadriela">Resources/Galadriela/galadriela.bmp</file>
+        <file alias="pomurnik">Resources/Pomurnik/pomurnik.bmp</file>
     </qresource>
 </RCC>
