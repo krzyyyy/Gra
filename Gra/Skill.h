@@ -3,10 +3,17 @@
 #include "IAction.h"
 //#include "ICharacter.h"
 //#include "Effect.h"
+
+#ifdef EXPORT_CHARACTER_TO_DLL
+#define EXPORT_SKILL __declspec(dllexport)
+#else
+#define EXPORT_SKILL __declspec(dllimport)
+#endif
+
 using ImplEff = std::function<std::unique_ptr<IAction>()>;
 class Character;
 
-class Skill
+class EXPORT_SKILL Skill
 {
 public:
 	Skill(std::string n, bool iA, bool iM, double c, ImplEff f);

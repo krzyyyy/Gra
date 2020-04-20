@@ -7,20 +7,15 @@
 #include "Attack.h"
 #include <unordered_map>
 
-enum class attributC {
-	live = 0,
-	concentration = 1,
-	armor = 2,
-	damage = 3,
-	dodge = 4,
-	first = live,
-	last = dodge
 
-};
-class Character: public ICharacter
+class EXPORT_CHARACTER Character: public ICharacter
 {
 public:
 	Character();
+	Character(const Character& obj) = delete;
+	Character(Character&&)noexcept = default;
+	Character& operator = (const Character& obj) = delete;
+	Character& operator = (Character&& obj) = default;
 	~Character() = default;
 	//ICharacter& operator=(const ICharacter&) = default;
 

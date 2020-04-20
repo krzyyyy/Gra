@@ -5,7 +5,7 @@
 #include <iostream>
 #include "Pomurnik.h"
 #include "Galadriela.h"
-#include "Character.h"
+#include "ICharacter.h"
 #include "EffectInteraction.h"
 
 int main()
@@ -13,7 +13,7 @@ int main()
 	int tourConter = 0;
 	EffectInteraction interaction;
 	std::vector<std::string> names({ "pomurnik",  "galadiera" });
-	std::vector<std::unique_ptr<Character>> characters;
+	std::vector<std::unique_ptr<ICharacter>> characters;
 	characters.emplace_back(std::make_unique<Pomurnik>());
 	characters.emplace_back(std::make_unique<Galadriela>());
 	int player = 0;

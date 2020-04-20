@@ -1,7 +1,7 @@
 #pragma once
 //#include "pch.h"
 #include "Character.h"
-class Pomurnik: public Character
+class EXPORT_CHARACTER Pomurnik: public Character
 {
 public:
 	Pomurnik();

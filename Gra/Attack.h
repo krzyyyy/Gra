@@ -1,6 +1,6 @@
 #pragma once
 #include "IAction.h"
-class Attack: public IAction
+class EXPORT_ATCTION Attack: public IAction
 {
 public:
 	Attack(double a);

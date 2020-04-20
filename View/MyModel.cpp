@@ -1,18 +1,19 @@
 #include "MyModel.h"
 #include <QImage>
 #include "CharacterViewData.h"
+#include "..\Gra\Pomurnik.h"
+//#include "..\Gra\Character.h"
+//#include "..\Gra\Galadriela.h"
 
 MyModel::MyModel(QObject* parent)
     : QAbstractTableModel(parent)
 {
-    auto first_elem = std::pair<CharacterViewData, int>(CharacterViewData("galadriela"), 1);
-    auto second_elem = std::pair<CharacterViewData, int>(CharacterViewData("pomurnik"), 1);
+    std::unique_ptr<ICharacter> ptr = std::unique_ptr<ICharacter>(new Pomurnik());
+    //auto first_elem = std::make_pair(CharacterViewData("galadriela"), /*std::make_unique<ICharacter>(Pomurnik())*//*Pomurnik()*/);
+    //auto second_elem = std::make_pair(CharacterViewData("pomurnik"), std::make_unique<ICharacter>(Galadriela()));
 
-    characters.push_back(first_elem);
-    characters.push_back(second_elem);
-    characters.push_back(second_elem);
-    characters.push_back(second_elem);
-    characters.push_back(first_elem);
+    //characters.push_back(second_elem);
+    //characters.push_back(first_elem);
 }
 
 int MyModel::rowCount(const QModelIndex& /*parent*/) const

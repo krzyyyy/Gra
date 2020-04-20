@@ -1,6 +1,6 @@
 #pragma once
 #include "IAttribute.h"
-class AttributeParam: public IAttribute
+class EXPORT_ATTRIBUTE AttributeParam: public IAttribute
 {
 public:
 

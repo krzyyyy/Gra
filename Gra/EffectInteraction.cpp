@@ -2,7 +2,7 @@
 #include "EffectInteraction.h"
 
 
-bool EffectInteraction::action(std::unique_ptr<Character>& ofenser, std::unique_ptr<Character>& target)
+bool EffectInteraction::action(std::unique_ptr<ICharacter>& ofenser, std::unique_ptr<ICharacter>& target)
 {
 	// adding effects
 	auto skill = ofenser->getSkill();

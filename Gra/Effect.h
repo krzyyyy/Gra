@@ -1,7 +1,7 @@
 #pragma once
 #include "pch.h"
 #include "IAction.h"
-class Effect: public IAction
+class EXPORT_ATCTION Effect: public IAction
 {
 public:
 	Effect();

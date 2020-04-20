@@ -1,7 +1,13 @@
 #pragma once
 #include "pch.h"
 
-class IAttribute {
+#ifdef EXPORT_CHARACTER_TO_DLL
+#define EXPORT_ATTRIBUTE __declspec(dllexport)
+#else
+#define EXPORT_ATTRIBUTE __declspec(dllimport)
+#endif
+
+class EXPORT_ATTRIBUTE IAttribute {
 public:
 	virtual void init() = 0;
 	virtual void modify(double a, double b)=0;

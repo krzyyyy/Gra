@@ -1,7 +1,7 @@
 #pragma once
 #include "IAttribute.h"
 
-class AttributeBarParam: public IAttribute
+class EXPORT_ATTRIBUTE AttributeBarParam: public IAttribute
 {
 public:
 

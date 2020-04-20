@@ -102,6 +102,11 @@
     <ClInclude Include="CharacterDelegate.h" />
     <ClInclude Include="CharacterViewData.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Gra\Gra.vcxproj">
+      <Project>{18f87a68-c2b2-4243-8eb2-4d7bad8a7776}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
     <Import Project="$(QtMsBuild)\qt.targets" />

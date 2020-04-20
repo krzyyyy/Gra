@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Gra", "Gra\Gra.vcxproj", "{18F87A68-C2B2-4243-8EB2-4D7BAD8A7776}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "View", "View\View.vcxproj", "{5611D054-F593-417B-92FA-0F25A1DF0897}"
+	ProjectSection(ProjectDependencies) = postProject
+		{18F87A68-C2B2-4243-8EB2-4D7BAD8A7776} = {18F87A68-C2B2-4243-8EB2-4D7BAD8A7776}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

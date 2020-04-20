@@ -4,7 +4,7 @@
 class EffectInteraction: public IInteraction
 {
 public:
-	bool action(std::unique_ptr<Character> &ofenser, std::unique_ptr<Character> &target);
+	bool action(std::unique_ptr<ICharacter> &ofenser, std::unique_ptr<ICharacter> &target);
 	EffectInteraction();
 	~EffectInteraction();
 };
