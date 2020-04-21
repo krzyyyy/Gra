@@ -99,12 +99,17 @@ Skill Character::getSkill()
 	return *chosenSkill;
 }
 
-double Character::getAttrib(attributC at)
+double Character::getAttribVal(attributC at)
 {
 
 	return attributes[at]->getValue();
 }
 
+double Character::getAttribDefVal(attributC at)
+{
+
+	return attributes[at]->getDefautVal();
+}
 void Character::modifAttr(attributC at, double a, double b)
 {
 	attributes[at]->modify(a, b);

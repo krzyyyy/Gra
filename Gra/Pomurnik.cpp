@@ -22,7 +22,7 @@ unique_ptr<Effect> Pomurnik::charge()
 {
 	auto effFn = [this](Character & obj) {
 		double attack = this->attributes[attributC::damage]->getValue() * 2;
-		double armor = obj.getAttrib(attributC::armor)/2;
+		double armor = obj.getAttribVal(attributC::armor)/2;
 		double damage = (1 - armor)*attack;
 		obj.modifAttr(attributC::live, 0, -damage);
 	};

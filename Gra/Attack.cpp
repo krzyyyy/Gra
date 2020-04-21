@@ -10,7 +10,7 @@ void Attack::operator()(Character & obj)
 {
 	if (obj.isDodge())
 		return;
-	auto armor = obj.getAttrib(attributC::armor);
+	auto armor = obj.getAttribVal(attributC::armor);
 	double damage = (1 - armor)*attack;
 	obj.modifAttr(attributC::live, 0, -damage);
 }

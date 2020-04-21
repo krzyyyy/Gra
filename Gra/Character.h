@@ -30,7 +30,8 @@ public:
 	//get function
 	std::string getName() { return name; };
 	Skill getSkill();
-	double getAttrib(attributC at);
+	double getAttribVal(attributC at);
+	double getAttribDefVal(attributC at);
 	//set function
 	void modifAttr(attributC at, double a, double b);
 	void addEffect(std::unique_ptr<IAction> eff);

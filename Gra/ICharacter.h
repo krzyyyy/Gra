@@ -33,7 +33,8 @@ public:
 	//get function
 	virtual std::string getName()  = 0;
 	virtual Skill getSkill() = 0;
-	virtual double getAttrib(attributC at) = 0;
+	virtual double getAttribVal(attributC at) = 0;
+	virtual double getAttribDefVal(attributC at) = 0;
 	//set function
 	virtual void modifAttr(attributC at, double a, double b) = 0;
 	virtual void addEffect(std::unique_ptr<IAction> eff) = 0;

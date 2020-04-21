@@ -1,6 +1,6 @@
 #pragma once
 #include "Character.h"
-class Galadriela: public Character
+class EXPORT_CHARACTER Galadriela: public Character
 {
 public:
 	Galadriela();
