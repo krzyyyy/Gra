@@ -15,7 +15,12 @@ void CharacterDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 	painter->setBrush(brush);
 	painter->drawRoundedRect(option.rect, 10, 15);
 	
-	QPoint health_place = option.rect.topLeft + QPoint((option.rect.width * 0.05), option.rect.height*0.7);
+	QPoint health_place_top_left = option.rect.topLeft() + QPoint((option.rect.width() * 0.05), option.rect.height()*0.7);
+	QPoint health_place_bottom_right = option.rect.bottomRight() - QPoint((option.rect.width() * 0.05), option.rect.height()*0.3 + (option.rect.height()*0.05));
+	QRect health_rect = QRect(health_place_top_left, health_place_bottom_right);
+	QBrush brush_bar = QBrush(Qt::red);
+	painter->setBrush(brush_bar);
+	painter->drawRoundedRect(health_rect, 10, 10);
 	painter->drawText(option.rect, values[3]);
 	painter->restore();
 }

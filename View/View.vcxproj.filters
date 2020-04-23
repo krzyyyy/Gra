@@ -28,9 +28,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="View.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MyModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -42,17 +39,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="View.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="MyModel.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-  </ItemGroup>
-  <ItemGroup>
-    <QtUic Include="View.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="View.qrc">

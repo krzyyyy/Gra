@@ -1,4 +1,3 @@
-#include "View.h"
 #include <QtWidgets/QApplication>
 #include <QTableView>
 #include "MyModel.h"

@@ -1,6 +1,11 @@
 <RCC>
-    <qresource prefix="/images">
-        <file alias="galadriela">Resources/Galadriela/galadriela.bmp</file>
-        <file alias="pomurnik">Resources/Pomurnik/pomurnik.bmp</file>
+    <qresource prefix="/images"/>
+    <qresource prefix="/images/galadriela">
+        <file alias="character">Resources/Galadriela/galadriela.bmp</file>
+        <file alias="background">Resources/Galadriela/background.jpg</file>
+    </qresource>
+    <qresource prefix="/images/pomurnik">
+        <file alias="character">Resources/Pomurnik/pomurnik.jpg</file>
+        <file alias="background">Resources/Pomurnik/background.jpg</file>
     </qresource>
 </RCC>

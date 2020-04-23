@@ -84,13 +84,6 @@
     <ClCompile Include="CharacterViewData.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyModel.cpp" />
-    <ClCompile Include="View.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="View.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtUic Include="View.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="View.qrc" />
