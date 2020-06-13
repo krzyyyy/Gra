@@ -1,6 +1,5 @@
 #pragma once
 #include "ICharacter.h"
-#include "Character.h"
 
 class IInteraction {
 public:

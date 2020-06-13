@@ -81,6 +81,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CharacterDelegate.cpp" />
+    <ClCompile Include="CharacterEditor.cpp" />
     <ClCompile Include="CharacterViewData.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyModel.cpp" />
@@ -93,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CharacterDelegate.h" />
+    <QtMoc Include="CharacterEditor.h" />
     <ClInclude Include="CharacterViewData.h" />
   </ItemGroup>
   <ItemGroup>

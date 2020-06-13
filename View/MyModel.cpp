@@ -50,6 +50,7 @@ QVariant MyModel::data(const QModelIndex& index, int role) const
         character_data.getQImage(img);
         return img.size();
     }
+    //else if(role == Qt::)
 
     return QVariant();
 }

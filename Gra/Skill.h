@@ -1,6 +1,7 @@
 #pragma once
 #include "pch.h"
 #include "IAction.h"
+#include <functional>
 //#include "ICharacter.h"
 //#include "Effect.h"
 

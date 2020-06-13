@@ -6,14 +6,16 @@
 
 
 void paintBar(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index, double width_margin,
-	double bar_width, double bar_placement, Qt::GlobalColor color)
+	double bar_width, double bar_placement, int value, int max_value, Qt::GlobalColor color)
 {
 	QPoint health_place_top_left = option.rect.topLeft() + QPoint((option.rect.width() * width_margin), option.rect.height() * bar_placement);
-	QPoint health_place_bottom_right = option.rect.topLeft() + QPoint((option.rect.width() * (1. - width_margin)), option.rect.height() * bar_placement + (option.rect.height() * bar_width));
+	int bar_length = option.rect.width() * (1. - (2 * width_margin))*(value/max_value);
+	QPoint health_place_bottom_right = health_place_top_left + QPoint(bar_length,  (option.rect.height() * bar_width));
 	QRect health_rect = QRect(health_place_top_left, health_place_bottom_right);
 	QBrush brush_bar = QBrush(color);
 	painter->setBrush(brush_bar);
 	painter->drawRoundedRect(health_rect, 10, 10);
+	painter->drawText(QPoint(health_place_top_left.x()+ bar_length/2, health_place_bottom_right.y()), QString::number(value)+"/"+QString::number(max_value));
 }
 void CharacterDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
@@ -25,10 +27,9 @@ void CharacterDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 	painter->save();
 	painter->setBrush(brush);
 	painter->drawRoundedRect(option.rect, 10, 15);
-	paintBar(painter, option, index, 0.05, 0.02, 0.75, Qt::GlobalColor::red);
-	paintBar(painter, option, index, 0.05, 0.02, 0.8, Qt::GlobalColor::blue);
+	paintBar(painter, option, index, 0.05, 0.03, 0.75, values[1].toInt(), values[0].toInt(), Qt::GlobalColor::red);
+	paintBar(painter, option, index, 0.05, 0.03, 0.8, values[3].toInt(), values[2].toInt(), Qt::GlobalColor::blue);
 
-	painter->drawText(option.rect, values[3]);
 	painter->restore();
 }
 
