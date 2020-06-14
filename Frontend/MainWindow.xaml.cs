@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace Frontend
 {
     /// <summary>
@@ -20,9 +21,12 @@ namespace Frontend
     /// </summary>
     public partial class MainWindow : NavigationWindow
     {
+        ViewModel.MainViewModel MainViewModel { get; set; }
         public MainWindow()
         {
             InitializeComponent();
+            MainViewModel = new ViewModel.MainViewModel();
+            //DataContext = MainViewModel;
         }
     }
 }

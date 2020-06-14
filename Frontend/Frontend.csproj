@@ -58,6 +58,13 @@
     <Compile Include="Report.xaml.cs">
       <DependentUpon>Report.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="View\CharacterSkill.xaml.cs">
+      <DependentUpon>CharacterSkill.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CharacterView.xaml.cs">
+      <DependentUpon>CharacterView.xaml</DependentUpon>
+    </Compile>
     <Page Include="Home.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -78,6 +85,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Report.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CharacterSkill.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CharacterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -109,7 +124,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="las2.jpg" />
+    <Resource Include="Resources\Galadriela\background.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ModelWrapper\ModelWrapper.vcxproj">
+      <Project>{78ce6abf-5441-4802-8761-f0b8e2d1ca2a}</Project>
+      <Name>ModelWrapper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

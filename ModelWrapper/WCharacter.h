@@ -9,6 +9,7 @@ namespace ModelWrapper {
 	public ref class WCharacter
 	{
 	public:
+		WCharacter();
 		WCharacter(System::String^ name);
 		~WCharacter();
 		System::Boolean isDead();

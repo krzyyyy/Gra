@@ -4,6 +4,11 @@
 #include <memory>
 #include <msclr\marshal_cppstd.h>
 
+ModelWrapper::WCharacter::WCharacter()
+{
+	character = nullptr;
+}
+
 ModelWrapper::WCharacter::WCharacter(System::String^ name)
 {
 	std::string cpp_name = msclr::interop::marshal_as<std::string>(name);
