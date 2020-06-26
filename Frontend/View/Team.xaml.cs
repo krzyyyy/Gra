@@ -13,20 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-
-namespace Frontend
+namespace Frontend.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Team.xaml
     /// </summary>
-    public partial class MainWindow : UserControl
+    public partial class Team : UserControl
     {
-        ViewModel.MainViewModel MainViewModel { get; set; }
-        public MainWindow()
+        public Team()
         {
             InitializeComponent();
-            MainViewModel = new ViewModel.MainViewModel();
-            DataContext = MainViewModel;
         }
     }
 }

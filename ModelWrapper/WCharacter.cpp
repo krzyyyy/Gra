@@ -21,9 +21,10 @@ ModelWrapper::WCharacter::~WCharacter()
 		delete character;
 	
 }
-System::Boolean ModelWrapper::WCharacter::isDead()
+bool^ ModelWrapper::WCharacter::isDead()
 {
 	return character->isDead();
+	//return true;
 }
 
 System::Void ModelWrapper::WCharacter::setSkill(System::Int32 skill)

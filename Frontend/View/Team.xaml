@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Frontend.View.CharacterSkill"
+﻿<UserControl x:Class="Frontend.View.Team"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,8 +6,9 @@
              xmlns:local="clr-namespace:Frontend.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Button>
-        <Image Source="{Binding Image}"  HorizontalAlignment="Left" Margin="10,10,10,10" VerticalAlignment="Top"/>
-        
-    </Button>
+    <Grid>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+            
+        </StackPanel>
+    </Grid>
 </UserControl>

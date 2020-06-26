@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ModelWrapper;
+using Frontend.Models;
 
 namespace Frontend.View
 {
@@ -31,10 +31,10 @@ namespace Frontend.View
             get { return (BitmapImage)GetValue(ImageProperty); }
             set { SetValue(ImageProperty, value); }
         }
-        public static readonly DependencyProperty CharacterProperty = DependencyProperty.Register("Character", typeof(WCharacter), typeof(CharacterView), new PropertyMetadata(new WCharacter()));
-        public WCharacter Character
+        public static readonly DependencyProperty CharacterProperty = DependencyProperty.Register("Character", typeof(CharacterModel), typeof(CharacterView), new PropertyMetadata(null));
+        public CharacterModel Character
         {
-            get { return (WCharacter)GetValue(CharacterProperty); }
+            get { return (CharacterModel)GetValue(CharacterProperty); }
             set { SetValue(CharacterProperty, value); }
         }
     }

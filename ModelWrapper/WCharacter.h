@@ -1,5 +1,5 @@
 #pragma once
-#include <memory>
+//#include <memory>
 #include "ICharacter.h"
 #include <msclr/marshal.h>
 #include <msclr\marshal_cppstd.h>
@@ -12,10 +12,10 @@ namespace ModelWrapper {
 		WCharacter();
 		WCharacter(System::String^ name);
 		~WCharacter();
-		System::Boolean isDead();
-		System::Void setSkill(System::Int32 skill);
-		System::Void passRound();
-		// TODO: Add your methods for this class here.
+		bool^ isDead();
+		void setSkill(System::Int32 skill);
+		void passRound();
+		 //TODO: Add your methods for this class here.
 	private:
 		ICharacter* character;
 	};
