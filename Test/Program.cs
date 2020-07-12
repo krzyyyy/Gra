@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ModelWrapper;
 
 namespace Test
@@ -7,8 +8,11 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            WCharacter sdf = new WCharacter("Galadriela");
-            Console.WriteLine("Hello World!");
+            List<int> aaa = new List<int>{ 1, 2, 3, 4, 5};
+            foreach(var number in aaa)
+            {
+                 //number = 1;
+            }
         }
     }
 }

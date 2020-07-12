@@ -23,6 +23,18 @@ namespace Frontend.View
         public Team()
         {
             InitializeComponent();
+            //Image = new BitmapImage(new Uri("pack://application:,,,/Resources/Galadriela/background.jpg"));
+
+        }
+        public static readonly DependencyProperty ImageProperty = DependencyProperty.Register("Image", typeof(ImageSource), typeof(Team), new UIPropertyMetadata());
+        public ImageSource Image
+        {
+            get { return (ImageSource)GetValue(ImageProperty); }
+            set {
+                SetValue(ImageProperty , value);
+                
+
+            }
         }
     }
 }

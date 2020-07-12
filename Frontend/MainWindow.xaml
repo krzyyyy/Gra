@@ -7,8 +7,8 @@
         xmlns:costum ="clr-namespace:Frontend.View"
         mc:Ignorable="d"
          Height="450" Width="800" >
-    
-    
+
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
@@ -16,8 +16,11 @@
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" >
-            <costum:CharacterView Character="{Binding Character}" />
+            <costum:CharacterView Character="{Binding Character}" Image="{Binding CharacterImage}" />
 
         </StackPanel>
+        <!--<Image Source="{Binding CharacterImage}" HorizontalAlignment="Left" Height="300" Margin="120,41.2,0,0" Grid.Row="1" VerticalAlignment="Top" Width="109"/>-->
+        <costum:Team Grid.Row="2" Image="{Binding CharacterImage , UpdateSourceTrigger=PropertyChanged}"/>
+        <Label Content="sdfsdfsdf"></Label>
     </Grid>
 </UserControl>

@@ -24,9 +24,11 @@ namespace Frontend
         ViewModel.MainViewModel MainViewModel { get; set; }
         public MainWindow()
         {
+
             InitializeComponent();
             MainViewModel = new ViewModel.MainViewModel();
             DataContext = MainViewModel;
+
         }
     }
 }

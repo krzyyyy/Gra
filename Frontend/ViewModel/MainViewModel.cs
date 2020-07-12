@@ -1,27 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ModelWrapper;
-using Frontend.Models;
+using GalaSoft.MvvmLight;
+using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System;
 
 namespace Frontend.ViewModel
 {
-    public class MainViewModel
+    /// <summary>
+    /// This class contains properties that the main View can data bind to.
+    /// <para>
+    /// Use the <strong>mvvminpc</strong> snippet to add bindable properties to this ViewModel.
+    /// </para>
+    /// <para>
+    /// You can also use Blend to data bind with the tool's support.
+    /// </para>
+    /// <para>
+    /// See http://www.galasoft.ch/mvvm
+    /// </para>
+    /// </summary>
+    public class MainViewModel : ViewModelBase
     {
-        private CharacterModel character;
-        public CharacterModel Character { get; set; }
+        /// <summary>
+        /// Initializes a new instance of the MainViewModel class.
+        /// </summary>
+        private BitmapSource image;
+        public BitmapSource Image
+        {
+            get { return image; }
+            set { image = value;
+                RaisePropertyChanged(() => Image);
+            }
+        }
         public MainViewModel()
         {
-            Character = new CharacterModel();
-            Character.Name = "adasdad";
+            var path = new Uri("pack://application:,,,/Resources/Galadriela/background.jpg");
+            Image = new BitmapImage(path);
         }
-        //private WCharacter character;
-        //public WCharacter Character
-        //{
-        //    get { return character; }
-        //    set { character = value; }
-        //}
     }
 }
