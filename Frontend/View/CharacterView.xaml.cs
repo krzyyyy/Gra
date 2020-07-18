@@ -25,11 +25,11 @@ namespace Frontend.View
         {
             InitializeComponent();
         }
-        public static readonly DependencyProperty ImageProperty = DependencyProperty.Register("Image", typeof(BitmapImage), typeof(CharacterView), new FrameworkPropertyMetadata(null));
-        public BitmapImage Image
+        public static readonly DependencyProperty BackgroundImageProperty = DependencyProperty.Register("BackgroundImage", typeof(BitmapSource), typeof(CharacterView), new FrameworkPropertyMetadata(null));
+        public BitmapSource BackgroundImage
         {
-            get { return GetValue(ImageProperty) as BitmapImage; }
-            set { SetValue(ImageProperty, value); }
+            get { return GetValue(BackgroundImageProperty) as BitmapSource; }
+            set { SetValue(BackgroundImageProperty, value); }
         }
         public static readonly DependencyProperty CharacterProperty = DependencyProperty.Register("Character", typeof(CharacterModel), typeof(CharacterView), new PropertyMetadata(null));
         public CharacterModel Character
