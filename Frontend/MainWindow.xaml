@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Frontend.MainWindow"
+﻿<Page x:Class="Frontend.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,19 +8,14 @@
         mc:Ignorable="d"
          Height="450" Width="800" >
 
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
             <RowDefinition Height="1.5*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" >
-            <costum:CharacterView Character="{Binding Character}" BackgroundImage="{Binding Image}" />
 
-        </StackPanel>
-        <!--<Image Source="{Binding CharacterImage}" HorizontalAlignment="Left" Height="300" Margin="120,41.2,0,0" Grid.Row="1" VerticalAlignment="Top" Width="109"/>-->
-        <!--<costum:Team Grid.Row="2" Image="{Binding CharacterImage , UpdateSourceTrigger=PropertyChanged}"/>
-        <Label Content="sdfsdfsdf"></Label>-->
+        <costum:CharacterView Grid.Row="0" Statistics="{Binding HH}"/>
+        <!--<Image Source="{Binding CharacterImages.CharacterImage}" HorizontalAlignment="Left" Height="300" Margin="120,41.2,0,0" Grid.Row="1" VerticalAlignment="Top" Width="109"/>-->
     </Grid>
-</UserControl>
+</Page>

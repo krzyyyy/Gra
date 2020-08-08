@@ -19,7 +19,7 @@ namespace Frontend
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : UserControl
+    public partial class MainWindow : Page
     {
         ViewModel.MainViewModel MainViewModel { get; set; }
         public MainWindow()

@@ -70,6 +70,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\BackgroundImage.cs" />
+    <Compile Include="Converters\CharacterImage.cs" />
     <Compile Include="Models\CharacterImagesModel.cs" />
     <Compile Include="Models\CharacterModel.cs" />
     <Compile Include="Report.xaml.cs">
@@ -77,14 +79,8 @@
     </Compile>
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Compile Include="View\CharacterSkill.xaml.cs">
-      <DependentUpon>CharacterSkill.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\CharacterView.xaml.cs">
       <DependentUpon>CharacterView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Team.xaml.cs">
-      <DependentUpon>Team.xaml</DependentUpon>
     </Compile>
     <Page Include="Home.xaml">
       <SubType>Designer</SubType>
@@ -109,19 +105,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\Galadriela\CharacterResource.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\CharacterSkill.xaml">
+    <Page Include="Styles\CharacterStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\CharacterView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Team.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -160,11 +148,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Styles\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Galadriela\background.jpg" />
-    <Resource Include="Resources\Galadriela\galadriela.jpg" />
+    <Folder Include="Resources\Galadriela\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

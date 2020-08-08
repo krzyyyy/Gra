@@ -21,23 +21,38 @@ namespace Frontend.View
     /// </summary>
     public partial class CharacterView : UserControl
     {
-        public CharacterView()
+        //public CharacterView()
+        //{
+        //    InitializeComponent();
+        //}
+
+        //public static readonly DependencyProperty ImageSourceProperty =
+        //    DependencyProperty.Register("ImageSource",
+        //    typeof(ImageSource), typeof(CharacterView), new FrameworkPropertyMetadata(null));
+        //public ImageSource Image
+        //{
+        //    get { return GetValue(ImageSourceProperty) as ImageSource; }
+        //    set { SetValue(ImageSourceProperty, value); }
+        //}
+
+        //public static readonly DependencyProperty CommandProperty =
+        //    DependencyProperty.Register("Command",
+        //    typeof(ICommand), typeof(CharacterView),
+        //    new FrameworkPropertyMetadata(null));
+        //public ICommand Command
+        //{
+        //    get { return GetValue(CommandProperty) as ICommand; }
+        //    set { SetValue(CommandProperty, value); }
+        //}
+
+        public static readonly DependencyProperty StatisticsProperty = DependencyProperty.Register("Statistics",
+    typeof(String), typeof(CharacterView), new PropertyMetadata());
+
+
+        public String Statistics
         {
-            InitializeComponent();
-        }
-        public static readonly DependencyProperty BackgroundImageProperty = DependencyProperty.Register("BackgroundImage", typeof(BitmapSource), typeof(CharacterView), new FrameworkPropertyMetadata(null));
-        public BitmapSource BackgroundImage
-        {
-            get { return GetValue(BackgroundImageProperty) as BitmapSource; }
-            set { SetValue(BackgroundImageProperty, value); }
-        }
-        public static readonly DependencyProperty CharacterProperty = DependencyProperty.Register("Character", typeof(CharacterModel), typeof(CharacterView), new PropertyMetadata(null));
-        public CharacterModel Character
-        {
-            get { return (CharacterModel)GetValue(CharacterProperty); }
-            set { 
-                SetValue(CharacterProperty, value);
-            }
+            get { return (String)GetValue(StatisticsProperty); }
+            set { SetValue(StatisticsProperty, value); }
         }
     }
 }
