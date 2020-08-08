@@ -82,7 +82,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\Krzysztof\source\repos\Gra\Gra;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Gra;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <UseFullPaths>false</UseFullPaths>
     </ClCompile>
     <Link>
@@ -121,7 +121,8 @@
       <AdditionalIncludeDirectories>../Gra;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies />
+      <AdditionalDependencies>Gra.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../x64/Debug</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
