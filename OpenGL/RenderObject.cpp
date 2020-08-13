@@ -36,9 +36,10 @@ void RenderObject::Initialize(float movement)
     glEnableVertexAttribArray(1);
 }
 
-void RenderObject::Render(int shaderProgram)
+void RenderObject::Render(const Program& program)
 {
-    glUseProgram(shaderProgram);
+    auto idProgram = program.getIdProgram();
+    glUseProgram(idProgram);
     glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }

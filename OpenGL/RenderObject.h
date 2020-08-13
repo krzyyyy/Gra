@@ -12,7 +12,7 @@ class RenderObject : public ObjectCounter<RenderObject>, public IRenderObject
 public:
 	RenderObject();
 	void Initialize(float movement);
-	void Render(int shaderProgram);
+	void Render(const Program& program);
 	~RenderObject();
 
 
