@@ -1,5 +1,6 @@
 #include "RenderObject.h"
 
+
 RenderObject::RenderObject():VAO(-1), VBO(-1), EBO(-1)
 {
 }
@@ -7,10 +8,10 @@ RenderObject::RenderObject():VAO(-1), VBO(-1), EBO(-1)
 void RenderObject::Initialize(float movement)
 {
   float vertices[] = {
-      0.0f + movement,  0.0f + movement, 0.0f,  // top right
-      0.0f + movement, -1.f + movement, 0.0f,  // bottom right
-     -1.f + movement, -1.f + movement, 0.0f,  // bottom left
-     -1.f + movement,  0.0f + movement, 0.0f   // top left 
+      0.0f + movement,  0.0f + movement, 0.0f, 1.f, 0.f, 0.f,   // top right
+      0.0f + movement, -1.f + movement, 0.0f,  0.f, 1.f, 0.f, // bottom right
+     -1.f + movement, -1.f + movement, 0.0f,  0.f, 0.f, 1.f, // bottom left
+     -1.f + movement,  0.0f + movement, 0.0f,  1.f, 0.f, 1.f,  // top left 
     };
     unsigned int indices[] = {  // note that we start from 0!
     0, 1, 3,   // first triangle
@@ -28,8 +29,11 @@ void RenderObject::Initialize(float movement)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
+
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
 }
 
 void RenderObject::Render(int shaderProgram)

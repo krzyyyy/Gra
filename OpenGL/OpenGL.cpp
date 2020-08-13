@@ -2,9 +2,11 @@
 #include <GLFW/glfw3.h>
 
 #include <iostream>
+#include <math.h>
 
 #include "RenderObject.h"
 #include "Shader.h"
+
 
 using namespace std;
 
@@ -17,21 +19,26 @@ const unsigned int SCR_HEIGHT = 600;
 
 const char* vertexShaderSource = "#version 330 core\n"
 "layout (location = 0) in vec3 aPos;\n"
+"layout (location = 1) in vec3 color;\n"
+"out vec4 vertexColor;\n" // specify a color output to the fragment shader
 "void main()\n"
 "{\n"
-"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+"   gl_Position = vec4(aPos, 1.0f);\n"
+"   vertexColor = vec4(color, 1.0f);\n"
 "}\0";
 const char* fragmentShaderSource = "#version 330 core\n"
 "out vec4 FragColor;\n"
+"in vec4 vertexColor;\n"
 "void main()\n"
 "{\n"
-"   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+"   FragColor = vertexColor;\n"
 "}\n\0";
 const char* fragmentShaderSource2 = "#version 330 core\n"
 "out vec4 FragColor;\n"
+"in vec4 vertexColor;\n"
 "void main()\n"
 "{\n"
-"   FragColor = vec4(0.9f, 0.5f, 0.9f, 1.0f);\n"
+"   FragColor = vertexColor;\n"
 "}\n\0";
 
 
@@ -112,16 +119,18 @@ int main()
         // -----
         processInput(window);
 
-        // render
-        // ------
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-
-        // draw our first triangle
-        //glBindVertexArray(0); // no need to unbind it every time 
+        //float timeValue = glfwGetTime();
+        //float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
+        //float blueValue = (sin(timeValue+3.1415*(2./3)) / 2.0f) + 0.5f;
+        //float redValue = (sin(timeValue + 3.1415 * (4. / 3)) / 2.0f) + 0.5f;
+        //int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
         obj1.Render(shaderProgram);
+        //glUniform4f(vertexColorLocation, redValue, greenValue, blueValue, 1.0f);
         obj2.Render(shaderProgram2);
+        
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
