@@ -16,6 +16,9 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{6f2a4b72-a8ed-46bb-a40a-b68a2d110033}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Concepts">
+      <UniqueIdentifier>{d99d6d01-0e58-4a10-80f9-f4cf130f4ca0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OpenGL.cpp">
@@ -31,6 +34,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Program.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MultidimensionalVector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -55,6 +61,12 @@
     </ClInclude>
     <ClInclude Include="Program.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MultidimensionalVector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MultidimensionalConvertable.h">
+      <Filter>Concepts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -8,6 +8,9 @@
 #include "Shader.h"
 #include <filesystem>
 #include "Program.h"
+#include <opencv2/opencv.hpp>
+#include "MultidimensionalConvertable.h"
+#include <concepts>
 
 namespace fs = std::filesystem;
 using namespace std;
@@ -69,7 +72,7 @@ int main()
 
     RenderObject obj1, obj2;
     obj1.Initialize(0.);
-    obj2.Initialize(1.);
+    obj2.Initialize(0.5);
 
 
 

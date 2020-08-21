@@ -1,4 +1,8 @@
 #include "RenderObject.h"
+#include "MultidimensionalVector.h"
+#include <opencv2/opencv.hpp>
+
+using namespace std;
 
 
 RenderObject::RenderObject():VAO(-1), VBO(-1), EBO(-1)
@@ -7,24 +11,33 @@ RenderObject::RenderObject():VAO(-1), VBO(-1), EBO(-1)
 
 void RenderObject::Initialize(float movement)
 {
-  float vertices[] = {
+   float vertices2[] = {
       0.0f + movement,  0.0f + movement, 0.0f, 1.f, 0.f, 0.f,   // top right
-      0.0f + movement, -1.f + movement, 0.0f,  0.f, 1.f, 0.f, // bottom right
+      0.0f + movement, -1.f + movement, 0.5f,  0.f, 1.f, 0.f, // bottom right
      -1.f + movement, -1.f + movement, 0.0f,  0.f, 0.f, 1.f, // bottom left
-     -1.f + movement,  0.0f + movement, 0.0f,  1.f, 0.f, 1.f,  // top left 
-    };
+     -1.f + movement,  0.0f + movement, 0.9f,  1.f, 0.f, 1.f,  // top left 
+   };
+
     unsigned int indices[] = {  // note that we start from 0!
     0, 1, 3,   // first triangle
     1, 2, 3    // second triangle
     };
+
+    MultidimensionalVector<float, 1, 3, 4> aaa;
+    for (int i = 0; i < MultidimensionalVector<float, 1, 3, 4>::feature_count + 1; ++i)
+    {
+        cout << MultidimensionalVector<float, 1, 3, 4>::ranges[i] << endl;
+    }
+
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &EBO);
     glGenBuffers(1, &VBO);
-
+    
 
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices2), &vertices2[0], GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
