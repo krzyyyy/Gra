@@ -1,8 +1,10 @@
 #pragma once
+
 #include <iostream>
 #include <vector>
 #include <tuple>
 #include <map>
+#include <ranges>
 
 #include "MultidimensionalConvertable.h"
 
@@ -27,7 +29,7 @@ class MultidimensionalVector
 {
 public:
 	// compile time value computation
-	constexpr static std::size_t feature_count = sizeof...(FeatureSizes);;
+	constexpr static std::size_t feature_count = sizeof...(FeatureSizes);
 	constexpr static std::size_t stride_size = (FeatureSizes +...);
 	constexpr static std::array<std::size_t, feature_count> feature_sizes = {FeatureSizes...};
 	constexpr static std::array<std::size_t, feature_count+1> ranges = sum<feature_count, feature_sizes>();
@@ -41,56 +43,66 @@ public:
 	MultidimensionalVector(const MultidimensionalVector& obj) = default;
 	MultidimensionalVector& operator = (const MultidimensionalVector & obj) = default;
 
+	void push_back(const PointRepresentation& elem);
+	void* data();
 	/* -------- ITERATORS --------*/
-	class iterator;
-	iterator begin();
-	const iterator begin() const;
-	iterator end();
-	const iterator end() const;
-	const iterator cbegin() const;
-	const iterator cend() const;
-	/*----------------------------*/
+	template<int FeatureID>
+	class Iterator;
 
-	/* -------- CAPACITY -------- */
-	bool empty() const;
-	// Returns size of allocated storate capacity
-	size_t capacity() const;
-	// Requests a change in capacity
-	// reserve() will never decrase the capacity.
-	void reserve(int newmalloc);
-	// Changes the Vector's size.
-	// If the newsize is smaller, the last elements will be lost.
-	// Has a default value param for custom values when resizing.
-	void resize(int newsize, T val = T());
-	// Returns the size of the Vector (number of elements). 
-	size_t size() const;
-	// Returns the maximum number of elements the Vector can hold
-	size_t max_size() const;
-	// Reduces capcity to fit the size
-	void shrink_to_fit();
-	/*----------------------------*/
+	template<int FeatureId>
+	Iterator< FeatureId>& begin();
+	//template<int FeatureId>
+	//const iterator begin() const;
+	//template<int FeatureId>
+	//iterator end();
+	//template<int FeatureId>
+	//const iterator end() const;
+	//template<int FeatureId>
+	//const iterator cbegin() const;
+	//template<int FeatureId>
+	//const iterator cend() const;
+	///*----------------------------*/
 
-	/* ----- ELEMENT ACCESS ----- */
-	// Access elements with bounds checking
-	T& at(int n);
-	// Access elements with bounds checking for constant Vectors.
-	const T& at(int n) const;
-	// Access elements, no bounds checking
-	T& operator[](int i);
-	// Access elements, no bounds checking
-	const T& operator[](int i) const;
-	// Returns a reference to the first element
-	T& front();
-	// Returns a reference to the first element
-	const T& front() const;
-	// Returns a reference to the last element
-	T& back();
-	// Returns a reference to the last element
-	const T& back() const;
-	// Returns a pointer to the array used by Vector
-	T* data();
-	// Returns a pointer to the array used by Vector
-	const T* data() const;
+	///* -------- CAPACITY -------- */
+	//bool empty() const;
+	//// Returns size of allocated storate capacity
+	//size_t capacity() const;
+	//// Requests a change in capacity
+	//// reserve() will never decrase the capacity.
+	//void reserve(int newmalloc);
+	//// Changes the Vector's size.
+	//// If the newsize is smaller, the last elements will be lost.
+	//// Has a default value param for custom values when resizing.
+	//void resize(int newsize, T val = T());
+	//// Returns the size of the Vector (number of elements). 
+	//size_t size() const;
+	//// Returns the maximum number of elements the Vector can hold
+	//size_t max_size() const;
+	//// Reduces capcity to fit the size
+	//void shrink_to_fit();
+	///*----------------------------*/
+
+	///* ----- ELEMENT ACCESS ----- */
+	//// Access elements with bounds checking
+	//T& at(int n);
+	//// Access elements with bounds checking for constant Vectors.
+	//const T& at(int n) const;
+	//// Access elements, no bounds checking
+	//T& operator[](int i);
+	//// Access elements, no bounds checking
+	//const T& operator[](int i) const;
+	//// Returns a reference to the first element
+	//T& front();
+	//// Returns a reference to the first element
+	//const T& front() const;
+	//// Returns a reference to the last element
+	//T& back();
+	//// Returns a reference to the last element
+	//const T& back() const;
+	//// Returns a pointer to the array used by Vector
+	//T* data();
+	//// Returns a pointer to the array used by Vector
+	//const T* data() const;
 	/*----------------------------*/
 
 
@@ -103,6 +115,7 @@ template<typename T, std::size_t ...FeatureSizes>
 inline MultidimensionalVector<T,  FeatureSizes ...>::MultidimensionalVector(int n)
 {
 	points = std::vector<PointRepresentation>(n);
+
 }
 
 template<typename T, std::size_t ...FeatureSizes>
@@ -111,8 +124,93 @@ inline MultidimensionalVector<T, FeatureSizes...>::MultidimensionalVector(int n,
 	points = std::vector<PointRepresentation>(n, inital);
 }
 
-template<typename T, std::size_t... FeatureSizes>
-class MultidimensionalVector< T, FeatureSizes...> Iterator
+template<typename T, std::size_t ...FeatureSizes>
+inline void MultidimensionalVector<T, FeatureSizes...>::push_back(const PointRepresentation& elem)
 {
+	points.push_back(elem);
+}
 
+template<typename T, std::size_t ...FeatureSizes>
+inline void* MultidimensionalVector<T, FeatureSizes...>::data()
+{
+	return &points[0];
+}
+
+template<typename T, std::size_t ...FeatureSizes>
+template<int FeatureID>
+class MultidimensionalVector<T, FeatureSizes...>::Iterator
+{
+public:
+
+	constexpr static std::size_t arraySize = MultidimensionalVector<T, FeatureSizes...>::feature_sizes[FeatureID];
+	
+	Iterator();
+	Iterator(const std::array<T,
+		MultidimensionalVector<T, FeatureSizes...>::feature_sizes[FeatureID]>& elem);
+	std::array<T, MultidimensionalVector<T, FeatureSizes...>::feature_sizes[FeatureID]>& operator * ();
+	Iterator& operator ++();
+	Iterator& operator --();
+
+	//Iterator operator ++(int);
+	//Iterator operator --(int);
+private:
+	std::array<T, MultidimensionalVector<T, FeatureSizes...>::feature_sizes[FeatureID]>& featurePointer;
 };
+
+
+template<typename T, std::size_t ...FeatureSizes>
+template<int FeatureID>
+inline MultidimensionalVector<T, FeatureSizes...>::Iterator<FeatureID>::Iterator()
+{
+	featurePointer = nullptr;
+}
+
+template<typename T, std::size_t ...FeatureSizes>
+template<int FeatureID>
+inline MultidimensionalVector<T, FeatureSizes...>::Iterator<FeatureID>::
+Iterator(const std::array<T, MultidimensionalVector<T,
+	FeatureSizes...>::feature_sizes[FeatureID]>& elem):featurePointer(elem)
+{
+	 
+}
+
+template<typename T, std::size_t ...FeatureSizes>
+template<int FeatureID>
+inline std::array< T, 
+	MultidimensionalVector<T, FeatureSizes...>::feature_sizes[FeatureID] >&
+	MultidimensionalVector<T, FeatureSizes...>::Iterator<FeatureID>::operator*()
+{
+	return *featurePointer;
+}
+
+template<typename T, std::size_t ...FeatureSizes>
+template<int FeatureID>
+inline MultidimensionalVector<T, FeatureSizes...>::Iterator< FeatureID>& MultidimensionalVector<T, FeatureSizes...>::Iterator<FeatureID>::operator++()
+{
+	featurePointer = &featurePointer[0] + MultidimensionalVector<T, FeatureSizes...>::stride_size;
+	return *this;
+}
+
+template<typename T, std::size_t ...FeatureSizes>
+template<int FeatureID>
+inline MultidimensionalVector<T, FeatureSizes...>::Iterator< FeatureID>& MultidimensionalVector<T, FeatureSizes...>::Iterator<FeatureID>::operator--()
+{
+	featurePointer = &featurePointer[0] - MultidimensionalVector<T, FeatureSizes...>::stride_size;
+	return *this;
+}
+
+//template<typename T, std::size_t ...FeatureSizes>
+//template<int FeatureID>
+//inline MultidimensionalVector<T, FeatureSizes...>::Iterator< FeatureID> MultidimensionalVector<T, FeatureSizes...>::Iterator<FeatureID>::operator++(int)
+//{
+//	auto copy = *this;
+//	pointer = pointer + MultidimensionalVector<T, FeatureSizes...>::stride_size;
+//	return copy;
+//}
+
+template<typename T, std::size_t ...FeatureSizes>
+template<int FeatureId>
+inline MultidimensionalVector<T, FeatureSizes ...>::Iterator<FeatureId>& MultidimensionalVector<T, FeatureSizes ...>::begin()
+{
+	return MultidimensionalVector<T, FeatureSizes ...>::Iterator<FeatureId>();
+}
