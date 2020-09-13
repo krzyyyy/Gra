@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <opencv2/opencv.hpp>
 #include <vector>
 #include <tuple>
 #include <map>
@@ -43,14 +44,17 @@ public:
 	MultidimensionalVector(const MultidimensionalVector& obj) = default;
 	MultidimensionalVector& operator = (const MultidimensionalVector & obj) = default;
 
-	void push_back(const PointRepresentation& elem);
+	void push_back(PointRepresentation&& elem);
+	void emplace_back(PointRepresentation&& elem);
 	void* data();
 	/* -------- ITERATORS --------*/
 	template<int FeatureID>
 	class Iterator;
+	cv::Mat getAllPoints(std::size_t featureId);
+	void transform(std::size_t featureId, const cv::Mat& transormMatrix);
 
 	template<int FeatureId>
-	Iterator< FeatureId>& begin();
+	Iterator< FeatureId> begin();
 	//template<int FeatureId>
 	//const iterator begin() const;
 	//template<int FeatureId>
@@ -125,9 +129,15 @@ inline MultidimensionalVector<T, FeatureSizes...>::MultidimensionalVector(int n,
 }
 
 template<typename T, std::size_t ...FeatureSizes>
-inline void MultidimensionalVector<T, FeatureSizes...>::push_back(const PointRepresentation& elem)
+inline void MultidimensionalVector<T, FeatureSizes...>::push_back(PointRepresentation&& elem)
 {
-	points.push_back(elem);
+	points.push_back(std::forward< PointRepresentation>(elem));
+}
+
+template<typename T, std::size_t ...FeatureSizes>
+inline void MultidimensionalVector<T, FeatureSizes...>::emplace_back(PointRepresentation&& elem)
+{
+	points.emplace_back(std::forward<PointRepresentation>(elem));
 }
 
 template<typename T, std::size_t ...FeatureSizes>
@@ -169,9 +179,9 @@ template<typename T, std::size_t ...FeatureSizes>
 template<int FeatureID>
 inline MultidimensionalVector<T, FeatureSizes...>::Iterator<FeatureID>::
 Iterator(const std::array<T, MultidimensionalVector<T,
-	FeatureSizes...>::feature_sizes[FeatureID]>& elem):featurePointer(elem)
+	FeatureSizes...>::feature_sizes[FeatureID]>& elem):featurePointer(&elem)
 {
-	 
+	featurePointer = &elem;
 }
 
 template<typename T, std::size_t ...FeatureSizes>
@@ -180,7 +190,7 @@ inline std::array< T,
 	MultidimensionalVector<T, FeatureSizes...>::feature_sizes[FeatureID] >&
 	MultidimensionalVector<T, FeatureSizes...>::Iterator<FeatureID>::operator*()
 {
-	return *featurePointer;
+	return featurePointer;
 }
 
 template<typename T, std::size_t ...FeatureSizes>
@@ -209,8 +219,30 @@ inline MultidimensionalVector<T, FeatureSizes...>::Iterator< FeatureID>& Multidi
 //}
 
 template<typename T, std::size_t ...FeatureSizes>
-template<int FeatureId>
-inline MultidimensionalVector<T, FeatureSizes ...>::Iterator<FeatureId>& MultidimensionalVector<T, FeatureSizes ...>::begin()
+inline cv::Mat MultidimensionalVector<T, FeatureSizes...>::getAllPoints(std::size_t featureId)
 {
-	return MultidimensionalVector<T, FeatureSizes ...>::Iterator<FeatureId>();
+	auto matrix = cv::Mat(points.size() , stride_size,CV_32FC1 , points.data());
+	auto columnRange = cv::Range(ranges[featureId], ranges[featureId + 1]);
+	auto rowRange = cv::Range(0, matrix.rows);
+	return matrix(rowRange, columnRange);
+}
+
+template<typename T, std::size_t ...FeatureSizes>
+inline void MultidimensionalVector<T, FeatureSizes...>::transform(std::size_t featureId, const cv::Mat& transormMatrix)
+{
+	auto allPoints = getAllPoints(featureId);
+	cv::Mat result = allPoints * transormMatrix;
+	if (result.size() != allPoints.size())
+		throw std::exception("zla macierz przeksztalcen");
+	result.copyTo(allPoints);
+}
+
+
+template<typename T, std::size_t ...FeatureSizes>
+template<int FeatureId>
+inline MultidimensionalVector<T, FeatureSizes ...>::Iterator<FeatureId> MultidimensionalVector<T, FeatureSizes ...>::begin()
+{
+	auto rrr = std::array<T,
+		MultidimensionalVector<T, FeatureSizes...>::feature_sizes[FeatureId]>();
+	return MultidimensionalVector<T, FeatureSizes...>::Iterator<FeatureId>(rrr);
 }
