@@ -5,6 +5,7 @@
 #include <iostream>
 #include "ObjectCounter.h"
 #include "IRenderObject.h"
+#include "MultidimensionalVector.h"
 
 
 class RenderObject : public ObjectCounter<RenderObject>, public IRenderObject
@@ -15,13 +16,13 @@ public:
 	void Render(const Program& program);
 	~RenderObject();
 
-
-
 private:
 	unsigned int VAO;
 	unsigned int VBO;
 	unsigned int EBO;
-
+	unsigned int texture;
+	MultidimensionalVector<float, 3, 3, 2> vec;
+	void addTexture(const std::string& texturePath);
 	
 };
 

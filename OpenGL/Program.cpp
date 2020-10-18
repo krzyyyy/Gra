@@ -1,5 +1,6 @@
 #include "Program.h"
 
+
 Program::Program():  idProgram(0)
 {
 }
@@ -23,11 +24,10 @@ void Program::CompileAndLink()
     glLinkProgram(idProgram);
 }
 
-void Program::setUniform(std::tuple<float, float, float, float> vec4, std::string uniformName)
+void Program::setUniform(const glm::mat4& mat, std::string uniformName)
 {
-    auto [skalar1, skalar2, skalar3, skalar4] = vec4;
-    int vertexColorLocation = glGetUniformLocation(idProgram, "ourColor");
-    glUniform4f(vertexColorLocation, skalar1, skalar2, skalar3, skalar4);
+    int uniformLocation = glGetUniformLocation(idProgram, uniformName.c_str());
+    glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, &mat[0][0]);
 }
 
 Program::~Program()

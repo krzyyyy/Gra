@@ -1,5 +1,6 @@
 #pragma once
 #include "Shader.h"
+#include "glm/glm.hpp"
 
 class Program
 {
@@ -8,7 +9,7 @@ public:
 	//Program(const fs::path& vertexSaderPath, const fs::path& fragmentShaderPath);
 	void Initialize(const fs::path& vertexSaderPath, const fs::path& fragmentShaderPath);
 	void CompileAndLink();
-	void setUniform(std::tuple<float, float, float, float> vec4, std::string uniformName);
+	void setUniform(const glm::mat4& mat, std::string uniformName);
 	unsigned int getIdProgram() const
 	{
 		return idProgram;

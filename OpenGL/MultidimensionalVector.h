@@ -47,9 +47,12 @@ public:
 	void push_back(PointRepresentation&& elem);
 	void emplace_back(PointRepresentation&& elem);
 	void* data();
+	int getArraySize();
 	/* -------- ITERATORS --------*/
 	template<int FeatureID>
 	class Iterator;
+
+	//openCV matrix function
 	cv::Mat getAllPoints(std::size_t featureId);
 	void transform(std::size_t featureId, const cv::Mat& transormMatrix);
 
@@ -144,6 +147,13 @@ template<typename T, std::size_t ...FeatureSizes>
 inline void* MultidimensionalVector<T, FeatureSizes...>::data()
 {
 	return &points[0];
+}
+
+template<typename T, std::size_t ...FeatureSizes>
+inline int MultidimensionalVector<T, FeatureSizes...>::getArraySize()
+{
+
+	return points.size()* stride_size*sizeof(T);
 }
 
 template<typename T, std::size_t ...FeatureSizes>

@@ -1,6 +1,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+
 #include <iostream>
 #include <math.h>
 
@@ -10,7 +11,11 @@
 #include "Program.h"
 #include <opencv2/opencv.hpp>
 #include "MultidimensionalConvertable.h"
+#include "MultidimensionalVector.h"
 #include <concepts>
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 namespace fs = std::filesystem;
 using namespace std;
@@ -26,6 +31,7 @@ const unsigned int SCR_HEIGHT = 600;
 
 int main()
 {
+ 
     Program program1;
     Program program2;
     auto vertexShaderPath = fs::path("VertexShader.glsl");
@@ -85,23 +91,33 @@ int main()
         // input
         // -----
         processInput(window);
+        auto time = glfwGetTime();
 
-
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         float timeValue = glfwGetTime();
-        float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
-        float blueValue = (sin(timeValue+3.1415*(2./3)) / 2.0f) + 0.5f;
-        float redValue = (sin(timeValue + 3.1415 * (4. / 3)) / 2.0f) + 0.5f;
-        program1.setUniform(std::make_tuple(redValue, blueValue, greenValue, 0.5f), "ourColor");
+        cv::Mat rotationVector = (cv::Mat_<float>(1, 3) << 0.4, 0.000, 0.000);
+        auto rotationMatrix = cv::Mat();
+        cv::Rodrigues(rotationVector, rotationMatrix);
+        glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+        glm::mat4 view = glm::mat4(1.0f);
+        glm::mat4 projection = glm::mat4(1.0f);
+        model = glm::rotate(model, glm::radians((float)time*10), glm::vec3(1.0f, 0.0f, 0.0f));
+        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+        projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+        program1.setUniform(model, "model");
+        program1.setUniform(view, "view");
+        program1.setUniform(projection, "projection");
+        //program1.setUniform(std::make_tuple(redValue, blueValue, greenValue, 0.5f), "ourColor");
         obj1.Render(program1);
         
-        obj2.Render(program2);
+        //obj2.Render(program2);
         
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
         glfwPollEvents();
+        cv::waitKey(10);
     }
 
     // optional: de-allocate all resources once they've outlived their purpose:

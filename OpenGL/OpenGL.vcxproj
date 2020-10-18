@@ -162,6 +162,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GLAD\src\glad.c" />
     <ClCompile Include="MultidimensionalVector.cpp" />
     <ClCompile Include="OpenGL.cpp" />
@@ -170,6 +171,8 @@
     <ClCompile Include="Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="CameraTypes.h" />
     <ClInclude Include="IRenderObject.h" />
     <ClInclude Include="IShader.h" />
     <ClInclude Include="MultidimensionalConvertable.h" />
@@ -179,11 +182,15 @@
     <ClInclude Include="RenderObject.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderEnum.h" />
+    <ClInclude Include="ShaderFunctionTemplates.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FragmentShader.glsl" />
     <None Include="FragmentShader2.glsl" />
     <None Include="VertexShader.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Textures\wall.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
