@@ -5,44 +5,81 @@
 using namespace std;
 
 
-RenderObject::RenderObject():VAO(-1), VBO(-1), EBO(-1), texture(-1)
+
+
+void RenderObject::Initialize()
 {
-    vec = MultidimensionalVector<float, 3, 3, 2>();
-}
+    //vec = { { 0.5f + movement,  0.0f + movement, 0.0f, 1.f, 0.f, 0.f, 1, 1},
+    //{ 0.5f + movement, -1.f + movement, 0.0f,  0.f, 1.f, 0.f, 1, 0 },
+    //{ -1.f + movement, -1.f + movement, 0.0f,  0.f, 0.f, 1.f, 0, 0},
+    //{ -1.f + movement,  0.0f + movement, 0.0f,  1.f, 0.f, 1.f, 0, 1},
+    //{ 0.5f + movement,  0.0f + movement, 0.5f, 1.f, 0.f, 0.f, 0.5, 1 },
+    //{ 0.5f + movement, -1.f + movement, 0.5f,  0.f, 1.f, 0.f, 1, 0 },
+    //{ -1.f + movement, -1.f + movement, 1.0f,  0.f, 0.f, 1.f, 0, 0 },
+    //{ -1.f + movement,  0.0f + movement, 1.0f,  1.f, 0.f, 1.f, 0, 1 } };
+    vec = { { -0.5f, -0.5f, -0.5f,0.f, 1.f, 0.f, 0.0f, 0.0f },
+   { 0.5f, -0.5f, -0.5f,0.f, 1.f, 0.f, 1.0f, 0.0f},
+        { 0.5f,  0.5f, -0.5f,0.f, 1.f, 0.f,  1.0f, 1.0f},
+        {0.5f,  0.5f, -0.5f,0.f, 1.f, 0.f,  1.0f, 1.0f},
+        {-0.5f,  0.5f, -0.5f,0.f, 1.f, 0.f,  0.0f, 1.0f},
+        {-0.5f, -0.5f, -0.5f,0.f, 1.f, 0.f,  0.0f, 0.0f},
 
-void RenderObject::Initialize(float movement)
-{
+        {-0.5f, -0.5f,  0.5f,0.f, 1.f, 0.f,  0.0f, 0.0f},
+        { 0.5f, -0.5f,  0.5f,0.f, 1.f, 0.f,  1.0f, 0.0f},
+        { 0.5f,  0.5f,  0.5f,0.f, 1.f, 0.f,  1.0f, 1.0f},
+        { 0.5f,  0.5f,  0.5f,0.f, 1.f, 0.f,  1.0f, 1.0f},
+        {-0.5f,  0.5f,  0.5f,0.f, 1.f, 0.f,  0.0f, 1.0f},
+        {-0.5f, -0.5f,  0.5f,0.f, 1.f, 0.f,  0.0f, 0.0f},
 
-    vec.push_back(std::array<float, 8>({ 0.5f + movement,  0.0f + movement, 0.0f, 1.f, 0.f, 0.f, 1, 1}));
-    vec.push_back(std::array<float, 8>({ 0.5f + movement, -1.f + movement, 0.0f,  0.f, 1.f, 0.f, 1, 0 }));
-    vec.push_back(std::array<float, 8>({ -1.f + movement, -1.f + movement, 0.0f,  0.f, 0.f, 1.f, 0, 0}));
-    vec.push_back(std::array<float, 8>({ -1.f + movement,  0.0f + movement, 0.0f,  1.f, 0.f, 1.f, 0, 1}));
+        {-0.5f,  0.5f,  0.5f,0.f, 1.f, 0.f,  1.0f, 0.0f},
+        {-0.5f,  0.5f, -0.5f,0.f, 1.f, 0.f,  1.0f, 1.0f},
+        {-0.5f, -0.5f, -0.5f,0.f, 1.f, 0.f,  0.0f, 1.0f},
+        {-0.5f, -0.5f, -0.5f,0.f, 1.f, 0.f,  0.0f, 1.0f},
+        {-0.5f, -0.5f,  0.5f,0.f, 1.f, 0.f,  0.0f, 0.0f},
+        {-0.5f,  0.5f,  0.5f,0.f, 1.f, 0.f,  1.0f, 0.0f},
 
+        {0.5f,  0.5f,  0.5f,0.f, 1.f, 0.f,  1.0f, 0.0f},
+        { 0.5f,  0.5f, -0.5f,0.f, 1.f, 0.f,  1.0f, 1.0f},
+        {0.5f, -0.5f, -0.5f,0.f, 1.f, 0.f,  0.0f, 1.0f},
+        {0.5f, -0.5f, -0.5f,0.f, 1.f, 0.f,  0.0f, 1.0f},
+        {0.5f, -0.5f,  0.5f,0.f, 1.f, 0.f,  0.0f, 0.0f},
+        {0.5f,  0.5f,  0.5f,0.f, 1.f, 0.f,  1.0f, 0.0f},
 
+        {-0.5f, -0.5f, -0.5f,0.f, 1.f, 0.f,  0.0f, 1.0f},
+        {0.5f, -0.5f, -0.5f,0.f, 1.f, 0.f,  1.0f, 1.0f},
+        {0.5f, -0.5f,  0.5f, 0.f, 1.f, 0.f, 1.0f, 0.0f},
+        { 0.5f, -0.5f,  0.5f,0.f, 1.f, 0.f,  1.0f, 0.0f},
+        {-0.5f, -0.5f,  0.5f,0.f, 1.f, 0.f,  0.0f, 0.0f},
+        {-0.5f, -0.5f, -0.5f,0.f, 1.f, 0.f,  0.0f, 1.0f},
 
-    unsigned int indices[] = {  // note that we start from 0!
-    0, 1, 3,   // first triangle
-    1, 2, 3    // second triangle
+        {-0.5f,  0.5f, -0.5f,0.f, 1.f, 0.f,  0.0f, 1.0f},
+        {0.5f,  0.5f, -0.5f,0.f, 1.f, 0.f,  1.0f, 1.0f},
+        {0.5f,  0.5f,  0.5f, 0.f, 1.f, 0.f, 1.0f, 0.0f},
+        { 0.5f,  0.5f,  0.5f,0.f, 1.f, 0.f,  1.0f, 0.0f},
+        {-0.5f,  0.5f,  0.5f,0.f, 1.f, 0.f,  0.0f, 0.0f},
+        {-0.5f,  0.5f, -0.5f,0.f, 1.f, 0.f,  0.0f, 1.0f} 
     };
 
-    MultidimensionalVector<float, 1, 3, 4> aaa;
-    for (int i = 0; i < MultidimensionalVector<float, 1, 3, 4>::feature_count + 1; ++i)
-    {
-        cout << MultidimensionalVector<float, 1, 3, 4>::ranges[i] << endl;
-    }
+
+
+    //unsigned int indices[] = {  // note that we start from 0!
+    //0, 1, 3,   // first triangle
+    //1, 2, 3,
+    //4, 5, 7,
+    //5, 6, 7    // second triangle
+    //};
+
 
     glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &EBO);
+    //glGenBuffers(1, &EBO);
     glGenBuffers(1, &VBO);
     
 
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
-    glBufferData(GL_ARRAY_BUFFER, vec.getArraySize(), vec.data(), GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vec.getArraySize(), vec.data(), GL_STATIC_DRAW);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_DYNAMIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
@@ -55,20 +92,29 @@ void RenderObject::Initialize(float movement)
     addTexture("Textures/wall.jpg");
 }
 
-void RenderObject::Render(const Program& program)
+void RenderObject::Render()
 {
-    auto idProgram = program.getIdProgram();
     glBindTexture(GL_TEXTURE_2D, texture);
-    glUseProgram(idProgram);
-    glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+    glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glDrawArrays(GL_TRIANGLES, 0, vec.size());
 }
+
+//void RenderObject::Render(const Program& program)
+//{
+//    auto idProgram = program.getIdProgram();
+//    glBindTexture(GL_TEXTURE_2D, texture);
+//    glUseProgram(idProgram);
+//    glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+//    //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+//    glDrawArrays(GL_TRIANGLES, 0, vec.size());
+//}
 
 RenderObject::~RenderObject()
 {
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
-    glDeleteBuffers(1, &EBO);
+    //glDeleteBuffers(1, &EBO);
 }
 
 void RenderObject::addTexture(const std::string& texturePath)

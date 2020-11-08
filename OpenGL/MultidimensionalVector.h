@@ -38,6 +38,7 @@ public:
 	using PointRepresentation = std::array<T, stride_size>;
 
 	//Conctructors
+	MultidimensionalVector(std::initializer_list< PointRepresentation> l) :points(l) {};
 	MultidimensionalVector() = default;
 	explicit MultidimensionalVector(int n);
 	explicit MultidimensionalVector(int n, const PointRepresentation& inital);
@@ -48,6 +49,10 @@ public:
 	void emplace_back(PointRepresentation&& elem);
 	void* data();
 	int getArraySize();
+	auto size()
+	{
+		return points.size();
+	};
 	/* -------- ITERATORS --------*/
 	template<int FeatureID>
 	class Iterator;

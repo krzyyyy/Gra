@@ -16,6 +16,7 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
+#include "Object.h"
 
 namespace fs = std::filesystem;
 using namespace std;
@@ -76,18 +77,36 @@ int main()
     program1.CompileAndLink();
     program2.CompileAndLink();
 
-    RenderObject obj1, obj2;
-    obj1.Initialize(0.);
-    obj2.Initialize(0.5);
+    RenderObject::getInstance().Initialize();
+    auto cubes = std::vector<Object<RenderObject>>(10);
+    glm::vec3 cubePositions[] = {
+    glm::vec3(0.0f,  0.0f,  0.0f),
+    glm::vec3(2.0f,  5.0f, -15.0f),
+    glm::vec3(-1.5f, -2.2f, -2.5f),
+    glm::vec3(-3.8f, -2.0f, -12.3f),
+    glm::vec3(2.4f, -0.4f, -3.5f),
+    glm::vec3(-1.7f,  3.0f, -7.5f),
+    glm::vec3(1.3f, -2.0f, -2.5f),
+    glm::vec3(1.5f,  2.0f, -2.5f),
+    glm::vec3(1.5f,  0.2f, -1.5f),
+    glm::vec3(-1.3f,  1.0f, -1.5f)
+    };
+    for (int i = 0; i < cubes.size(); ++i)
+    {
+        cubes[i].model2 = glm::mat4(1.0f);
+        cubes[i].model2 = glm::translate(cubes[i].model2, cubePositions[i]);
+    }
 
 
 
     // note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glEnable(GL_DEPTH_TEST);
 
     // -----------
     while (!glfwWindowShouldClose(window))
     {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         // input
         // -----
         processInput(window);
@@ -96,21 +115,19 @@ int main()
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         float timeValue = glfwGetTime();
-        cv::Mat rotationVector = (cv::Mat_<float>(1, 3) << 0.4, 0.000, 0.000);
+        cv::Mat rotationVector = (cv::Mat_<float>(1, 3) << 0.4, 0.03, 0.000);
         auto rotationMatrix = cv::Mat();
         cv::Rodrigues(rotationVector, rotationMatrix);
         glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-        glm::mat4 view = glm::mat4(1.0f);
-        glm::mat4 projection = glm::mat4(1.0f);
-        model = glm::rotate(model, glm::radians((float)time*10), glm::vec3(1.0f, 0.0f, 0.0f));
-        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-        projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-        program1.setUniform(model, "model");
-        program1.setUniform(view, "view");
-        program1.setUniform(projection, "projection");
-        //program1.setUniform(std::make_tuple(redValue, blueValue, greenValue, 0.5f), "ourColor");
-        obj1.Render(program1);
-        
+        //glm::mat4 view = glm::mat4(1.0f);
+        //glm::mat4 projection = glm::mat4(1.0f);
+
+        for (auto& cube : cubes)
+        {
+            
+            cube.model2 = glm::rotate(cube.model2, glm::radians( 1.f), glm::vec3(1.0f, 0.3f, 0.0f));
+            cube.render(program1);
+        }
         //obj2.Render(program2);
         
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
