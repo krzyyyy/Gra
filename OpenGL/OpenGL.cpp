@@ -17,6 +17,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 #include "Object.h"
+#include "Camera.h"
 
 namespace fs = std::filesystem;
 using namespace std;
@@ -27,19 +28,19 @@ void processInput(GLFWwindow* window);
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
-
-
+Camera camera;
+void mauseCallback(GLFWwindow* window, double posX, double posY);
+void scrollCallback(GLFWwindow* window, double xOffset, double yOffset);
 
 int main()
 {
  
     Program program1;
-    Program program2;
     auto vertexShaderPath = fs::path("VertexShader.glsl");
     auto fragmenShaderPath = fs::path("FragmentShader.glsl");
-    auto fragmenShader2Path = fs::path("FragmentShader2.glsl");
 
-    if (!(fs::exists(vertexShaderPath) && fs::exists(fragmenShaderPath) && fs::exists(fragmenShader2Path)))
+
+    if (!(fs::exists(vertexShaderPath) && fs::exists(fragmenShaderPath)))
     {
         cout << "I can't load shader" << endl;
         throw std::exception();
@@ -61,6 +62,7 @@ int main()
         glfwTerminate();
         return -1;
     }
+    
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
@@ -71,11 +73,12 @@ int main()
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetCursorPosCallback(window, mauseCallback);
+    glfwSetScrollCallback(window, scrollCallback);
 
     program1.Initialize(vertexShaderPath, fragmenShaderPath);
-    program2.Initialize(vertexShaderPath, fragmenShader2Path);
     program1.CompileAndLink();
-    program2.CompileAndLink();
 
     RenderObject::getInstance().Initialize();
     auto cubes = std::vector<Object<RenderObject>>(10);
@@ -110,7 +113,10 @@ int main()
         // input
         // -----
         processInput(window);
+        camera.processInput(window);
         auto time = glfwGetTime();
+        program1.setUniform(camera.getViewMatrix(), "view");
+        program1.setUniform(camera.getProjectionMatrix(), "projection");
 
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
@@ -153,6 +159,16 @@ void processInput(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
+}
+
+void mauseCallback(GLFWwindow* window, double posX, double posY)
+{
+    camera.mauseCallback(window, posX, posY);
+}
+
+void scrollCallback(GLFWwindow* window, double xOffset, double yOffset)
+{
+    camera.scrollCallback(window, xOffset, yOffset);
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
