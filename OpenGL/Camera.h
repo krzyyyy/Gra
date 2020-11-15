@@ -27,6 +27,6 @@ private:
 	bool firstMouse = true;
 	double yaw = 0;
 	double pitch = 0;
-	double zoom =0;
+	double zoom =45;
 };
 
