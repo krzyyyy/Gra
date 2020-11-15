@@ -22,15 +22,21 @@
     <Filter Include="Textures">
       <UniqueIdentifier>{5ac7b892-cb21-4ed3-ab36-866a0ec15909}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Models">
+      <UniqueIdentifier>{c622dcf2-3090-4032-b51b-5e6cabc85c1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Models\ModelCreators">
+      <UniqueIdentifier>{1c6d4358-d008-4c75-bb4b-2a57cd1f42c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ShaderClasses">
+      <UniqueIdentifier>{4e695f58-815e-4e3b-b394-1d69e68442d1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OpenGL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GLAD\src\glad.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
@@ -48,27 +54,12 @@
     <ClCompile Include="Object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="RenderObject.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="RenderObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ObjectCounter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IRenderObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ShaderEnum.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Program.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MultidimensionalVector.h">
@@ -80,13 +71,34 @@
     <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CameraTypes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ShaderFunctionTemplates.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IRenderObject.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderObject.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeCreator.h">
+      <Filter>Models\ModelCreators</Filter>
+    </ClInclude>
+    <ClInclude Include="CilinderCreator.h">
+      <Filter>Models\ModelCreators</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderEnum.h">
+      <Filter>ShaderClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>ShaderClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Program.h">
+      <Filter>ShaderClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="IShader.h">
+      <Filter>ShaderClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="IObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

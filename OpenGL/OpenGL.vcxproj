@@ -173,7 +173,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="CameraTypes.h" />
+    <ClInclude Include="CilinderCreator.h" />
+    <ClInclude Include="CubeCreator.h" />
+    <ClInclude Include="IObject.h" />
     <ClInclude Include="IRenderObject.h" />
     <ClInclude Include="IShader.h" />
     <ClInclude Include="MultidimensionalConvertable.h" />
@@ -184,7 +186,6 @@
     <ClInclude Include="RenderObject.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderEnum.h" />
-    <ClInclude Include="ShaderFunctionTemplates.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FragmentShader.glsl" />
