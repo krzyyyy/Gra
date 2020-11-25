@@ -20,6 +20,7 @@
 #include "Camera.h"
 #include "CilinderCreator.h"
 #include "CubeCreator.h"
+#include "SceneMenager.h"
 
 namespace fs = std::filesystem;
 using namespace std;
@@ -88,11 +89,8 @@ int main()
 
 	RenderObject<ModelCreators::CubeCreator>::getInstance().Initialize();
 	RenderObject<ModelCreators::CylinderCreator>::getInstance().Initialize();
-	//auto cubes = std::vector<Object<RenderObject<ModelCreators::CubeCreator>>>(10);
-		//std::make_unique< IObject >(Object<RenderObject<ModelCreators::CubeCreator>>()),
-			//std::make_unique< Object<RenderObject<ModelCreators::CubeCreator>>>(),
-			//std::make_unique< Object<RenderObject<ModelCreators::CubeCreator>>>(),
-			//std::make_unique< Object<RenderObject<ModelCreators::CubeCreator>>>()
+
+
 	auto cubes = std::vector<std::unique_ptr<IObject>>();
 	cubes.emplace_back(std::make_unique< Object<RenderObject<ModelCreators::CubeCreator>>>());
 	cubes.emplace_back(std::make_unique< Object<RenderObject<ModelCreators::CubeCreator>>>());
@@ -143,7 +141,6 @@ int main()
 		glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
 		//glm::mat4 view = glm::mat4(1.0f);
 		//glm::mat4 projection = glm::mat4(1.0f);
-
 		for (auto& cube : cubes)
 		{
 

@@ -23,7 +23,7 @@ public:
 	void operator=(RenderObject< ModelCreator> const&) = delete;
 	void Initialize();
 	void Render();
-	//void Render(const Program& program);
+    using ModelCreator::computeMeshVertexes;
 	~RenderObject();
     
 private:

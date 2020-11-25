@@ -169,6 +169,7 @@
     <ClCompile Include="OpenGL.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="RenderObject.cpp" />
+    <ClCompile Include="SceneMenager.cpp" />
     <ClCompile Include="Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -176,14 +177,17 @@
     <ClInclude Include="CilinderCreator.h" />
     <ClInclude Include="CubeCreator.h" />
     <ClInclude Include="IObject.h" />
+    <ClInclude Include="IObjectGenerator.h" />
     <ClInclude Include="IRenderObject.h" />
     <ClInclude Include="IShader.h" />
     <ClInclude Include="MultidimensionalConvertable.h" />
     <ClInclude Include="MultidimensionalVector.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectCounter.h" />
+    <ClInclude Include="ObjectGenerator.h" />
     <ClInclude Include="Program.h" />
     <ClInclude Include="RenderObject.h" />
+    <ClInclude Include="SceneMenager.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderEnum.h" />
   </ItemGroup>

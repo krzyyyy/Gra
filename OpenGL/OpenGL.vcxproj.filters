@@ -57,6 +57,9 @@
     <ClCompile Include="RenderObject.cpp">
       <Filter>Models</Filter>
     </ClCompile>
+    <ClCompile Include="SceneMenager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ObjectCounter.h">
@@ -99,6 +102,15 @@
       <Filter>ShaderClasses</Filter>
     </ClInclude>
     <ClInclude Include="IObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneMenager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IObjectGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
