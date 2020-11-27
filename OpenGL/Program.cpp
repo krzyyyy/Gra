@@ -35,9 +35,6 @@ void Program::setUniform(const glm::mat4& mat, std::string uniformName)const
 
 void Program::useProgram()const
 {
-    const unsigned int SCR_WIDTH = 800;
-    const unsigned int SCR_HEIGHT = 600;
-    glm::mat4 projection = glm::mat4(1.0f);
     glUseProgram(idProgram);
 }
 

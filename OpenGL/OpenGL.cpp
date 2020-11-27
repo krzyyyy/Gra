@@ -41,17 +41,11 @@ void scrollCallback(GLFWwindow* window, double xOffset, double yOffset);
 
 int main()
 {
-
-	Program program1;
+	
 	auto vertexShaderPath = fs::path("VertexShader.glsl");
 	auto fragmenShaderPath = fs::path("FragmentShader.glsl");
+	auto fragmenShader2Path = fs::path("FragmentShader2.glsl");
 
-
-	if (!(fs::exists(vertexShaderPath) && fs::exists(fragmenShaderPath)))
-	{
-		cout << "I can't load shader" << endl;
-		throw std::exception();
-	}
 	// glfw: initialize and configure
 	// ------------------------------
 	glfwInit();
@@ -84,36 +78,14 @@ int main()
 	glfwSetCursorPosCallback(window, mauseCallback);
 	glfwSetScrollCallback(window, scrollCallback);
 
-	program1.Initialize(vertexShaderPath, fragmenShaderPath);
-	program1.CompileAndLink();
-
+	
 	RenderObject<ModelCreators::CubeCreator>::getInstance().Initialize();
 	RenderObject<ModelCreators::CylinderCreator>::getInstance().Initialize();
 
 
-	auto cubes = std::vector<std::unique_ptr<IObject>>();
-	cubes.emplace_back(std::make_unique< Object<RenderObject<ModelCreators::CubeCreator>>>());
-	cubes.emplace_back(std::make_unique< Object<RenderObject<ModelCreators::CubeCreator>>>());
-	cubes.emplace_back(std::make_unique< Object<RenderObject<ModelCreators::CylinderCreator>>>());
-	cubes.emplace_back(std::make_unique< Object<RenderObject<ModelCreators::CubeCreator>>>());
-	cubes.emplace_back(std::make_unique< Object<RenderObject<ModelCreators::CylinderCreator>>>());
-	glm::vec3 cubePositions[] = {
-	glm::vec3(0.0f,  0.0f,  0.0f),
-	glm::vec3(2.0f,  5.0f, -15.0f),
-	glm::vec3(-1.5f, -2.2f, -2.5f),
-	glm::vec3(-3.8f, -2.0f, -12.3f),
-	glm::vec3(2.4f, -0.4f, -3.5f),
-	glm::vec3(-1.7f,  3.0f, -7.5f),
-	glm::vec3(1.3f, -2.0f, -2.5f),
-	glm::vec3(1.5f,  2.0f, -2.5f),
-	glm::vec3(1.5f,  0.2f, -1.5f),
-	glm::vec3(-1.3f,  1.0f, -1.5f)
-	};
-	for (int i = 0; i < cubes.size(); ++i)
-	{
-		cubes[i]->translate(cubePositions[i]);
-	}
-
+	SceneMenager sceneMenager;
+	sceneMenager.initilizeShaders(std::make_pair(vertexShaderPath.string(), fragmenShaderPath.string()),
+		std::make_pair(vertexShaderPath.string(), fragmenShader2Path.string()));
 
 
 	// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
@@ -129,8 +101,6 @@ int main()
 		processInput(window);
 		camera.processInput(window);
 		auto time = glfwGetTime();
-		program1.setUniform(camera.getViewMatrix(), "view");
-		program1.setUniform(camera.getProjectionMatrix(), "projection");
 
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
@@ -141,12 +111,7 @@ int main()
 		glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
 		//glm::mat4 view = glm::mat4(1.0f);
 		//glm::mat4 projection = glm::mat4(1.0f);
-		for (auto& cube : cubes)
-		{
-
-			cube->rotate(glm::radians(1.f), glm::vec3(1.0f, 0.3f, 0.0f));
-			cube->render(program1);
-		}
+		sceneMenager.updateScene(camera);
 		//obj2.Render(program2);
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)

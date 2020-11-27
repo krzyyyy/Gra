@@ -14,8 +14,8 @@ public:
 	void processInput(GLFWwindow* window);
 	void mauseCallback(GLFWwindow* window, double posX, double posY);
 	void scrollCallback(GLFWwindow* window, double xOffset, double yOffset);
-	glm::mat4 getViewMatrix();
-	glm::mat4 getProjectionMatrix();
+	glm::mat4 getViewMatrix()const;
+	glm::mat4 getProjectionMatrix()const;
 
 private:
 	float deltaTime;

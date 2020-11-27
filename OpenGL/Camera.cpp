@@ -63,12 +63,12 @@ void Camera::scrollCallback(GLFWwindow* window, double xOffset, double yOffset)
         zoom = 45.0f;
 }
 
-glm::mat4 Camera::getViewMatrix()
+glm::mat4 Camera::getViewMatrix() const
 {
     return glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 }
 
-glm::mat4 Camera::getProjectionMatrix()
+glm::mat4 Camera::getProjectionMatrix() const
 {
     return glm::perspective((float)glm::radians(zoom), 800.0f / 600.0f, 0.1f, 100.0f);
 }
