@@ -10,9 +10,9 @@
 SceneMenager::SceneMenager()
 {
 	objects = std::vector<std::unique_ptr<IObject>>();
-	//objects.emplace_back(std::make_unique< Object<RenderObject<ModelCreators::CubeCreator>>>());
-	//objects.emplace_back(std::make_unique< Object<RenderObject<ModelCreators::CubeCreator>>>());
-	//objects.emplace_back(std::make_unique< Object<RenderObject<ModelCreators::CylinderCreator>>>());
+	objects.emplace_back(std::make_unique< Object<ModelCreators::CubeCreator>>());
+	objects.emplace_back(std::make_unique< Object<ModelCreators::CubeCreator>>());
+	objects.emplace_back(std::make_unique< Object<ModelCreators::CylinderCreator>>());
 	//objects.emplace_back(std::make_unique< Object<RenderObject<ModelCreators::CubeCreator>>>());
 	//objects.emplace_back(std::make_unique< Object<RenderObject<ModelCreators::CylinderCreator>>>());
 	glm::vec3 cubePositions[] = {
@@ -27,7 +27,7 @@ SceneMenager::SceneMenager()
 	{
 		objects[i]->translate(cubePositions[i]);
 	}
-	sword = std::make_unique < Object<RenderObject<ModelCreators::CylinderCreator>>>();
+	sword = std::make_unique < Object<ModelCreators::CylinderCreator>>();
 	//objectGenerators.push_back(std::make_unique<ObjectGenerator<)
 }
 void SceneMenager::updateScene(const Camera& camera)
