@@ -4,7 +4,7 @@
 #include "Object.h"
 #include "Program.h"
 #include "Camera.h"
-//#include "ObjectGenerator.h"
+#include "ObjectGenerator.h"
 
 class SceneMenager
 {
@@ -19,11 +19,12 @@ public:
 	void initilizeShaders(const std::pair<std::string, std::string>& objectsShadersNames, const std::pair<std::string, std::string>& swordShadersNames);
 
 private:
-	//std::vector<std::unique_ptr<IObjectGenerator>> objectGenerators;
-	std::vector<std::unique_ptr<IObject>> objects;
+	std::vector<std::unique_ptr<IObjectGenerator>> objectGenerators;
+	std::vector<std::shared_ptr<IObject>> objects;
 	std::unique_ptr<IObject> sword;
 	Program objectsProgram;
 	Program swordProgram;
+	Program objectGeneratorProgram;
 	glm::vec3 swordPosition;
 
 };

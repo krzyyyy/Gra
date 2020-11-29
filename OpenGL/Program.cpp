@@ -33,6 +33,12 @@ void Program::setUniform(const glm::mat4& mat, std::string uniformName)const
     glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, &mat[0][0]);
 }
 
+void Program::setUniform(const glm::vec3& vec, std::string uniformName) const
+{
+    int uniformLocation = glGetUniformLocation(idProgram, uniformName.c_str());
+    glUniform3fv(uniformLocation, 1, glm::value_ptr(vec));
+}
+
 void Program::useProgram()const
 {
     glUseProgram(idProgram);

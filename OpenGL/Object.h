@@ -44,6 +44,7 @@ inline Object<typename Shape, typename RenderedObject>::Object():velocity(0.0)
 template<typename Shape, template<class> typename RenderedObject>
 inline Object<typename Shape, typename RenderedObject>::Object(glm::vec3 moveDirection_):moveDirection(moveDirection_), velocity(0.1)
 {
+	globalPosition = glm::mat4(1.0f);
 }
 
 template<typename Shape, template<class> typename RenderedObject>

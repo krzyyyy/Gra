@@ -3,16 +3,18 @@
 #include "CubeCreator.h"
 #include "CilinderCreator.h"
 #include "ObjectGenerator.h"
+#include "IObjectGenerator.h"
 //#include <iostream>
 //#include <memory>
 
 
 SceneMenager::SceneMenager()
 {
-	objects = std::vector<std::unique_ptr<IObject>>();
-	objects.emplace_back(std::make_unique< Object<ModelCreators::CubeCreator>>());
-	objects.emplace_back(std::make_unique< Object<ModelCreators::CubeCreator>>());
-	objects.emplace_back(std::make_unique< Object<ModelCreators::CylinderCreator>>());
+	objects = std::vector<std::shared_ptr<IObject>>();
+	objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>());
+	objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>());
+	objects.emplace_back(std::make_shared< Object<ModelCreators::CylinderCreator>>());
+	objects.emplace_back(std::make_unique<ObjectGenerator< ModelCreators::CubeCreator, ModelCreators::CylinderCreator>>());
 	//objects.emplace_back(std::make_unique< Object<RenderObject<ModelCreators::CubeCreator>>>());
 	//objects.emplace_back(std::make_unique< Object<RenderObject<ModelCreators::CylinderCreator>>>());
 	glm::vec3 cubePositions[] = {
@@ -34,19 +36,38 @@ void SceneMenager::updateScene(const Camera& camera)
 {
 	objectsProgram.setUniform(camera.getViewMatrix(), "view");
 	objectsProgram.setUniform(camera.getProjectionMatrix(), "projection");
-
-	for (auto& element : objects)
+	static int time = glfwGetTime();
+	int currentTime = glfwGetTime();
+	for (const auto& element : objects)
 	{
 		element->render(objectsProgram);
+
 	}
+	auto newObjects = decltype(objects)();
+	for (const auto& element : objects)
+	{
+		auto objectPointer = std::dynamic_pointer_cast<IObjectGenerator>(element);
+		if (objectPointer)
+		{
+			if (std::abs(time - currentTime) > 10)
+			{
+				time = currentTime;
+				newObjects.emplace_back(objectPointer->generate(camera.getCameraPos()));
+			}
+		}
+	}
+	std::move(newObjects.begin(), newObjects.end(), std::back_inserter(objects));
 
 	swordProgram.setUniform(camera.getViewMatrix(), "view");
 	swordProgram.setUniform(camera.getProjectionMatrix(), "projection");
 	sword->render(swordProgram);
+	objectGeneratorProgram.setUniform(glm::vec3(0.9, 0.2, 0.1), "color");
+
 }
 
 void SceneMenager::initilizeShaders(const std::pair<std::string, std::string>& objectsShadersNames, const std::pair<std::string, std::string>& swordShadersNames)
 {
+	auto objectGeneratorShadersNames = std::make_pair(objectsShadersNames.first, "ObjectGeneratorShader.glsl");
 	if (!(fs::exists(objectsShadersNames.first) && fs::exists(objectsShadersNames.second)))
 	{
 		std::cout << "I can't load elements shader" << std::endl;
@@ -57,10 +78,20 @@ void SceneMenager::initilizeShaders(const std::pair<std::string, std::string>& o
 		std::cout << "I can't load sword shader" << std::endl;
 		throw std::exception();
 	}
+	if (!(fs::exists(objectGeneratorShadersNames.first) && fs::exists(objectGeneratorShadersNames.second)))
+	{
+		std::cout << "I can't load objectGenerator shader" << std::endl;
+		throw std::exception();
+	}
 	//objects shaders loading
 	objectsProgram.Initialize(objectsShadersNames.first, objectsShadersNames.second);
 	objectsProgram.CompileAndLink();
 	//sword shaders loading
 	swordProgram.Initialize(swordShadersNames.first, swordShadersNames.second);
 	swordProgram.CompileAndLink();
+
+	//objectsGenerator shaders loading
+	objectGeneratorProgram.Initialize(objectGeneratorShadersNames.first, objectGeneratorShadersNames.second);
+	objectGeneratorProgram.CompileAndLink();
+	//
 }

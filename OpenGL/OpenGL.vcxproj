@@ -194,6 +194,7 @@
   <ItemGroup>
     <None Include="FragmentShader.glsl" />
     <None Include="FragmentShader2.glsl" />
+    <None Include="ObjectGeneratorShader.glsl" />
     <None Include="VertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>

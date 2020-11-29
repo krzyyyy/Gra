@@ -72,3 +72,8 @@ glm::mat4 Camera::getProjectionMatrix() const
 {
     return glm::perspective((float)glm::radians(zoom), 800.0f / 600.0f, 0.1f, 100.0f);
 }
+
+glm::vec3 Camera::getCameraPos()const
+{
+    return cameraPos;
+}

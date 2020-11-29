@@ -124,6 +124,9 @@
     <None Include="VertexShader.glsl">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="ObjectGeneratorShader.glsl">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Textures\wall.jpg">

@@ -8,5 +8,6 @@
 class IObjectGenerator
 {
 public:
-	virtual std::unique_ptr<IObject> generate(glm::vec3 targetPosition) = 0;
+	virtual ~IObjectGenerator() {};
+	virtual std::shared_ptr<IObject> generate(glm::vec3 targetPosition)const = 0;
 };
