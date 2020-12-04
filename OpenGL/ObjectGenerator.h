@@ -30,8 +30,10 @@ inline ObjectGenerator<Model, GeneratedModel>::ObjectGenerator(glm::vec3 targetP
 template<typename Model, typename GeneratedModel>
 inline std::shared_ptr<IObject> ObjectGenerator<Model, GeneratedModel>::generate(glm::vec3 targetPosition)const
 {
-	glm::vec3 targetDirection = targetPosition - glm::vec3(0, 0, 0);
+	auto generatorPosition = glm::vec3(this->globalPosition[3].x, this->globalPosition[3].y, this->globalPosition[3].z);
+	glm::vec3 targetDirection = targetPosition - generatorPosition;
 	glm::vec3 velociti = glm::normalize(targetDirection);
-	//velociti *= 0.1;
-	return std::make_shared<Object<GeneratedModel>>(velociti);
+	auto newObject = std::make_shared<Object<GeneratedModel>>(velociti);
+	newObject->translate(generatorPosition);
+	return newObject;
 }

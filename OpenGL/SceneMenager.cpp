@@ -11,10 +11,11 @@
 SceneMenager::SceneMenager()
 {
 	objects = std::vector<std::shared_ptr<IObject>>();
-	objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>());
-	objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>());
-	objects.emplace_back(std::make_shared< Object<ModelCreators::CylinderCreator>>());
+	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>());
+	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>());
+	//objects.emplace_back(std::make_shared< Object<ModelCreators::CylinderCreator>>());
 	objects.emplace_back(std::make_unique<ObjectGenerator< ModelCreators::CubeCreator, ModelCreators::CylinderCreator>>());
+	
 	//objects.emplace_back(std::make_unique< Object<RenderObject<ModelCreators::CubeCreator>>>());
 	//objects.emplace_back(std::make_unique< Object<RenderObject<ModelCreators::CylinderCreator>>>());
 	glm::vec3 cubePositions[] = {
@@ -29,11 +30,12 @@ SceneMenager::SceneMenager()
 	{
 		objects[i]->translate(cubePositions[i]);
 	}
-	sword = std::make_unique < Object<ModelCreators::CylinderCreator>>();
-	//objectGenerators.push_back(std::make_unique<ObjectGenerator<)
+
+	//sword = std::make_unique < Object<ModelCreators::CylinderCreator>>();
 }
 void SceneMenager::updateScene(const Camera& camera)
 {
+	objectsProgram.useProgram();
 	objectsProgram.setUniform(camera.getViewMatrix(), "view");
 	objectsProgram.setUniform(camera.getProjectionMatrix(), "projection");
 	static int time = glfwGetTime();
@@ -43,9 +45,18 @@ void SceneMenager::updateScene(const Camera& camera)
 		element->render(objectsProgram);
 
 	}
+
+	//swordProgram.setUniform(camera.getViewMatrix(), "view");
+	//swordProgram.setUniform(camera.getProjectionMatrix(), "projection");
+	//sword->render(swordProgram);
+	//objectGeneratorProgram.setUniform(camera.getViewMatrix(), "view");
+	//objectGeneratorProgram.setUniform(camera.getProjectionMatrix(), "projection");
+	//objectGeneratorProgram.setUniform(glm::vec3(0.9, 0.2, 0.1), "color");
+
 	auto newObjects = decltype(objects)();
-	for (const auto& element : objects)
+	for (auto& element : objects)
 	{
+
 		auto objectPointer = std::dynamic_pointer_cast<IObjectGenerator>(element);
 		if (objectPointer)
 		{
@@ -57,11 +68,6 @@ void SceneMenager::updateScene(const Camera& camera)
 		}
 	}
 	std::move(newObjects.begin(), newObjects.end(), std::back_inserter(objects));
-
-	swordProgram.setUniform(camera.getViewMatrix(), "view");
-	swordProgram.setUniform(camera.getProjectionMatrix(), "projection");
-	sword->render(swordProgram);
-	objectGeneratorProgram.setUniform(glm::vec3(0.9, 0.2, 0.1), "color");
 
 }
 

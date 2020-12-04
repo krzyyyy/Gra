@@ -8,5 +8,5 @@ uniform vec3 color;
 
 void main()
 {
-    FragColor = vec4(color.zzy , 1.0f);// texture(ourTexture, TexCoord);
+    FragColor = vec4(color , 1.0f);// texture(ourTexture, TexCoord);
 }

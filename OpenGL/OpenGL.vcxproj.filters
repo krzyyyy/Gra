@@ -31,6 +31,9 @@
     <Filter Include="ShaderClasses">
       <UniqueIdentifier>{4e695f58-815e-4e3b-b394-1d69e68442d1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utilities">
+      <UniqueIdentifier>{3074dc69-bc1c-4c43-b24a-86cd124f95bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OpenGL.cpp">
@@ -112,6 +115,9 @@
     </ClInclude>
     <ClInclude Include="ObjectGenerator.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StreamOperators.h">
+      <Filter>Utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

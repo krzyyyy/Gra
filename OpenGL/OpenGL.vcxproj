@@ -190,6 +190,7 @@
     <ClInclude Include="SceneMenager.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderEnum.h" />
+    <ClInclude Include="StreamOperators.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FragmentShader.glsl" />

@@ -67,8 +67,9 @@ inline void Object<typename Shape, typename RenderedObject>::rotate(float angle,
 template<typename Shape, template<class> typename RenderedObject>
 void Object<typename Shape, typename RenderedObject>::render(const Program& program)
 {
+	//program.useProgram();
 	program.setUniform(globalPosition, "model");
-	program.useProgram();
+	
 	updatePosition();
 
 	ModelType::getInstance().Render();

@@ -19,7 +19,7 @@ public:
 	void initilizeShaders(const std::pair<std::string, std::string>& objectsShadersNames, const std::pair<std::string, std::string>& swordShadersNames);
 
 private:
-	std::vector<std::unique_ptr<IObjectGenerator>> objectGenerators;
+	std::vector<std::shared_ptr<IObjectGenerator>> objectGenerators;
 	std::vector<std::shared_ptr<IObject>> objects;
 	std::unique_ptr<IObject> sword;
 	Program objectsProgram;

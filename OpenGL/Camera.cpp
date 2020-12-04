@@ -1,4 +1,6 @@
 #include "Camera.h"
+#include "StreamOperators.h"
+
 
 Camera::Camera():cameraPos(glm::vec3(0.0f, 0.0f, 3.0f)), cameraFront(glm::vec3(0.0f, 0.0f, -1.0f)), cameraUp(glm::vec3(0.0f, 1.0f, 0.0f)), deltaTime(0), lastFrameTime(0)
 {
@@ -19,6 +21,7 @@ void Camera::processInput(GLFWwindow* window)
         cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+    std::cout << cameraPos;
 }
 
 void Camera::mauseCallback(GLFWwindow* window, double posX, double posY)
