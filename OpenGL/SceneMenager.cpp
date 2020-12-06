@@ -13,7 +13,7 @@ SceneMenager::SceneMenager()
 	objects = std::vector<std::shared_ptr<IObject>>();
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>());
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>());
-	//objects.emplace_back(std::make_shared< Object<ModelCreators::CylinderCreator>>());
+	objects.emplace_back(std::make_shared< Object<ModelCreators::CylinderCreator>>());
 	objects.emplace_back(std::make_unique<ObjectGenerator< ModelCreators::CubeCreator, ModelCreators::CylinderCreator>>());
 	
 	//objects.emplace_back(std::make_unique< Object<RenderObject<ModelCreators::CubeCreator>>>());
@@ -42,16 +42,19 @@ void SceneMenager::updateScene(const Camera& camera)
 	int currentTime = glfwGetTime();
 	for (const auto& element : objects)
 	{
-		element->render(objectsProgram);
+		auto objectPointer = std::dynamic_pointer_cast<IObjectGenerator>(element);
+		if(!objectPointer)
+			element->render(objectsProgram);
 
 	}
 
 	//swordProgram.setUniform(camera.getViewMatrix(), "view");
 	//swordProgram.setUniform(camera.getProjectionMatrix(), "projection");
 	//sword->render(swordProgram);
-	//objectGeneratorProgram.setUniform(camera.getViewMatrix(), "view");
-	//objectGeneratorProgram.setUniform(camera.getProjectionMatrix(), "projection");
-	//objectGeneratorProgram.setUniform(glm::vec3(0.9, 0.2, 0.1), "color");
+	objectGeneratorProgram.useProgram();
+	objectGeneratorProgram.setUniform(camera.getViewMatrix(), "view");
+	objectGeneratorProgram.setUniform(camera.getProjectionMatrix(), "projection");
+	objectGeneratorProgram.setUniform(glm::vec3(0.9, 0.2, 0.1), "color");
 
 	auto newObjects = decltype(objects)();
 	for (auto& element : objects)
@@ -60,6 +63,7 @@ void SceneMenager::updateScene(const Camera& camera)
 		auto objectPointer = std::dynamic_pointer_cast<IObjectGenerator>(element);
 		if (objectPointer)
 		{
+			element->render(objectGeneratorProgram);
 			if (std::abs(time - currentTime) > 10)
 			{
 				time = currentTime;
