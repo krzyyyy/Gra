@@ -33,6 +33,7 @@ SceneMenager::SceneMenager()
 
 	sword = std::make_shared < Object<ModelCreators::CylinderCreator>>();
 	lastTime = std::chrono::steady_clock::now();
+	generationTimer = Timer(std::chrono::seconds(10));
 }
 void SceneMenager::RenderScene(const Camera& camera)
 {
@@ -64,6 +65,7 @@ void SceneMenager::RenderScene(const Camera& camera)
 			objectGeneratorProgram.Render(element);
 		}
 	}
+	
 }
 void SceneMenager::UpdatePosition(std::chrono::duration<double> deltaT)
 {
@@ -78,7 +80,10 @@ void SceneMenager::UpdateScene(const Camera& camera)
 	auto currentTime = std::chrono::steady_clock::now();
 	auto deltaT = currentTime - lastTime;
 	lastTime = currentTime;
+	UpdatePosition(deltaT);
 
+	//GenerateNewObjects(camera);
+	generationTimer.RunEvent(&SceneMenager::GenerateNewObjects, *this, camera);
 	RenderScene(camera);
 }
 
@@ -111,4 +116,18 @@ void SceneMenager::initilizeShaders(const std::pair<std::string, std::string>& o
 	objectGeneratorProgram.Initialize(objectGeneratorShadersNames.first, objectGeneratorShadersNames.second);
 	objectGeneratorProgram.CompileAndLink();
 	//
+}
+
+void SceneMenager::GenerateNewObjects(const Camera& camera)
+{
+	auto newObjects = decltype(objects)();
+	for (const auto& object : objects)
+	{
+		auto generateableObject = std::dynamic_pointer_cast<IObjectGenerator>(object);
+		if (generateableObject != nullptr)
+		{
+			newObjects.push_back(generateableObject->generate(camera.getCameraPos()));
+		}
+	}
+	std::move(newObjects.begin(), newObjects.end(), std::back_inserter(objects));
 }

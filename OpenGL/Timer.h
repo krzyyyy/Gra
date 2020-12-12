@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <functional>
 #include <chrono>
 
 
@@ -23,7 +24,7 @@ public:
 		std::chrono::duration<double> executionTime = std::chrono::duration<double>(0);
 		if (elapsedTime >= interval)
 		{
-			std::invoke(std::forward< Callback>(callbackMethod), std::forward< Args>(args...));
+			std::invoke(std::forward< Callback>(callbackMethod), std::forward< Args>(args)...);
 			auto afterExecutedTime = std::chrono::steady_clock::now();
 			executionTime = currentTime - afterExecutedTime;
 			lastTime = currentTime;
