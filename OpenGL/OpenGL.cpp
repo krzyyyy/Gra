@@ -111,7 +111,7 @@ int main()
 		glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
 		//glm::mat4 view = glm::mat4(1.0f);
 		//glm::mat4 projection = glm::mat4(1.0f);
-		sceneMenager.updateScene(camera);
+		sceneMenager.UpdateScene(camera);
 		//obj2.Render(program2);
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)

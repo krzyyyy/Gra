@@ -171,6 +171,7 @@
     <ClCompile Include="RenderObject.cpp" />
     <ClCompile Include="SceneMenager.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -191,6 +192,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderEnum.h" />
     <ClInclude Include="StreamOperators.h" />
+    <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FragmentShader.glsl" />

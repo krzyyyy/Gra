@@ -14,17 +14,19 @@ public:
 	SceneMenager(SceneMenager&& object) = default;
 	SceneMenager& operator=(const SceneMenager& object) = default;
 	SceneMenager& operator=(SceneMenager&& object) = default;
-	
-	void updateScene(const Camera& camera);
+	void RenderScene(const Camera& camera);
+	void UpdatePosition(std::chrono::duration<double> deltaT);
+	void UpdateScene(const Camera& camera);
 	void initilizeShaders(const std::pair<std::string, std::string>& objectsShadersNames, const std::pair<std::string, std::string>& swordShadersNames);
 
 private:
 	std::vector<std::shared_ptr<IObjectGenerator>> objectGenerators;
 	std::vector<std::shared_ptr<IObject>> objects;
-	std::unique_ptr<IObject> sword;
+	std::shared_ptr<IObject> sword;
 	Program objectsProgram;
 	Program swordProgram;
 	Program objectGeneratorProgram;
 	glm::vec3 swordPosition;
+	std::chrono::steady_clock::time_point lastTime;
 
 };

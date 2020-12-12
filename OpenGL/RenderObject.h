@@ -22,7 +22,7 @@ public:
 	RenderObject(const RenderObject< ModelCreator>& obj) = delete;
 	void operator=(RenderObject< ModelCreator> const&) = delete;
 	void Initialize();
-	void Render();
+	void Load();
     using ModelCreator::computeMeshVertexes;
 	~RenderObject();
     
@@ -78,7 +78,7 @@ void RenderObject<typename Model>::Initialize()
 }
 
 template<typename Model>
-void RenderObject<typename Model>::Render()
+void RenderObject<typename Model>::Load()
 {
     glBindTexture(GL_TEXTURE_2D, texture);
     glBindVertexArray(VAO);

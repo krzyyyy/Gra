@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 #include <random>
-#include "Program.h"
 #include <opencv2/opencv.hpp>
 #include "ObjectCounter.h"
 #include "IObject.h"
@@ -18,20 +17,20 @@ public:
 	~Object();
 	void translate(glm::vec3 translateVector);
 	void rotate(float angle, glm::vec3 rotateVector);
-	void render(const Program& program);
-
+	void loadModel()const;
+	glm::mat4 getGlobalPosition()const;
+	void updatePosition(std::chrono::duration<double> deltaT);
 	using ModelType = RenderObject< Shape>;
 
 protected:
-	void updatePosition();
+	
 	glm::mat4 globalPosition;
 	glm::vec3 moveDirection;
-	float velocity;
 
 };
 
 template<typename Shape, template<class> typename RenderedObject>
-inline Object<typename Shape, typename RenderedObject>::Object():velocity(0.0)
+inline Object<typename Shape, typename RenderedObject>::Object()
 {
 	//std::random_device rd;
 	//std::mt19937 mt(rd());
@@ -42,7 +41,7 @@ inline Object<typename Shape, typename RenderedObject>::Object():velocity(0.0)
 }
 
 template<typename Shape, template<class> typename RenderedObject>
-inline Object<typename Shape, typename RenderedObject>::Object(glm::vec3 moveDirection_):moveDirection(moveDirection_), velocity(0.1)
+inline Object<typename Shape, typename RenderedObject>::Object(glm::vec3 moveDirection_):moveDirection(moveDirection_)
 {
 	globalPosition = glm::mat4(1.0f);
 }
@@ -65,18 +64,20 @@ inline void Object<typename Shape, typename RenderedObject>::rotate(float angle,
 }
 
 template<typename Shape, template<class> typename RenderedObject>
-void Object<typename Shape, typename RenderedObject>::render(const Program& program)
+void Object<typename Shape, typename RenderedObject>::loadModel()const
 {
-	//program.useProgram();
-	program.setUniform(globalPosition, "model");
-	
-	updatePosition();
 
-	ModelType::getInstance().Render();
+	ModelType::getInstance().Load();
 
-};
+}
 template<typename Shape, template<class> typename RenderedObject>
-inline void Object<typename Shape, typename RenderedObject>::updatePosition()
+inline glm::mat4 Object<Shape, typename RenderedObject>::getGlobalPosition()const
 {
-	globalPosition = glm::translate(globalPosition, moveDirection * velocity);
+	return globalPosition;
+}
+;
+template<typename Shape, template<class> typename RenderedObject>
+inline void Object<typename Shape, typename RenderedObject>::updatePosition(std::chrono::duration<double> deltaT)
+{
+	globalPosition = glm::translate(globalPosition, moveDirection * (float)deltaT.count());
 };

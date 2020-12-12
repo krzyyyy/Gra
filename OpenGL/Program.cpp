@@ -44,6 +44,13 @@ void Program::useProgram()const
     glUseProgram(idProgram);
 }
 
+void Program::Render(const std::shared_ptr<IObject>& object)
+{
+    //program.useProgram();
+    setUniform(object->getGlobalPosition(), "model");
+    object->loadModel();
+}
+
 Program::~Program()
 {
     glDeleteProgram(idProgram);

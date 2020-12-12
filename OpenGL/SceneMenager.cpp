@@ -31,48 +31,55 @@ SceneMenager::SceneMenager()
 		objects[i]->translate(cubePositions[i]);
 	}
 
-	//sword = std::make_unique < Object<ModelCreators::CylinderCreator>>();
+	sword = std::make_shared < Object<ModelCreators::CylinderCreator>>();
+	lastTime = std::chrono::steady_clock::now();
 }
-void SceneMenager::updateScene(const Camera& camera)
+void SceneMenager::RenderScene(const Camera& camera)
 {
 	objectsProgram.useProgram();
 	objectsProgram.setUniform(camera.getViewMatrix(), "view");
 	objectsProgram.setUniform(camera.getProjectionMatrix(), "projection");
-	static int time = glfwGetTime();
-	int currentTime = glfwGetTime();
 	for (const auto& element : objects)
 	{
 		auto objectPointer = std::dynamic_pointer_cast<IObjectGenerator>(element);
-		if(!objectPointer)
-			element->render(objectsProgram);
+		if (!objectPointer)
+			objectsProgram.Render(element);
 
 	}
 
-	//swordProgram.setUniform(camera.getViewMatrix(), "view");
-	//swordProgram.setUniform(camera.getProjectionMatrix(), "projection");
-	//sword->render(swordProgram);
+	swordProgram.useProgram();
+	swordProgram.setUniform(camera.getViewMatrix(), "view");
+	swordProgram.setUniform(camera.getProjectionMatrix(), "projection");
+	swordProgram.Render(sword);
 	objectGeneratorProgram.useProgram();
 	objectGeneratorProgram.setUniform(camera.getViewMatrix(), "view");
 	objectGeneratorProgram.setUniform(camera.getProjectionMatrix(), "projection");
 	objectGeneratorProgram.setUniform(glm::vec3(0.9, 0.2, 0.1), "color");
 
-	auto newObjects = decltype(objects)();
-	for (auto& element : objects)
+	for (const auto& element : objects)
 	{
-
 		auto objectPointer = std::dynamic_pointer_cast<IObjectGenerator>(element);
 		if (objectPointer)
 		{
-			element->render(objectGeneratorProgram);
-			if (std::abs(time - currentTime) > 10)
-			{
-				time = currentTime;
-				newObjects.emplace_back(objectPointer->generate(camera.getCameraPos()));
-			}
+			objectGeneratorProgram.Render(element);
 		}
 	}
-	std::move(newObjects.begin(), newObjects.end(), std::back_inserter(objects));
+}
+void SceneMenager::UpdatePosition(std::chrono::duration<double> deltaT)
+{
 
+	for (auto& element : objects)
+	{
+		element->updatePosition(deltaT);
+	}
+}
+void SceneMenager::UpdateScene(const Camera& camera)
+{
+	auto currentTime = std::chrono::steady_clock::now();
+	auto deltaT = currentTime - lastTime;
+	lastTime = currentTime;
+
+	RenderScene(camera);
 }
 
 void SceneMenager::initilizeShaders(const std::pair<std::string, std::string>& objectsShadersNames, const std::pair<std::string, std::string>& swordShadersNames)
