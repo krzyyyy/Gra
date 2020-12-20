@@ -8,6 +8,12 @@ class Program
 {
 public:
 	Program();
+	Program(const fs::path& vertexSaderPath, const fs::path& fragmentShaderPath);
+	Program(const Program& object) = delete;
+	Program(Program&& object) noexcept;
+	Program& operator=(const Program& object) = delete;
+	Program& operator=(Program&& object)noexcept;
+
 	//Program(const fs::path& vertexSaderPath, const fs::path& fragmentShaderPath);
 	void Initialize(const fs::path& vertexSaderPath, const fs::path& fragmentShaderPath);
 	void CompileAndLink();
@@ -19,6 +25,6 @@ public:
 private:
 	Shader<GL_VERTEX_SHADER> vertexShader;
 	Shader<GL_FRAGMENT_SHADER> fragmentShader;
-	unsigned int idProgram;
+	int idProgram;
 };
 

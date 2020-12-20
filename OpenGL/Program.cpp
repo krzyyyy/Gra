@@ -8,6 +8,27 @@ Program::Program():  idProgram(0)
 {
 }
 
+Program::Program(const fs::path& vertexSaderPath, const fs::path& fragmentShaderPath)
+{
+    Initialize(vertexSaderPath, fragmentShaderPath);
+}
+
+Program::Program(Program&& object)noexcept : vertexShader(std::move(object.vertexShader)),
+fragmentShader(std::move(object.fragmentShader)), idProgram(std::move(object.idProgram))
+{
+    object.idProgram = -1;
+}
+
+Program& Program::operator=(Program&& object)noexcept
+{
+    vertexShader = std::move(object.vertexShader);
+    fragmentShader = std::move(object.fragmentShader);
+    idProgram = std::move(object.idProgram);
+    object.idProgram = -1;
+    return *this;
+    // TODO: insert return statement here
+}
+
 void Program::Initialize(const fs::path& vertexSaderPath, const fs::path& fragmentShaderPath)
 {
 	vertexShader.Initialize(vertexSaderPath);
@@ -47,11 +68,12 @@ void Program::useProgram()const
 void Program::Render(const std::shared_ptr<IObject>& object)
 {
     //program.useProgram();
-    setUniform(object->getGlobalPosition(), "model");
-    object->loadModel();
+    setUniform(object->GetGlobalPosition(), "model");
+    object->LoadModel();
 }
 
 Program::~Program()
 {
-    glDeleteProgram(idProgram);
+    if(idProgram>=0)
+        glDeleteProgram(idProgram);
 }

@@ -8,9 +8,10 @@ class IObject
 {
 public:
 	virtual ~IObject() {};
-	virtual void translate(glm::vec3 translateVector) = 0;
-	virtual void rotate(float angle, glm::vec3 rotateVector) = 0;
-	virtual glm::mat4 getGlobalPosition()const = 0;
-	virtual void loadModel()const = 0;
-	virtual void updatePosition(std::chrono::duration<double> deltaT) =0;
+	virtual void Translate(glm::vec3 translateVector) = 0;
+	virtual void Rotate(float angle, glm::vec3 rotateVector) = 0;
+	virtual glm::mat4 GetGlobalPosition()const = 0;
+	virtual void LoadModel()const = 0;
+	virtual void UpdatePosition(std::chrono::duration<double> deltaT) =0;
+	virtual std::string GetObjectType()const =0;
 };

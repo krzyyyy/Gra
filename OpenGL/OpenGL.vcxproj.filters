@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Shaders">
-      <UniqueIdentifier>{6f2a4b72-a8ed-46bb-a40a-b68a2d110033}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Concepts">
       <UniqueIdentifier>{d99d6d01-0e58-4a10-80f9-f4cf130f4ca0}</UniqueIdentifier>
     </Filter>
@@ -28,11 +25,17 @@
     <Filter Include="Models\ModelCreators">
       <UniqueIdentifier>{1c6d4358-d008-4c75-bb4b-2a57cd1f42c2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ShaderClasses">
-      <UniqueIdentifier>{4e695f58-815e-4e3b-b394-1d69e68442d1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Utilities">
       <UniqueIdentifier>{3074dc69-bc1c-4c43-b24a-86cd124f95bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renders">
+      <UniqueIdentifier>{6c4ec68e-8142-4758-a65f-c084836df66f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renders\ShaderClasses">
+      <UniqueIdentifier>{4e695f58-815e-4e3b-b394-1d69e68442d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renders\Shaders">
+      <UniqueIdentifier>{6f2a4b72-a8ed-46bb-a40a-b68a2d110033}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -66,6 +69,9 @@
     <ClCompile Include="Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="RenderScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ObjectCounter.h">
@@ -96,16 +102,16 @@
       <Filter>Models\ModelCreators</Filter>
     </ClInclude>
     <ClInclude Include="ShaderEnum.h">
-      <Filter>ShaderClasses</Filter>
+      <Filter>Renders\ShaderClasses</Filter>
     </ClInclude>
     <ClInclude Include="Shader.h">
-      <Filter>ShaderClasses</Filter>
+      <Filter>Renders\ShaderClasses</Filter>
     </ClInclude>
     <ClInclude Include="Program.h">
-      <Filter>ShaderClasses</Filter>
+      <Filter>Renders\ShaderClasses</Filter>
     </ClInclude>
     <ClInclude Include="IShader.h">
-      <Filter>ShaderClasses</Filter>
+      <Filter>Renders\ShaderClasses</Filter>
     </ClInclude>
     <ClInclude Include="IObject.h">
       <Filter>Header Files</Filter>
@@ -125,19 +131,22 @@
     <ClInclude Include="Timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="RenderScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="FragmentShader.glsl">
-      <Filter>Shaders</Filter>
+      <Filter>Renders\Shaders</Filter>
     </None>
     <None Include="FragmentShader2.glsl">
-      <Filter>Shaders</Filter>
+      <Filter>Renders\Shaders</Filter>
     </None>
     <None Include="VertexShader.glsl">
-      <Filter>Shaders</Filter>
+      <Filter>Renders\Shaders</Filter>
     </None>
-    <None Include="ObjectGeneratorShader.glsl">
-      <Filter>Shaders</Filter>
+    <None Include="GeneratorsFragmentShader.glsl">
+      <Filter>Renders\Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

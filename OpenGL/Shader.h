@@ -7,19 +7,43 @@
 
 namespace fs = std::filesystem;
 
-template<unsigned unsigned int T>
+template<unsigned int T>
 class Shader: public IShader
 {
 public:
+    Shader();
+    Shader(const Shader& object) = delete;
+    Shader(Shader&& object);
+    Shader& operator=(const Shader& object) = delete;
+    Shader& operator=(Shader&& object);
 	void Initialize( const std::string& shaderSourceCode);
     void Initialize(const fs::path& shaderPath);
 	void Compile();
     unsigned int getSharedID();
 	~Shader();
 private:
-	unsigned int shaderID;
+	int shaderID;
 
 };
+
+template<unsigned int T>
+inline Shader<T>::Shader():shaderID(-1)
+{
+}
+
+template<unsigned int T>
+inline Shader<T>::Shader(Shader&& object) : shaderID(std::move(object.shaderID))
+{
+    object.shaderID = -1;
+}
+
+template<unsigned int T>
+inline Shader<T>& Shader<T>::operator=(Shader&& object)
+{
+    shaderID = std::move(object.shaderID);
+    object.shaderID = -1;
+    return *this;
+}
 
 template<unsigned unsigned int T>
 inline void Shader<T>::Initialize( const std::string& shaderSourceCode)
@@ -76,5 +100,6 @@ inline unsigned int Shader<T>::getSharedID()
 template<unsigned int T>
 inline Shader<T>::~Shader()
 {
-    glDeleteShader(shaderID);
+    if(shaderID>=0)
+        glDeleteShader(shaderID);
 }

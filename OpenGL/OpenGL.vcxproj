@@ -151,6 +151,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)\GLFW\include\;$(ProjectDir)\GLAD\include\;%OpenCV43Path%\include\</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -169,6 +170,7 @@
     <ClCompile Include="OpenGL.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="RenderObject.cpp" />
+    <ClCompile Include="RenderScene.cpp" />
     <ClCompile Include="SceneMenager.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -188,6 +190,7 @@
     <ClInclude Include="ObjectGenerator.h" />
     <ClInclude Include="Program.h" />
     <ClInclude Include="RenderObject.h" />
+    <ClInclude Include="RenderScene.h" />
     <ClInclude Include="SceneMenager.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderEnum.h" />
@@ -197,7 +200,7 @@
   <ItemGroup>
     <None Include="FragmentShader.glsl" />
     <None Include="FragmentShader2.glsl" />
-    <None Include="ObjectGeneratorShader.glsl" />
+    <None Include="GeneratorsFragmentShader.glsl" />
     <None Include="VertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>

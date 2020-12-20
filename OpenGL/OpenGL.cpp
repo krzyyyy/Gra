@@ -21,6 +21,8 @@
 #include "CilinderCreator.h"
 #include "CubeCreator.h"
 #include "SceneMenager.h"
+#include "RenderScene.h"
+
 
 namespace fs = std::filesystem;
 using namespace std;
@@ -45,6 +47,7 @@ int main()
 	auto vertexShaderPath = fs::path("VertexShader.glsl");
 	auto fragmenShaderPath = fs::path("FragmentShader.glsl");
 	auto fragmenShader2Path = fs::path("FragmentShader2.glsl");
+	auto fragmenShaderGeneratorPath = fs::path("GeneratorsFragmentShader.glsl");
 
 	// glfw: initialize and configure
 	// ------------------------------
@@ -82,10 +85,13 @@ int main()
 	RenderObject<ModelCreators::CubeCreator>::getInstance().Initialize();
 	RenderObject<ModelCreators::CylinderCreator>::getInstance().Initialize();
 
-
+	auto renderScene = RenderScene();
 	SceneMenager sceneMenager;
-	sceneMenager.initilizeShaders(std::make_pair(vertexShaderPath.string(), fragmenShaderPath.string()),
-		std::make_pair(vertexShaderPath.string(), fragmenShader2Path.string()));
+	renderScene.InitilizeShaders({
+		std::make_tuple("Bullet", vertexShaderPath.string(), fragmenShaderPath.string()),
+		std::make_tuple("Sword", vertexShaderPath.string(), fragmenShader2Path.string()),
+		std::make_tuple("Generator", vertexShaderPath.string(), fragmenShaderGeneratorPath.string()),
+		});
 
 
 	// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
@@ -104,21 +110,14 @@ int main()
 
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-		float timeValue = glfwGetTime();
-		cv::Mat rotationVector = (cv::Mat_<float>(1, 3) << 0.4, 0.03, 0.000);
-		auto rotationMatrix = cv::Mat();
-		cv::Rodrigues(rotationVector, rotationMatrix);
-		glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-		//glm::mat4 view = glm::mat4(1.0f);
-		//glm::mat4 projection = glm::mat4(1.0f);
 		sceneMenager.UpdateScene(camera);
-		//obj2.Render(program2);
-
+		std::vector<std::shared_ptr<IObject>> objects = sceneMenager.GetObjects();
+		renderScene.RenderObjects(objects, camera);
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
 		glfwSwapBuffers(window);
 		glfwPollEvents();
-		cv::waitKey(10);
+		cv::waitKey(1);
 	}
 
 	// optional: de-allocate all resources once they've outlived their purpose:

@@ -29,6 +29,7 @@ public:
 			executionTime = currentTime - afterExecutedTime;
 			lastTime = currentTime;
 		}
+		std::cout << executionTime.count() << std::endl;
 		return executionTime;
 	}
 
