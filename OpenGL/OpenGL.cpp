@@ -10,7 +10,6 @@
 #include <filesystem>
 #include "Program.h"
 #include <opencv2/opencv.hpp>
-#include "MultidimensionalVector.h"
 #include <concepts>
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -22,6 +21,7 @@
 #include "CubeCreator.h"
 #include "SceneMenager.h"
 #include "RenderScene.h"
+#include "BasicShapesCreators.h"
 
 
 namespace fs = std::filesystem;
@@ -48,14 +48,12 @@ int main()
 	auto fragmenShaderPath = fs::path("FragmentShader.glsl");
 	auto fragmenShader2Path = fs::path("FragmentShader2.glsl");
 	auto fragmenShaderGeneratorPath = fs::path("GeneratorsFragmentShader.glsl");
-
 	// glfw: initialize and configure
 	// ------------------------------
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
 
 	// glfw window creation
 	// --------------------

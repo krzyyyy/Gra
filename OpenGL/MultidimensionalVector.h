@@ -14,6 +14,11 @@
 //	
 //	return Args + Sum<...>();
 //};
+
+#ifndef MULTI_VECTOR
+#define MULTI_VECTOR
+ // !MULTI_VECTOR
+
 template<std::size_t size, const auto& arr>
 constexpr std::array<std::size_t, size+1> sum()
 {
@@ -44,11 +49,19 @@ public:
 	explicit MultidimensionalVector(int n, const PointRepresentation& inital);
 	MultidimensionalVector(const MultidimensionalVector& obj) = default;
 	MultidimensionalVector& operator = (const MultidimensionalVector & obj) = default;
+	template<std::size_t... FeatureSizes2>
+	MultidimensionalVector<T, FeatureSizes... , FeatureSizes2...> concatenate(MultidimensionalVector<T, FeatureSizes2...> multiVector);
 
+	//inserting methods
 	void push_back(PointRepresentation&& elem);
 	void emplace_back(PointRepresentation&& elem);
+
+	//access method
 	void* data();
 	int getArraySize();
+	std::array<T, (FeatureSizes + ...)>& operator[](std::size_t idx);
+
+
 	auto size()
 	{
 		return points.size();
@@ -60,62 +73,10 @@ public:
 	//openCV matrix function
 	cv::Mat getAllPoints(std::size_t featureId);
 	void transform(std::size_t featureId, const cv::Mat& transormMatrix);
-
+	
 	template<int FeatureId>
 	Iterator< FeatureId> begin();
-	//template<int FeatureId>
-	//const iterator begin() const;
-	//template<int FeatureId>
-	//iterator end();
-	//template<int FeatureId>
-	//const iterator end() const;
-	//template<int FeatureId>
-	//const iterator cbegin() const;
-	//template<int FeatureId>
-	//const iterator cend() const;
-	///*----------------------------*/
 
-	///* -------- CAPACITY -------- */
-	//bool empty() const;
-	//// Returns size of allocated storate capacity
-	//size_t capacity() const;
-	//// Requests a change in capacity
-	//// reserve() will never decrase the capacity.
-	//void reserve(int newmalloc);
-	//// Changes the Vector's size.
-	//// If the newsize is smaller, the last elements will be lost.
-	//// Has a default value param for custom values when resizing.
-	//void resize(int newsize, T val = T());
-	//// Returns the size of the Vector (number of elements). 
-	//size_t size() const;
-	//// Returns the maximum number of elements the Vector can hold
-	//size_t max_size() const;
-	//// Reduces capcity to fit the size
-	//void shrink_to_fit();
-	///*----------------------------*/
-
-	///* ----- ELEMENT ACCESS ----- */
-	//// Access elements with bounds checking
-	//T& at(int n);
-	//// Access elements with bounds checking for constant Vectors.
-	//const T& at(int n) const;
-	//// Access elements, no bounds checking
-	//T& operator[](int i);
-	//// Access elements, no bounds checking
-	//const T& operator[](int i) const;
-	//// Returns a reference to the first element
-	//T& front();
-	//// Returns a reference to the first element
-	//const T& front() const;
-	//// Returns a reference to the last element
-	//T& back();
-	//// Returns a reference to the last element
-	//const T& back() const;
-	//// Returns a pointer to the array used by Vector
-	//T* data();
-	//// Returns a pointer to the array used by Vector
-	//const T* data() const;
-	/*----------------------------*/
 
 
 	
@@ -159,6 +120,14 @@ inline int MultidimensionalVector<T, FeatureSizes...>::getArraySize()
 {
 
 	return points.size()* stride_size*sizeof(T);
+}
+
+
+template<typename T, std::size_t ...FeatureSizes>
+inline std::array<T, (FeatureSizes + ...)>&
+MultidimensionalVector<T, FeatureSizes...>::operator [] (std::size_t idx)
+{
+	return points[idx];
 }
 
 template<typename T, std::size_t ...FeatureSizes>
@@ -254,10 +223,22 @@ inline void MultidimensionalVector<T, FeatureSizes...>::transform(std::size_t fe
 
 
 template<typename T, std::size_t ...FeatureSizes>
-template<int FeatureId>
-inline MultidimensionalVector<T, FeatureSizes ...>::Iterator<FeatureId> MultidimensionalVector<T, FeatureSizes ...>::begin()
+template<std::size_t ...FeatureSizes2>
+inline MultidimensionalVector<T, FeatureSizes..., FeatureSizes2...>
+MultidimensionalVector<T, FeatureSizes...>::concatenate(MultidimensionalVector<T, FeatureSizes2...> multiVector)
 {
-	auto rrr = std::array<T,
-		MultidimensionalVector<T, FeatureSizes...>::feature_sizes[FeatureId]>();
-	return MultidimensionalVector<T, FeatureSizes...>::Iterator<FeatureId>(rrr);
+	if (size() != multiVector.size())
+		throw std::exception("obj1.size() != obj2.size() !!! Different sizes of multivectors");
+	auto result = MultidimensionalVector<T, FeatureSizes..., FeatureSizes2...>();
+	for (int i = 0; i < size(); ++i)
+	{
+		auto multivectorElement = std::array<T, stride_size + multiVector.stride_size>();
+		std::copy(points[i].cbegin(), points[i].cend(), multivectorElement.begin());
+		std::copy(multiVector[i].cbegin(), multiVector[i].cend(), multivectorElement.begin()+stride_size);
+		result.push_back(std::move(multivectorElement));
+	}
+	return result;
 }
+
+
+#endif

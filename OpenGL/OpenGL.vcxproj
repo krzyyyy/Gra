@@ -163,6 +163,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BasicShapesCreators.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GLAD\src\glad.c" />
     <ClCompile Include="MultidimensionalVector.cpp" />
@@ -176,9 +177,11 @@
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BasicShapesCreators.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CilinderCreator.h" />
     <ClInclude Include="CubeCreator.h" />
+    <ClInclude Include="IModelCreator.h" />
     <ClInclude Include="IObject.h" />
     <ClInclude Include="IObjectGenerator.h" />
     <ClInclude Include="IRenderObject.h" />

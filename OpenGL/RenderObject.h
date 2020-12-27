@@ -29,13 +29,13 @@ public:
 private:
 	RenderObject() :VAO(-1), VBO(-1)/*, EBO(-1)*/, texture(-1)
 	{
-		vec = MultidimensionalVector<float, 3, 3, 2>();
+		vec = MultidimensionalVector<float, 3>();
 	};
 	unsigned int VAO;
 	unsigned int VBO;
 	//unsigned int EBO;
 	unsigned int texture;
-	MultidimensionalVector<float, 3, 3, 2> vec;
+	MultidimensionalVector<float, 3> vec;
 	void addTexture(const std::string& texturePath);
     using ModelCreator::getShape;
 };
@@ -66,14 +66,14 @@ void RenderObject<typename Model>::Initialize()
     glBufferData(GL_ARRAY_BUFFER, vec.getArraySize(), vec.data(), GL_STATIC_DRAW);
 
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
+    //glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    //glEnableVertexAttribArray(1);
 
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
+    //glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+    //glEnableVertexAttribArray(2);
     addTexture("Textures/wall.jpg");
 }
 

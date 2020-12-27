@@ -1,10 +1,10 @@
 #pragma once
 #include <iostream>
-#include "MultidimensionalVector.h"
+#include "BasicShapesCreators.h"
 
 namespace ModelCreators
 {
-	struct CubeCreator
+	struct CubeCreator 
 	{
 		std::vector<cv::Point3f> computeMeshVertexes()
 		{
@@ -23,54 +23,54 @@ namespace ModelCreators
 			}
 			return meshVertex;
 		};
-		MultidimensionalVector<float, 3, 3, 2>	getShape()
+		MultidimensionalVector<float, 3> getShape()
 		{
-			auto meshVerticles = computeMeshVertexes();
-		auto vector = MultidimensionalVector<float, 3, 3, 2>{
-	 { -0.5f, -0.5f, -0.5f, 0.f, 0.7f, 0.8f, 0.0f, 0.0f },
-	 { 0.5f, -0.5f, -0.5f, 0.f, 0.7f, 0.8f, 1.0f, 0.0f},
-	 { 0.5f,  0.5f, -0.5f, 0.f, 0.7f, 0.8f,  1.0f, 1.0f},
-	 {0.5f,  0.5f, -0.5f, 0.f, 0.7f, 0.8f,  1.0f, 1.0f},
-	 {-0.5f,  0.5f, -0.5f, 0.f, 0.7f, 0.8f,  0.0f, 1.0f},
-	 {-0.5f, -0.5f, -0.5f, 0.f, 0.7f, 0.8f,  0.0f, 0.0f},
+			const std::vector<cv::Point3f> meshVerticles = computeMeshVertexes();
+			auto modelTriangeVector = MultidimensionalVector<float, 3>();
+			auto dimentions = std::set{ 'x', 'y', 'z' };
+			for (auto dimention: dimentions)
+			{
+				for (auto isPositive : { true, false })
+				{
+					auto planarVerticles = std::vector<cv::Point3f>();
+					std::copy_if(meshVerticles.cbegin(), meshVerticles.cend(),std::back_inserter( planarVerticles), [dimention, isPositive](auto pt)
+						{
+							//switch (dimention)
+							//{
+							//case('x'):
+							//	return (pt.x > 0.) == isPositive;
+							//case('y'):
+							//	return (pt.y > 0.) == isPositive;
+							//case('z'):
+							//	return (pt.z > 0.) == isPositive;
+							//default:
+							//	throw std::exception("Dimetion does not exist !!! ");
+							//	return false;
+							//}
+							return (getVectorElement(dimention, pt) > 0.) == isPositive;
+					});
+					for (int i = 0; i < planarVerticles.size() - 1; ++i)
+					{
+						auto distance = cv::norm(planarVerticles[i] - planarVerticles[i + 1]);
+						if (distance>1.)
+						{
+							if (i == 0 || i == planarVerticles.size()-2)
+							{
+								std::swap(planarVerticles[0], planarVerticles[planarVerticles.size() - 1]);
+							}
+							else
+							{
+								std::swap(planarVerticles[i + 1], planarVerticles[i + 2]);
+							}
+						}
+					}
+					addTrianglesFromConvexPlane(planarVerticles, modelTriangeVector);
+				}
 
-	 {-0.5f, -0.5f,  0.5f,0.f, 0.7f, 0.8f,  0.0f, 0.0f},
-	 { 0.5f, -0.5f,  0.5f,0.f, 0.7f, 0.8f,  1.0f, 0.0f},
-	 { 0.5f,  0.5f,  0.5f,0.f, 0.7f, 0.8f,  1.0f, 1.0f},
-	 { 0.5f,  0.5f,  0.5f,0.f, 0.7f, 0.8f,  1.0f, 1.0f},
-	 {-0.5f,  0.5f,  0.5f,0.f, 0.7f, 0.8f,  0.0f, 1.0f},
-	 {-0.5f, -0.5f,  0.5f,0.f, 0.7f, 0.8f,  0.0f, 0.0f},
-
-	 {-0.5f,  0.5f, 0.5f,0.f, 0.7f, 0.8f,  1.0f, 0.0f},
-	 {-0.5f,  0.5f, -0.5f,0.f, 0.7f, 0.8f,  1.0f, 1.0f},
-	 {-0.5f, -0.5f, -0.5f,0.f, 0.7f, 0.8f,  0.0f, 1.0f},
-	 {-0.5f, -0.5f, -0.5f,0.f, 0.7f, 0.8f,  0.0f, 1.0f},
-	 {-0.5f, -0.5f, 0.5f,0.f, 0.7f, 0.8f,  0.0f, 0.0f},
-	 {-0.5f,  0.5f, 0.5f,0.f, 0.7f, 0.8f,  1.0f, 0.0f},
-
-	 {0.5f,  0.5f,  0.5f, 0.f, 0.7f, 0.8f,  1.0f, 0.0f},
-	 { 0.5f, 0.5f, -0.5f, 0.f, 0.7f, 0.8f,  1.0f, 1.0f},
-	 {0.5f, -0.5f, -0.5f, 0.f, 0.7f, 0.8f,  0.0f, 1.0f},
-	 {0.5f, -0.5f, -0.5f, 0.f, 0.7f, 0.8f,  0.0f, 1.0f},
-	 {0.5f, -0.5f,  0.5f, 0.f, 0.7f, 0.8f,  0.0f, 0.0f},
-	 {0.5f,  0.5f,  0.5f, 0.f, 0.7f, 0.8f,  1.0f, 0.0f},
-
-	 {-0.5f, -0.5f, -0.5f, 0.f, 0.7f, 0.8f,  0.0f, 1.0f},
-	 {0.5f, -0.5f, -0.5f, 0.f, 0.7f, 0.8f,  1.0f, 1.0f},
-	 {0.5f, -0.5f,  0.5f,  0.f, 0.7f, 0.8f, 1.0f, 0.0f},
-	 { 0.5f, -0.5f,  0.5f, 0.f, 0.7f, 0.8f,  1.0f, 0.0f},
-	 {-0.5f, -0.5f,  0.5f, 0.f, 0.7f, 0.8f,  0.0f, 0.0f},
-	 {-0.5f, -0.5f, -0.5f, 0.f, 0.7f, 0.8f,  0.0f, 1.0f},
-
-	 {-0.5f,  0.5f, -0.5f, 0.f, 0.7f, 0.8f,  0.0f, 1.0f},
-	 {0.5f,  0.5f, -0.5f, 0.f, 0.7f, 0.8f,  1.0f, 1.0f},
-	 {0.5f,  0.5f,  0.5f, 0.f, 0.7f, 0.8f, 1.0f, 0.0f},
-	 { 0.5f,  0.5f,  0.5f, 0.f, 0.7f, 0.8f,  1.0f, 0.0f},
-	 {-0.5f,  0.5f,  0.5f, 0.f, 0.7f, 0.8f,  0.0f, 0.0f},
-	 {-0.5f,  0.5f, -0.5f, 0.f, 0.7f, 0.8f,  0.0f, 1.0f}
-			};
-		return vector;
+			}
+		return modelTriangeVector;
 		};
+
 	};
 
 }

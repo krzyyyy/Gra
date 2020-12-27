@@ -72,6 +72,9 @@
     <ClCompile Include="RenderScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BasicShapesCreators.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ObjectCounter.h">
@@ -133,6 +136,12 @@
     </ClInclude>
     <ClInclude Include="RenderScene.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicShapesCreators.h">
+      <Filter>Models\ModelCreators</Filter>
+    </ClInclude>
+    <ClInclude Include="IModelCreator.h">
+      <Filter>Models\ModelCreators</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
