@@ -23,7 +23,7 @@ public:
 	void operator=(RenderObject< ModelCreator> const&) = delete;
 	void Initialize();
 	void Load();
-    using ModelCreator::computeMeshVertexes;
+    //using ModelCreator::computeMeshVertexes;
 	~RenderObject();
     
 private:
@@ -47,12 +47,6 @@ void RenderObject<typename Model>::Initialize()
     auto meshPoints = std::vector<cv::Point3f>();
     const double R = 1;
     vec = getShape();
-    //unsigned int indices[] = {  // note that we start from 0!
-    //0, 1, 3,   // first triangle
-    //1, 2, 3,
-    //4, 5, 7,
-    //5, 6, 7    // second triangle
-    //};
 
 
     glGenVertexArrays(1, &VAO);

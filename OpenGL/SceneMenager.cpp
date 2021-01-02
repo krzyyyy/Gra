@@ -2,6 +2,7 @@
 #include "RenderObject.h"
 #include "CubeCreator.h"
 #include "CilinderCreator.h"
+#include "SphereCreator.h"
 #include "ObjectGenerator.h"
 #include "IObjectGenerator.h"
 //#include <iostream>
@@ -16,6 +17,7 @@ SceneMenager::SceneMenager()
 	objects.emplace_back(std::make_shared< Object<ModelCreators::CylinderCreator>>("Bullet"));
 	objects.emplace_back(std::make_shared<ObjectGenerator< ModelCreators::CubeCreator, ModelCreators::CylinderCreator>>("Generator"));
 	objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>("Sword"));
+	objects.emplace_back(std::make_shared < ObjectGenerator< ModelCreators::CubeCreator, ModelCreators::SphereCreator>>("Generator"));
 	//objects.emplace_back(std::make_unique< Object<RenderObject<ModelCreators::CylinderCreator>>>());
 	glm::vec3 cubePositions[] = {
 	glm::vec3(0.0f,  3.0f,  0.0f),

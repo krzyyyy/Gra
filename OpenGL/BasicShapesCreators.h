@@ -5,6 +5,7 @@ namespace ModelCreators
 {
 	void addTrianglesFromConvexPlane(const std::vector<cv::Point3f>& points, MultidimensionalVector<float, 3>& model);
 	float getVectorElement(char dimention, cv::Point3f point);
+	std::vector<cv::Point3f> createOneEightSphere(bool positiveX = true, bool positiveY = true, bool positiveZ = true);
 }
 
 	//void testFunction()

@@ -20,7 +20,7 @@ namespace ModelCreators
             }
             return meshVertex;
         }
-		MultidimensionalVector<float, 3>	getShape()
+		MultidimensionalVector<float, 3> getShape()
 		{
             auto vector = MultidimensionalVector<float, 3>();
             auto meshVerticles = computeMeshVertexes();

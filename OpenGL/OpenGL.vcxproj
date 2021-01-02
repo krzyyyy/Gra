@@ -197,6 +197,7 @@
     <ClInclude Include="SceneMenager.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderEnum.h" />
+    <ClInclude Include="SphereCreator.h" />
     <ClInclude Include="StreamOperators.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>

@@ -35,18 +35,6 @@ namespace ModelCreators
 					auto planarVerticles = std::vector<cv::Point3f>();
 					std::copy_if(meshVerticles.cbegin(), meshVerticles.cend(),std::back_inserter( planarVerticles), [dimention, isPositive](auto pt)
 						{
-							//switch (dimention)
-							//{
-							//case('x'):
-							//	return (pt.x > 0.) == isPositive;
-							//case('y'):
-							//	return (pt.y > 0.) == isPositive;
-							//case('z'):
-							//	return (pt.z > 0.) == isPositive;
-							//default:
-							//	throw std::exception("Dimetion does not exist !!! ");
-							//	return false;
-							//}
 							return (getVectorElement(dimention, pt) > 0.) == isPositive;
 					});
 					for (int i = 0; i < planarVerticles.size() - 1; ++i)

@@ -22,6 +22,7 @@
 #include "SceneMenager.h"
 #include "RenderScene.h"
 #include "BasicShapesCreators.h"
+#include "SphereCreator.h"
 
 
 namespace fs = std::filesystem;
@@ -82,6 +83,7 @@ int main()
 	
 	RenderObject<ModelCreators::CubeCreator>::getInstance().Initialize();
 	RenderObject<ModelCreators::CylinderCreator>::getInstance().Initialize();
+	RenderObject<ModelCreators::SphereCreator>::getInstance().Initialize();
 
 	auto renderScene = RenderScene();
 	SceneMenager sceneMenager;
