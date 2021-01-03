@@ -20,8 +20,10 @@ public:
 	Object& operator=(const Object& object) = default;
 	Object& operator=(Object&& object) = default;
 	~Object();
-	void Translate(glm::vec3 translateVector);
-	void Rotate(float angle, glm::vec3 rotateVector);
+	//transformation functions
+	void Translate(glm::vec3 translateVector) override;
+	void Rotate(float angle, glm::vec3 rotateVector) override;
+	void Scale(glm::vec3 scaleFactor);
 	void LoadModel()const;
 	glm::mat4 GetGlobalPosition()const;
 	void UpdatePosition(std::chrono::duration<double> deltaT);
@@ -74,6 +76,12 @@ template<typename Shape, template<class> typename RenderedObject>
 inline void Object<typename Shape, typename RenderedObject>::Rotate(float angle, glm::vec3 rotateVector)
 {
 	globalPosition = glm::rotate(globalPosition, angle, rotateVector);
+}
+
+template<typename Shape, template<class> typename RenderedObject>
+inline void Object<Shape, typename RenderedObject>::Scale(glm::vec3 scaleFactor)
+{
+	globalPosition = glm::scale(globalPosition, scaleFactor);
 }
 
 template<typename Shape, template<class> typename RenderedObject>

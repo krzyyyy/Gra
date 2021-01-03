@@ -19,6 +19,7 @@ SceneMenager::SceneMenager()
 	objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>("Sword"));
 	objects.emplace_back(std::make_shared < ObjectGenerator< ModelCreators::CubeCreator, ModelCreators::SphereCreator>>("Generator"));
 	//objects.emplace_back(std::make_unique< Object<RenderObject<ModelCreators::CylinderCreator>>>());
+	objects[0]->Scale(glm::vec3(0.5, 0.5, 4));
 	glm::vec3 cubePositions[] = {
 	glm::vec3(0.0f,  3.0f,  0.0f),
 	glm::vec3(2.0f,  5.0f, -15.0f),

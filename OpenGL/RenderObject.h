@@ -9,7 +9,7 @@
 
 
 template<typename ModelCreator>
-class RenderObject : private ModelCreator, public IRenderObject
+class RenderObject : public ModelCreator, public IRenderObject
 {
 public:
 	static RenderObject< ModelCreator>& getInstance()
@@ -37,7 +37,7 @@ private:
 	unsigned int texture;
 	MultidimensionalVector<float, 3> vec;
 	void addTexture(const std::string& texturePath);
-    using ModelCreator::getShape;
+    //using ModelCreator::getShape;
 };
 
 template<typename Model>
@@ -46,7 +46,7 @@ void RenderObject<typename Model>::Initialize()
 
     auto meshPoints = std::vector<cv::Point3f>();
     const double R = 1;
-    vec = getShape();
+    vec = this->getShape();
 
 
     glGenVertexArrays(1, &VAO);

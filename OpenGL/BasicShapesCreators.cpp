@@ -21,11 +21,3 @@ float ModelCreators::getVectorElement(char dimention, cv::Point3f point)
 	return -1.;
 }
 
-std::vector<cv::Point3f> ModelCreators::createOneEightSphere(bool positiveX, bool positiveY, bool positiveZ)
-{
-	for (int i = 0; i < 90; ++i)
-	{
-
-	}
-	return std::vector<cv::Point3f>();
-}

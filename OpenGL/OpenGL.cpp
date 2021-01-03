@@ -81,7 +81,8 @@ int main()
 	glfwSetScrollCallback(window, scrollCallback);
 
 	
-	RenderObject<ModelCreators::CubeCreator>::getInstance().Initialize();
+	auto& cubeModel = RenderObject<ModelCreators::CubeCreator>::getInstance();
+	cubeModel.Initialize();
 	RenderObject<ModelCreators::CylinderCreator>::getInstance().Initialize();
 	RenderObject<ModelCreators::SphereCreator>::getInstance().Initialize();
 
