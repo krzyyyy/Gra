@@ -2,6 +2,7 @@
 #include <iostream>
 #include "MultidimensionalVector.h"
 #include "glm/glm.hpp"
+#include "BasicShapesCreators.h"
 
 namespace ModelCreators
 {
@@ -24,15 +25,12 @@ namespace ModelCreators
 		{
             auto vector = MultidimensionalVector<float, 3>();
             auto meshVerticles = computeMeshVertexes();
-            for (int j = 0; j < meshVerticles.size(); j = j + meshVerticles.size()/2)
-            {
-                for (int i = 2; i < meshVerticles.size() / 2; ++i)
-                {
-                    vector.push_back({ meshVerticles[0 + j].x,meshVerticles[0 + j].y, meshVerticles[0 + j].z });
-                    vector.push_back({ meshVerticles[i - 1 + j].x,meshVerticles[i - 1 + j].y, meshVerticles[i - 1 + j].z });
-                    vector.push_back({ meshVerticles[i + j].x,meshVerticles[i + j].y, meshVerticles[i + j].z });
-                }
-            }
+            std::size_t sizeOfBase = meshVerticles.size() / 2;
+            
+            ModelCreators::addTrianglesFromConvexPlane(std::vector<cv::Point3f>(meshVerticles.cbegin(), meshVerticles.cbegin() + sizeOfBase),
+                vector);
+            ModelCreators::addTrianglesFromConvexPlane(std::vector<cv::Point3f>(meshVerticles.cbegin()+sizeOfBase, meshVerticles.cend()),
+                vector);
             std::size_t baseSize = meshVerticles.size() / 2;
             for (int i = 0; i < baseSize; ++i)
             {
@@ -48,6 +46,6 @@ namespace ModelCreators
             }
             return vector;
 		};
-        MultidimensionalVector<float, 3, 3, 2> modelShape;
+       
 	};
 }

@@ -12,8 +12,10 @@ public:
 	virtual void Translate(glm::vec3 translateVector) = 0;
 	virtual void Rotate(float angle, glm::vec3 rotateVector) = 0;
 	virtual void Scale(glm::vec3 scaleFactor) =0;
+	virtual void UpdatePosition(std::chrono::duration<double> deltaT) = 0;
+	// geters
 	virtual glm::mat4 GetGlobalPosition()const = 0;
-	virtual void LoadModel()const = 0;
-	virtual void UpdatePosition(std::chrono::duration<double> deltaT) =0;
 	virtual std::string GetObjectType()const =0;
+	// for drawing
+	virtual void LoadModel()const = 0;
 };

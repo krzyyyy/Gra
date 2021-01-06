@@ -23,11 +23,13 @@ public:
 	//transformation functions
 	void Translate(glm::vec3 translateVector) override;
 	void Rotate(float angle, glm::vec3 rotateVector) override;
-	void Scale(glm::vec3 scaleFactor);
+	void Scale(glm::vec3 scaleFactor) override;
+	void UpdatePosition(std::chrono::duration<double> deltaT) override;
+	//geters
+	glm::mat4 GetGlobalPosition()  const override;
+	std::string GetObjectType()  const override;
+	// for drawing
 	void LoadModel()const;
-	glm::mat4 GetGlobalPosition()const;
-	void UpdatePosition(std::chrono::duration<double> deltaT);
-	std::string GetObjectType()const;
 	using ModelType = RenderObject< Shape>;
 
 protected:
@@ -87,16 +89,14 @@ inline void Object<Shape, typename RenderedObject>::Scale(glm::vec3 scaleFactor)
 template<typename Shape, template<class> typename RenderedObject>
 void Object<typename Shape, typename RenderedObject>::LoadModel()const
 {
-
 	ModelType::getInstance().Load();
-
 }
 template<typename Shape, template<class> typename RenderedObject>
-inline glm::mat4 Object<Shape, typename RenderedObject>::GetGlobalPosition()const
+inline glm::mat4 Object<Shape, typename RenderedObject>::GetGlobalPosition()  const
 {
 	return globalPosition;
 }
-;
+
 template<typename Shape, template<class> typename RenderedObject>
 inline void Object<typename Shape, typename RenderedObject>::UpdatePosition(std::chrono::duration<double> deltaT)
 {
