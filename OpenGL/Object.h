@@ -6,10 +6,11 @@
 #include "IObject.h"
 #include "glm/gtc/matrix_transform.hpp"
 #include "RenderObject.h"
+#include "IBounceable.h"
 
 
 template<typename Shape, template<typename> class RenderedObject = RenderObject>
-class Object:public ObjectCounter<Object<typename Shape, typename RenderedObject>>, public IObject
+class Object:public ObjectCounter<Object<typename Shape, typename RenderedObject>>, public IObject, public IBounceable
 {
 public:
 	Object();
@@ -30,6 +31,9 @@ public:
 	std::string GetObjectType()  const override;
 	// for drawing
 	void LoadModel()const;
+	//IBounceable methods
+	ParametricModel GetParametricModel()const;
+	void Bounce(glm::vec3 collisionPoint);
 	using ModelType = RenderObject< Shape>;
 
 protected:
@@ -90,6 +94,16 @@ template<typename Shape, template<class> typename RenderedObject>
 void Object<typename Shape, typename RenderedObject>::LoadModel()const
 {
 	ModelType::getInstance().Load();
+}
+template<typename Shape, template<class> typename RenderedObject>
+inline ParametricModel Object<Shape, typename RenderedObject>::GetParametricModel()const
+{
+	return Shape::ComputeParametricModel(globalPosition);
+}
+template<typename Shape, template<class> typename RenderedObject>
+inline void Object<Shape, typename RenderedObject>::Bounce(glm::vec3 collisionPoint)
+{
+	moveDirection = -moveDirection;
 }
 template<typename Shape, template<class> typename RenderedObject>
 inline glm::mat4 Object<Shape, typename RenderedObject>::GetGlobalPosition()  const

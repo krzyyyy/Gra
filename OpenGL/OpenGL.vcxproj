@@ -164,6 +164,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BasicShapesCreators.cpp" />
+    <ClCompile Include="BounceObject.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GLAD\src\glad.c" />
     <ClCompile Include="MultidimensionalVector.cpp" />
@@ -178,9 +179,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicShapesCreators.h" />
+    <ClInclude Include="BounceObject.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CilinderCreator.h" />
     <ClInclude Include="CubeCreator.h" />
+    <ClInclude Include="IBounceable.h" />
     <ClInclude Include="IModelCreator.h" />
     <ClInclude Include="IObject.h" />
     <ClInclude Include="IObjectGenerator.h" />
@@ -191,6 +194,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectCounter.h" />
     <ClInclude Include="ObjectGenerator.h" />
+    <ClInclude Include="ParametricModels.h" />
     <ClInclude Include="Program.h" />
     <ClInclude Include="RenderObject.h" />
     <ClInclude Include="RenderScene.h" />

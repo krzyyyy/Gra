@@ -14,12 +14,12 @@ SceneMenager::SceneMenager()
 	objects = std::vector<std::shared_ptr<IObject>>();
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>());
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>());
-	objects.emplace_back(std::make_shared< Object<ModelCreators::CylinderCreator>>("Bullet"));
-	objects.emplace_back(std::make_shared<ObjectGenerator< ModelCreators::CubeCreator, ModelCreators::CylinderCreator>>("Generator"));
-	objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>("Sword"));
-	objects.emplace_back(std::make_shared < ObjectGenerator< ModelCreators::CubeCreator, ModelCreators::SphereCreator>>("Generator"));
+	//objects.emplace_back(std::make_shared< Object<ModelCreators::SphereCreator>>("Bullet"));
+	objects.emplace_back(std::make_shared<ObjectGenerator< ModelCreators::CubeCreator, ModelCreators::SphereCreator>>("Generator"));
+	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>("Sword"));
+	//objects.emplace_back(std::make_shared < ObjectGenerator< ModelCreators::CubeCreator, ModelCreators::SphereCreator>>("Generator"));
 	//objects.emplace_back(std::make_unique< Object<RenderObject<ModelCreators::CylinderCreator>>>());
-	objects[0]->Scale(glm::vec3(0.5, 0.5, 4));
+	//objects[0]->Scale(glm::vec3(0.5, 0.5, 4));
 	glm::vec3 cubePositions[] = {
 	glm::vec3(0.0f,  3.0f,  0.0f),
 	glm::vec3(2.0f,  5.0f, -15.0f),
@@ -33,7 +33,7 @@ SceneMenager::SceneMenager()
 		objects[i]->Translate(cubePositions[i]);
 	}
 
-	sword = std::make_shared < Object<ModelCreators::CylinderCreator>>("Sword");
+	sword = std::make_shared < Object<ModelCreators::SphereCreator>>("Sword");
 	lastTime = std::chrono::steady_clock::now();
 	generationTimer = Timer(std::chrono::seconds(10));
 	renderTimer = Timer(std::chrono::milliseconds(33));
@@ -53,6 +53,7 @@ void SceneMenager::UpdateScene(const Camera& camera)
 	auto deltaT = currentTime - lastTime;
 	lastTime = currentTime;
 	UpdatePosition(deltaT);
+	objectsBouncer.FindCollisions(objects, sword);
 	generationTimer.RunEvent(&SceneMenager::GenerateNewObjects, this, camera);
 	//renderTimer.RunEvent(&SceneMenager::RenderScene, this, camera);
 	//RenderScene(camera);
@@ -60,7 +61,9 @@ void SceneMenager::UpdateScene(const Camera& camera)
 
 std::vector<std::shared_ptr<IObject>> SceneMenager::GetObjects()
 {
-	return objects;
+	auto allObjects = objects;
+	allObjects.push_back(sword);
+	return allObjects;
 }
 
 

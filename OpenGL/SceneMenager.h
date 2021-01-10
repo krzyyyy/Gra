@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include "ObjectGenerator.h"
 #include "Timer.h"
+#include "BounceObject.h"
 
 class SceneMenager
 {
@@ -28,4 +29,5 @@ private:
 	std::chrono::steady_clock::time_point lastTime;
 	Timer generationTimer;
 	Timer renderTimer;
+	BounceObjects objectsBouncer;
 };

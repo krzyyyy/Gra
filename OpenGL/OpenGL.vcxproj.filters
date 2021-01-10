@@ -37,6 +37,9 @@
     <Filter Include="Renders\Shaders">
       <UniqueIdentifier>{6f2a4b72-a8ed-46bb-a40a-b68a2d110033}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects Bounce">
+      <UniqueIdentifier>{aad64b39-89d9-4a60-87a8-c687770d960a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OpenGL.cpp">
@@ -73,6 +76,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BasicShapesCreators.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BounceObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -145,6 +151,15 @@
     </ClInclude>
     <ClInclude Include="SphereCreator.h">
       <Filter>Models\ModelCreators</Filter>
+    </ClInclude>
+    <ClInclude Include="IBounceable.h">
+      <Filter>Objects Bounce</Filter>
+    </ClInclude>
+    <ClInclude Include="ParametricModels.h">
+      <Filter>Objects Bounce</Filter>
+    </ClInclude>
+    <ClInclude Include="BounceObject.h">
+      <Filter>Objects Bounce</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

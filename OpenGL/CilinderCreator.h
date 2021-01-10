@@ -3,20 +3,23 @@
 #include "MultidimensionalVector.h"
 #include "glm/glm.hpp"
 #include "BasicShapesCreators.h"
+#include "ParametricModels.h"
 
 namespace ModelCreators
 {
 	struct CylinderCreator
 	{
+        const double radius = 0.5;
+        const double H = 1;
         std::vector<cv::Point3f> computeMeshVertexes()
         {
             auto meshVertex = std::vector<cv::Point3f>();
-            const double R = 0.5;
-            for (float i = 0; i < 2; i = ++i)
+            
+            for (double i = -H/2; i <= H/2; i = i=i+H)
             {
                 for (float x = 0; x < 360; x += 30)
                 {
-                    meshVertex.push_back(cv::Point3f(R * sin(glm::radians(x)), R * cos(glm::radians(x)), i));
+                    meshVertex.push_back(cv::Point3f(radius * sin(glm::radians(x)), radius * cos(glm::radians(x)), i));
                 }
             }
             return meshVertex;
@@ -46,6 +49,18 @@ namespace ModelCreators
             }
             return vector;
 		};
-       
+         static ParametricCilinder ComputeParametricModel(const glm::mat4& objectPosition)
+        {
+            auto vector = glm::vec3(objectPosition[0][0], objectPosition[0][1], objectPosition[0][2]);
+            double scale = glm::length(vector);
+            glm::vec3 heigntDirection = glm::mat3(objectPosition) * glm::vec3(0, 0, 1);
+            return ParametricCilinder{
+                .Center = glm::vec3(objectPosition[3].x, objectPosition[3].y, objectPosition[3].z),
+                .HeightDirection = heigntDirection,
+                .R = 0.5,
+                .Height = 1.
+
+            };
+        }
 	};
 }
