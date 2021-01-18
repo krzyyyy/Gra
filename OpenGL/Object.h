@@ -37,7 +37,7 @@ public:
 	using ModelType = RenderObject< Shape>;
 
 protected:
-	
+	glm::vec3 getPosition()const;
 	glm::mat4 globalPosition;
 	glm::vec3 moveDirection;
 	std::string objectType;
@@ -103,7 +103,21 @@ inline ParametricModel Object<Shape, typename RenderedObject>::GetParametricMode
 template<typename Shape, template<class> typename RenderedObject>
 inline void Object<Shape, typename RenderedObject>::Bounce(glm::vec3 collisionPoint)
 {
-	moveDirection = -moveDirection;
+	//moveDirection = -moveDirection;
+	glm::vec3 P = collisionPoint - moveDirection;
+	glm::vec3 centerPosition = getPosition();
+	glm::vec3 direction = collisionPoint - centerPosition;
+	direction = glm::normalize(direction);
+	double D = -((direction.x * P.x) + (direction.y * P.y) + (direction.z * P.z)); 
+	double t = -(glm::dot(direction, collisionPoint) + D);//t = -(Axc+Byc+Czc+D)/(A*A + B*B + C*C)
+	glm::vec3 Pprojected = glm::vec3((direction.x * t) + collisionPoint.x, (direction.y * t) + collisionPoint.y, (direction.z * t) + collisionPoint.z);
+	glm::vec3 changeVector = Pprojected - P; 
+	moveDirection = (P + (2.f * changeVector)) - collisionPoint;
+}
+template<typename Shape, template<class> typename RenderedObject>
+inline glm::vec3 Object<Shape, typename RenderedObject>::getPosition() const
+{
+	return  glm::vec3(this->globalPosition[3].x, this->globalPosition[3].y, this->globalPosition[3].z);
 }
 template<typename Shape, template<class> typename RenderedObject>
 inline glm::mat4 Object<Shape, typename RenderedObject>::GetGlobalPosition()  const
