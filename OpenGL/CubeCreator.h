@@ -59,13 +59,11 @@ namespace ModelCreators
 			}
 		return modelTriangeVector;
 		};
-		static ParametricCilinder ComputeParametricModel(const glm::mat4& objectPosition)
+		static ParametricCilinder ComputeParametricModel(const glm::mat4& objectPosition, const glm::vec3& scale)
 		{
-			auto vector = glm::vec3(objectPosition[0][0], objectPosition[0][1], objectPosition[0][2]);
-			double scale = glm::length(vector);
 			return ParametricCilinder{
 				.Center = glm::vec3(objectPosition[3].x, objectPosition[3].y, objectPosition[3].z),
-				.R = scale,
+				.R = scale.x,
 			};
 		};
 	};

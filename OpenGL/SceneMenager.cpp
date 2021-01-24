@@ -33,7 +33,8 @@ SceneMenager::SceneMenager()
 		objects[i]->Translate(cubePositions[i]);
 	}
 
-	sword = std::make_shared < Object<ModelCreators::SphereCreator>>("Sword");
+	sword = std::make_shared < Object<ModelCreators::CylinderCreator>>("Sword");
+	sword->Scale(glm::vec3(0.25, 0.25, 4));
 	lastTime = std::chrono::steady_clock::now();
 	generationTimer = Timer(std::chrono::seconds(10));
 	renderTimer = Timer(std::chrono::milliseconds(33));

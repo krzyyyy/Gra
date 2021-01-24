@@ -161,6 +161,9 @@
     <ClInclude Include="BounceObject.h">
       <Filter>Objects Bounce</Filter>
     </ClInclude>
+    <ClInclude Include="MathHelperFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="FragmentShader.glsl">

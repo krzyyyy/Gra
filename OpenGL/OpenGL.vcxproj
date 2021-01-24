@@ -189,6 +189,7 @@
     <ClInclude Include="IObjectGenerator.h" />
     <ClInclude Include="IRenderObject.h" />
     <ClInclude Include="IShader.h" />
+    <ClInclude Include="MathHelperFunctions.h" />
     <ClInclude Include="MultidimensionalConvertable.h" />
     <ClInclude Include="MultidimensionalVector.h" />
     <ClInclude Include="Object.h" />

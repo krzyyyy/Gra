@@ -7,6 +7,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "RenderObject.h"
 #include "IBounceable.h"
+#include "MathHelperFunctions.h"
 
 
 template<typename Shape, template<typename> class RenderedObject = RenderObject>
@@ -38,6 +39,7 @@ public:
 
 protected:
 	glm::vec3 getPosition()const;
+	glm::vec3 scale;
 	glm::mat4 globalPosition;
 	glm::vec3 moveDirection;
 	std::string objectType;
@@ -50,19 +52,20 @@ inline Object<typename Shape, typename RenderedObject>::Object()
 	//std::random_device rd;
 	//std::mt19937 mt(rd());
 	//std::uniform_real_distribution<double> dist(-1.0, 1.0);
-	
+	scale = glm::vec3(1., 1., 1.);
 	globalPosition = glm::mat4(1.0f);
 	moveDirection = glm::vec3(0, 0, 0);//glm::vec3(dist(mt), dist(mt), dist(mt));//
 	objectType = "Non";
 }
 
 template<typename Shape, template<class> typename RenderedObject>
-inline Object<typename Shape, typename RenderedObject>::Object(std::string objectType_):globalPosition(glm::mat4(1.0f)), moveDirection(glm::vec3(0, 0, 0)), objectType(objectType_)
+inline Object<typename Shape, typename RenderedObject>::Object(std::string objectType_):globalPosition(glm::mat4(1.0f)),scale(1., 1., 1.),
+moveDirection(glm::vec3(0, 0, 0)), objectType(objectType_)
 {
 }
 
 template<typename Shape, template<class> typename RenderedObject>
-inline Object<typename Shape, typename RenderedObject>::Object(glm::vec3 moveDirection_, std::string objectType_):moveDirection(moveDirection_), objectType(objectType_)
+inline Object<typename Shape, typename RenderedObject>::Object(glm::vec3 moveDirection_, std::string objectType_):scale(1., 1.,1.), moveDirection(moveDirection_), objectType(objectType_)
 {
 	globalPosition = glm::mat4(1.0f);
 }
@@ -87,7 +90,7 @@ inline void Object<typename Shape, typename RenderedObject>::Rotate(float angle,
 template<typename Shape, template<class> typename RenderedObject>
 inline void Object<Shape, typename RenderedObject>::Scale(glm::vec3 scaleFactor)
 {
-	globalPosition = glm::scale(globalPosition, scaleFactor);
+	scale = scale * scaleFactor;
 }
 
 template<typename Shape, template<class> typename RenderedObject>
@@ -98,7 +101,7 @@ void Object<typename Shape, typename RenderedObject>::LoadModel()const
 template<typename Shape, template<class> typename RenderedObject>
 inline ParametricModel Object<Shape, typename RenderedObject>::GetParametricModel()const
 {
-	return Shape::ComputeParametricModel(globalPosition);
+	return Shape::ComputeParametricModel(globalPosition, scale);
 }
 template<typename Shape, template<class> typename RenderedObject>
 inline void Object<Shape, typename RenderedObject>::Bounce(glm::vec3 collisionPoint)
@@ -107,10 +110,7 @@ inline void Object<Shape, typename RenderedObject>::Bounce(glm::vec3 collisionPo
 	glm::vec3 P = collisionPoint - moveDirection;
 	glm::vec3 centerPosition = getPosition();
 	glm::vec3 direction = collisionPoint - centerPosition;
-	direction = glm::normalize(direction);
-	double D = -((direction.x * P.x) + (direction.y * P.y) + (direction.z * P.z)); 
-	double t = -(glm::dot(direction, collisionPoint) + D);//t = -(Axc+Byc+Czc+D)/(A*A + B*B + C*C)
-	glm::vec3 Pprojected = glm::vec3((direction.x * t) + collisionPoint.x, (direction.y * t) + collisionPoint.y, (direction.z * t) + collisionPoint.z);
+	glm::vec3 Pprojected = Math::ProjectPointOntoStraight(collisionPoint, direction, P);
 	glm::vec3 changeVector = Pprojected - P; 
 	moveDirection = (P + (2.f * changeVector)) - collisionPoint;
 }
@@ -122,7 +122,7 @@ inline glm::vec3 Object<Shape, typename RenderedObject>::getPosition() const
 template<typename Shape, template<class> typename RenderedObject>
 inline glm::mat4 Object<Shape, typename RenderedObject>::GetGlobalPosition()  const
 {
-	return globalPosition;
+	return glm::scale( globalPosition, scale);
 }
 
 template<typename Shape, template<class> typename RenderedObject>
