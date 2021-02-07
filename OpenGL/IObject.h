@@ -16,6 +16,5 @@ public:
 	// geters
 	virtual glm::mat4 GetGlobalPosition()const = 0;
 	virtual std::string GetObjectType()const =0;
-	// for drawing
-	virtual void LoadModel()const = 0;
+	virtual std::string GetObjectModel() const = 0;
 };

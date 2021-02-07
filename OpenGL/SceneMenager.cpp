@@ -15,7 +15,7 @@ SceneMenager::SceneMenager()
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>());
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>());
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::SphereCreator>>("Bullet"));
-	objects.emplace_back(std::make_shared<ObjectGenerator< ModelCreators::CubeCreator, ModelCreators::SphereCreator>>("Generator"));
+	objects.emplace_back(std::make_shared<ObjectGenerator< ParametricSphere, ParametricSphere>>("Generator", "SphereModel"));
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>("Sword"));
 	//objects.emplace_back(std::make_shared < ObjectGenerator< ModelCreators::CubeCreator, ModelCreators::SphereCreator>>("Generator"));
 	//objects.emplace_back(std::make_unique< Object<RenderObject<ModelCreators::CylinderCreator>>>());
@@ -33,7 +33,7 @@ SceneMenager::SceneMenager()
 		objects[i]->Translate(cubePositions[i]);
 	}
 
-	sword = std::make_shared < Object<ModelCreators::CylinderCreator>>("Sword");
+	sword = std::make_shared < Object<ParametricCilinder>>("Sword", "CilinderModel");
 	sword->Scale(glm::vec3(0.25, 0.25, 4));
 	lastTime = std::chrono::steady_clock::now();
 	generationTimer = Timer(std::chrono::seconds(10));

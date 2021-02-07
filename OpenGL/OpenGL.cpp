@@ -17,8 +17,7 @@
 #include "Object.h"
 #include "IObject.h"
 #include "Camera.h"
-#include "CilinderCreator.h"
-#include "CubeCreator.h"
+#include "RenderObjectFactory.h"
 #include "SceneMenager.h"
 #include "RenderScene.h"
 #include "BasicShapesCreators.h"
@@ -49,6 +48,7 @@ int main()
 	auto fragmenShaderPath = fs::path("FragmentShader.glsl");
 	auto fragmenShader2Path = fs::path("FragmentShader2.glsl");
 	auto fragmenShaderGeneratorPath = fs::path("GeneratorsFragmentShader.glsl");
+	RenderObjectFactory renderObjectFactory;
 	// glfw: initialize and configure
 	// ------------------------------
 	glfwInit();
@@ -93,6 +93,18 @@ int main()
 		std::make_tuple("Sword", vertexShaderPath.string(), fragmenShader2Path.string()),
 		std::make_tuple("Generator", vertexShaderPath.string(), fragmenShaderGeneratorPath.string()),
 		});
+	renderScene.AddModel(
+		"CubeModel",
+		renderObjectFactory.CreateRenderObjects("CubeModel")
+	);
+	renderScene.AddModel(
+		"CilinderModel",
+		renderObjectFactory.CreateRenderObjects("CilinderModel")
+	);
+	renderScene.AddModel(
+		"SphereModel",
+		renderObjectFactory.CreateRenderObjects("SphereModel")
+	);
 
 
 	// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind

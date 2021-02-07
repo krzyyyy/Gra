@@ -65,11 +65,11 @@ void Program::useProgram()const
     glUseProgram(idProgram);
 }
 
-void Program::Render(const std::shared_ptr<IObject>& object)
+void Program::Render(const std::shared_ptr<IObject>& object, IRenderObject& renderObject)
 {
     //program.useProgram();
     setUniform(object->GetGlobalPosition(), "model");
-    object->LoadModel();
+    renderObject.Load();
 }
 
 Program::~Program()

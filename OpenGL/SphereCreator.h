@@ -104,13 +104,7 @@ namespace ModelCreators
             }
             return result;
         }
-        static ParametricSphere ComputeParametricModel(const glm::mat4& objectPosition, const glm::vec3& scale)
-        {
-            return ParametricSphere{
-                .Center = glm::vec3(objectPosition[3].x, objectPosition[3].y, objectPosition[3].z),
-                .R = 0.5,
-            };
-        }
+
 	};
 
 }

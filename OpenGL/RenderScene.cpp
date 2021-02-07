@@ -1,6 +1,11 @@
 #include "RenderScene.h"
 
 
+RenderScene::RenderScene()
+{
+
+}
+
 void RenderScene::RenderObjects(const std::vector<std::shared_ptr<IObject>>& objects, const Camera& camera)
 {
 	//auto objectsCopy = objects;
@@ -11,11 +16,13 @@ void RenderScene::RenderObjects(const std::vector<std::shared_ptr<IObject>>& obj
 	for (const auto& object : objects)
 	{
 		std::string objectType = object->GetObjectType();
+		auto modelName = object->GetObjectModel();
+
 		auto& program = programs[objectType];
 		program.useProgram();
 		program.setUniform(camera.getViewMatrix(), "view");
 		program.setUniform(camera.getProjectionMatrix(), "projection");
-		program.Render(object);
+		program.Render(object, *models[modelName]);
 	}
 
 }
@@ -37,3 +44,9 @@ void RenderScene::InitilizeShaders(const std::vector<std::tuple<std::string, std
 	}
 
 }
+
+void RenderScene::AddModel(std::string modelName, IRenderObject& model)
+{
+	models[modelName] = &model;
+}
+

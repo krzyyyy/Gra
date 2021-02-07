@@ -171,7 +171,6 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="OpenGL.cpp" />
     <ClCompile Include="Program.cpp" />
-    <ClCompile Include="RenderObject.cpp" />
     <ClCompile Include="RenderScene.cpp" />
     <ClCompile Include="SceneMenager.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -198,6 +197,7 @@
     <ClInclude Include="ParametricModels.h" />
     <ClInclude Include="Program.h" />
     <ClInclude Include="RenderObject.h" />
+    <ClInclude Include="RenderObjectFactory.h" />
     <ClInclude Include="RenderScene.h" />
     <ClInclude Include="SceneMenager.h" />
     <ClInclude Include="Shader.h" />
