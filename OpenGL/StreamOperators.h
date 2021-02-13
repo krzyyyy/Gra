@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 
-#include "glm/glm.hpp"
+#include "../glm/glm.hpp"
 
 
 	std::ostream& operator <<(std::ostream& stream,const glm::vec3& vector)

@@ -1,9 +1,8 @@
 #pragma once
 #include <iostream>
 #include "MultidimensionalVector.h"
-#include "glm/glm.hpp"
+#include "../glm/glm.hpp"
 #include "BasicShapesCreators.h"
-#include "ParametricModels.h"
 
 namespace ModelCreators
 {

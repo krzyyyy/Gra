@@ -1,8 +1,8 @@
 #pragma once
 #include <iostream>
 #include <chrono>
-#include "glm/gtc/matrix_transform.hpp"
-#include "glm/glm.hpp"
+#include "../glm/gtc/matrix_transform.hpp"
+#include "../glm/glm.hpp"
 
 class IObject
 {

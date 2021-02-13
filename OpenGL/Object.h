@@ -4,7 +4,7 @@
 #include <opencv2/opencv.hpp>
 #include "ObjectCounter.h"
 #include "IObject.h"
-#include "glm/gtc/matrix_transform.hpp"
+//#include "glm/gtc/matrix_transform.hpp"
 #include "RenderObject.h"
 #include "IBounceable.h"
 #include "MathHelperFunctions.h"
@@ -55,7 +55,7 @@ inline Object<typename Model>::Object()
 	globalPosition = glm::mat4(1.0f);
 	moveDirection = glm::vec3(0, 0, 0);//glm::vec3(dist(mt), dist(mt), dist(mt));//
 	objectType = "Non";
-	modelType = "Non";
+	modelType = "Non"; 
 }
 
 template<typename Model>
