@@ -2,7 +2,7 @@
 #include <iostream>
 #include <map>
 #include "Program.h"
-#include "IObject.h"
+#include "..\Core\IObject.h"
 #include "IRenderObject.h"
 #include "Camera.h"
 

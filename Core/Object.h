@@ -1,11 +1,10 @@
 #pragma once
 #include <iostream>
 #include <random>
-#include <opencv2/opencv.hpp>
+//#include <opencv2/opencv.hpp>
 #include "ObjectCounter.h"
 #include "IObject.h"
 //#include "glm/gtc/matrix_transform.hpp"
-#include "RenderObject.h"
 #include "IBounceable.h"
 #include "MathHelperFunctions.h"
 

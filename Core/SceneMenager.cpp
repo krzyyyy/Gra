@@ -1,8 +1,4 @@
 #include "SceneMenager.h"
-#include "RenderObject.h"
-#include "CubeCreator.h"
-#include "CilinderCreator.h"
-#include "SphereCreator.h"
 #include "ObjectGenerator.h"
 #include "IObjectGenerator.h"
 //#include <iostream>
@@ -48,14 +44,14 @@ void SceneMenager::UpdatePosition(std::chrono::duration<double> deltaT)
 		element->UpdatePosition(deltaT);
 	}
 }
-void SceneMenager::UpdateScene(const Camera& camera)
+void SceneMenager::UpdateScene(glm::vec3 targetPosition)
 {
 	auto currentTime = std::chrono::steady_clock::now();
 	auto deltaT = currentTime - lastTime;
 	lastTime = currentTime;
 	UpdatePosition(deltaT);
 	objectsBouncer.FindCollisions(objects, sword);
-	generationTimer.RunEvent(&SceneMenager::GenerateNewObjects, this, camera);
+	generationTimer.RunEvent(&SceneMenager::GenerateNewObjects, this, targetPosition);
 	//renderTimer.RunEvent(&SceneMenager::RenderScene, this, camera);
 	//RenderScene(camera);
 }
@@ -69,7 +65,7 @@ std::vector<std::shared_ptr<IObject>> SceneMenager::GetObjects()
 
 
 
-void SceneMenager::GenerateNewObjects(const Camera& camera)
+void SceneMenager::GenerateNewObjects(glm::vec3 posiotion)
 {
 	auto newObjects = decltype(objects)();
 	for (const auto& object : objects)
@@ -77,7 +73,7 @@ void SceneMenager::GenerateNewObjects(const Camera& camera)
 		auto generateableObject = std::dynamic_pointer_cast<IObjectGenerator>(object);
 		if (generateableObject != nullptr)
 		{
-			newObjects.push_back(generateableObject->generate(camera.getCameraPos()));
+			newObjects.push_back(generateableObject->generate(posiotion));
 		}
 	}
 	std::move(newObjects.begin(), newObjects.end(), std::back_inserter(objects));

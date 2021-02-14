@@ -2,13 +2,15 @@
 #include <istream>
 
 #include "Object.h"
-#include "Program.h"
-#include "Camera.h"
 #include "ObjectGenerator.h"
 #include "Timer.h"
 #include "BounceObject.h"
-
-class SceneMenager
+#ifdef EXPORT_FLAG
+#define EXPORT_MODULES __declspec(dllexport)
+#else
+#define EXPORT_MODULES __declspec(dllimport)
+#endif
+class EXPORT_MODULES SceneMenager
 {
 public:
 	SceneMenager();
@@ -17,11 +19,11 @@ public:
 	SceneMenager& operator=(const SceneMenager& object) = default;
 	SceneMenager& operator=(SceneMenager&& object) = default;
 	void UpdatePosition(std::chrono::duration<double> deltaT);
-	void UpdateScene(const Camera& camera);
+	void UpdateScene(glm::vec3 targetPosition);
 	std::vector<std::shared_ptr<IObject>> GetObjects();
 
 private:
-	void GenerateNewObjects(const Camera& camera);
+	void GenerateNewObjects(glm::vec3 posiotion);
 	std::vector<std::shared_ptr<IObject>> objects;
 	std::shared_ptr<IObject> sword;
 

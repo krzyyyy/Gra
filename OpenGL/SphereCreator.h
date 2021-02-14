@@ -4,7 +4,6 @@
 #include <vector>
 #include "opencv2/opencv.hpp"
 #include "MultidimensionalVector.h"
-#include "ParametricModels.h"
 
 //#include "glm/glm.hpp"
 //#include "glm/gtc/matrix_transform.hpp"

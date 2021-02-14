@@ -14,11 +14,10 @@
 //#include "glm/glm.hpp"
 //#include "glm/gtc/matrix_transform.hpp"
 //#include "glm/gtc/type_ptr.hpp"
-#include "Object.h"
-#include "IObject.h"
+#include "..\Core\Object.h"
 #include "Camera.h"
 #include "RenderObjectFactory.h"
-#include "SceneMenager.h"
+#include "..\Core\SceneMenager.h"
 #include "RenderScene.h"
 #include "BasicShapesCreators.h"
 #include "SphereCreator.h"
@@ -123,7 +122,7 @@ int main()
 
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-		sceneMenager.UpdateScene(camera);
+		sceneMenager.UpdateScene(camera.getCameraPos());
 		std::vector<std::shared_ptr<IObject>> objects = sceneMenager.GetObjects();
 		renderScene.RenderObjects(objects, camera);
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)

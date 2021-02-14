@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 #include "BasicShapesCreators.h"
-#include "ParametricModels.h"
 
 namespace ModelCreators
 {

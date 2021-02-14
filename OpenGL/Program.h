@@ -2,7 +2,7 @@
 #include <iostream>
 #include <memory>
 #include "Shader.h"
-#include "IObject.h"
+#include "..\Core\IObject.h"
 #include "IRenderObject.h"
 
 class Program

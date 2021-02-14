@@ -164,47 +164,31 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BasicShapesCreators.cpp" />
-    <ClCompile Include="BounceObject.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GLAD\src\glad.c" />
     <ClCompile Include="MultidimensionalVector.cpp" />
-    <ClCompile Include="Object.cpp" />
     <ClCompile Include="OpenGL.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="RenderScene.cpp" />
-    <ClCompile Include="SceneMenager.cpp" />
     <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicShapesCreators.h" />
-    <ClInclude Include="BounceObject.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CilinderCreator.h" />
     <ClInclude Include="CubeCreator.h" />
-    <ClInclude Include="IBounceable.h" />
     <ClInclude Include="IModelCreator.h" />
-    <ClInclude Include="IObject.h" />
-    <ClInclude Include="IObjectGenerator.h" />
     <ClInclude Include="IRenderObject.h" />
     <ClInclude Include="IShader.h" />
-    <ClInclude Include="MathHelperFunctions.h" />
     <ClInclude Include="MultidimensionalConvertable.h" />
     <ClInclude Include="MultidimensionalVector.h" />
-    <ClInclude Include="Object.h" />
-    <ClInclude Include="ObjectCounter.h" />
-    <ClInclude Include="ObjectGenerator.h" />
-    <ClInclude Include="ParametricModels.h" />
     <ClInclude Include="Program.h" />
     <ClInclude Include="RenderObject.h" />
     <ClInclude Include="RenderObjectFactory.h" />
     <ClInclude Include="RenderScene.h" />
-    <ClInclude Include="SceneMenager.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderEnum.h" />
     <ClInclude Include="SphereCreator.h" />
-    <ClInclude Include="StreamOperators.h" />
-    <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FragmentShader.glsl" />
@@ -214,6 +198,11 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Textures\wall.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.vcxproj">
+      <Project>{0fce3ea5-d98d-4e98-b235-8328b41d23df}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

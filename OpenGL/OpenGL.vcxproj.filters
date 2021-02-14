@@ -37,9 +37,6 @@
     <Filter Include="Renders\Shaders">
       <UniqueIdentifier>{6f2a4b72-a8ed-46bb-a40a-b68a2d110033}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects Bounce">
-      <UniqueIdentifier>{aad64b39-89d9-4a60-87a8-c687770d960a}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OpenGL.cpp">
@@ -60,29 +57,14 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneMenager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RenderScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BasicShapesCreators.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BounceObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ObjectCounter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MultidimensionalVector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -90,9 +72,6 @@
       <Filter>Concepts</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IRenderObject.h">
@@ -119,24 +98,6 @@
     <ClInclude Include="IShader.h">
       <Filter>Renders\ShaderClasses</Filter>
     </ClInclude>
-    <ClInclude Include="IObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneMenager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IObjectGenerator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectGenerator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StreamOperators.h">
-      <Filter>Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="RenderScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -148,18 +109,6 @@
     </ClInclude>
     <ClInclude Include="SphereCreator.h">
       <Filter>Models\ModelCreators</Filter>
-    </ClInclude>
-    <ClInclude Include="IBounceable.h">
-      <Filter>Objects Bounce</Filter>
-    </ClInclude>
-    <ClInclude Include="ParametricModels.h">
-      <Filter>Objects Bounce</Filter>
-    </ClInclude>
-    <ClInclude Include="BounceObject.h">
-      <Filter>Objects Bounce</Filter>
-    </ClInclude>
-    <ClInclude Include="MathHelperFunctions.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RenderObjectFactory.h">
       <Filter>Header Files</Filter>

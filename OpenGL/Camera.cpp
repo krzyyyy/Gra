@@ -1,5 +1,5 @@
 #include "Camera.h"
-#include "StreamOperators.h"
+#include "..\Core\StreamOperators.h"
 
 
 Camera::Camera():cameraPos(glm::vec3(0.0f, 0.0f, 3.0f)), cameraFront(glm::vec3(0.0f, 0.0f, -1.0f)), cameraUp(glm::vec3(0.0f, 1.0f, 0.0f)), deltaTime(0), lastFrameTime(0)
