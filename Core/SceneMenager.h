@@ -21,7 +21,6 @@ public:
 	void UpdatePosition(std::chrono::duration<double> deltaT);
 	void UpdateScene(glm::vec3 targetPosition);
 	std::vector<std::shared_ptr<IObject>> GetObjects();
-
 private:
 	void GenerateNewObjects(glm::vec3 posiotion);
 	std::vector<std::shared_ptr<IObject>> objects;

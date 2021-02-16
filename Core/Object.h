@@ -6,7 +6,7 @@
 #include "IObject.h"
 //#include "glm/gtc/matrix_transform.hpp"
 #include "IBounceable.h"
-#include "MathHelperFunctions.h"
+
 
 
 template<typename Model>
@@ -102,12 +102,8 @@ template<typename Model>
 inline void Object<Model>::Bounce(glm::vec3 collisionPoint)
 {
 	//moveDirection = -moveDirection;
-	glm::vec3 P = collisionPoint - moveDirection;
-	glm::vec3 centerPosition = getPosition();
-	glm::vec3 direction = collisionPoint - centerPosition;
-	glm::vec3 Pprojected = Math::ProjectPointOntoStraight(collisionPoint, direction, P);
-	glm::vec3 changeVector = Pprojected - P; 
-	moveDirection = (P + (2.f * changeVector)) - collisionPoint;
+	auto parametricModel = Model::ComputeParametricModel(globalPosition, scale);
+	moveDirection = parametricModel.ComputeNewDirection(collisionPoint, moveDirection);
 }
 template<typename Model>
 inline glm::vec3 Object<Model>::getPosition() const

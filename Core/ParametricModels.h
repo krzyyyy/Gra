@@ -4,6 +4,7 @@
 #include "../glm/glm.hpp"
 #include "../glm/gtc/matrix_transform.hpp"
 #include "../glm/gtc/type_ptr.hpp"
+#include "MathHelperFunctions.h"
 
 
 struct ParametricSphere
@@ -16,6 +17,14 @@ struct ParametricSphere
 			.Center = glm::vec3(objectPosition[3].x, objectPosition[3].y, objectPosition[3].z),
 			.R = 0.5,
 		};
+	}
+	glm::vec3 ComputeNewDirection(glm::vec3 collisionPoint, glm::vec3 currentDirection)
+	{
+		glm::vec3 P = collisionPoint - currentDirection;
+		glm::vec3 direction = collisionPoint - Center;
+		glm::vec3 Pprojected = Math::ProjectPointOntoStraight(collisionPoint, direction, P);
+		glm::vec3 changeVector = Pprojected - P;
+		return (P + (2.f * changeVector)) - collisionPoint;
 	}
 };
 struct ParametricCilinder
@@ -34,6 +43,14 @@ struct ParametricCilinder
 			.R = 0.5 * scale[0],
 			.Height = 1. * scale[2],
 		};
+	}
+	glm::vec3 ComputeNewDirection(glm::vec3 collisionPoint, glm::vec3 currentDirection)
+	{
+		glm::vec3 P = collisionPoint - currentDirection;
+		glm::vec3 direction = collisionPoint - Center;
+		glm::vec3 Pprojected = Math::ProjectPointOntoStraight(collisionPoint, direction, P);
+		glm::vec3 changeVector = Pprojected - P;
+		return (P + (2.f * changeVector)) - collisionPoint;
 	}
 };
 using ParametricModel = std::variant<ParametricSphere, ParametricCilinder>;
