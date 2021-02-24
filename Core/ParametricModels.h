@@ -36,18 +36,19 @@ struct ParametricCilinder
 	static ParametricCilinder ComputeParametricModel(const glm::mat4& objectPosition, const glm::vec3& scale)
 	{
 		auto vector = glm::vec3(objectPosition[0][0], objectPosition[0][1], objectPosition[0][2]);
-		glm::vec3 heigntDirection = glm::mat3(objectPosition) * glm::vec3(0, 0, 1);
+		glm::vec3 heightDirection = glm::mat3(objectPosition) * glm::vec3(0, 0, 1);
 		return ParametricCilinder{
 			.Center = glm::vec3(objectPosition[3].x, objectPosition[3].y, objectPosition[3].z),
-			.HeightDirection = heigntDirection,
+			.HeightDirection = heightDirection,
 			.R = 0.5 * scale[0],
 			.Height = 1. * scale[2],
 		};
 	}
 	glm::vec3 ComputeNewDirection(glm::vec3 collisionPoint, glm::vec3 currentDirection)
 	{
+		glm::vec3 collisionPointProjectedOntoMainAxis = Math::ProjectPointOntoStraight(Center, HeightDirection, collisionPoint);
 		glm::vec3 P = collisionPoint - currentDirection;
-		glm::vec3 direction = collisionPoint - Center;
+		glm::vec3 direction = collisionPoint - collisionPointProjectedOntoMainAxis;
 		glm::vec3 Pprojected = Math::ProjectPointOntoStraight(collisionPoint, direction, P);
 		glm::vec3 changeVector = Pprojected - P;
 		return (P + (2.f * changeVector)) - collisionPoint;

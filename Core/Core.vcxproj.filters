@@ -16,6 +16,9 @@
     <Filter Include="Models">
       <UniqueIdentifier>{c16dd99b-1bf5-447e-bb20-5b3797e8edef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utilities">
+      <UniqueIdentifier>{567a0c2f-d01a-465b-a49a-adf82472463c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BounceObject.h">
@@ -53,6 +56,9 @@
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TemplatesUtilities.h">
+      <Filter>Utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

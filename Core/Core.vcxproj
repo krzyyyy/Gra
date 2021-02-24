@@ -152,6 +152,7 @@
     <ClInclude Include="ParametricModels.h" />
     <ClInclude Include="SceneMenager.h" />
     <ClInclude Include="StreamOperators.h" />
+    <ClInclude Include="TemplatesUtilities.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
