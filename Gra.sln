@@ -17,6 +17,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenGL", "OpenGL\OpenGL.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Core", "Core\Core.vcxproj", "{0FCE3EA5-D98D-4E98-B235-8328B41D23DF}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ObjectLogic", "ObjectLogic\ObjectLogic.vcxproj", "{ED0041E9-83B0-4694-B76A-073377EC1311}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -103,6 +105,16 @@ Global
 		{0FCE3EA5-D98D-4E98-B235-8328B41D23DF}.Release|x64.Build.0 = Release|x64
 		{0FCE3EA5-D98D-4E98-B235-8328B41D23DF}.Release|x86.ActiveCfg = Release|Win32
 		{0FCE3EA5-D98D-4E98-B235-8328B41D23DF}.Release|x86.Build.0 = Release|Win32
+		{ED0041E9-83B0-4694-B76A-073377EC1311}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{ED0041E9-83B0-4694-B76A-073377EC1311}.Debug|x64.ActiveCfg = Debug|x64
+		{ED0041E9-83B0-4694-B76A-073377EC1311}.Debug|x64.Build.0 = Debug|x64
+		{ED0041E9-83B0-4694-B76A-073377EC1311}.Debug|x86.ActiveCfg = Debug|Win32
+		{ED0041E9-83B0-4694-B76A-073377EC1311}.Debug|x86.Build.0 = Debug|Win32
+		{ED0041E9-83B0-4694-B76A-073377EC1311}.Release|Any CPU.ActiveCfg = Release|Win32
+		{ED0041E9-83B0-4694-B76A-073377EC1311}.Release|x64.ActiveCfg = Release|x64
+		{ED0041E9-83B0-4694-B76A-073377EC1311}.Release|x64.Build.0 = Release|x64
+		{ED0041E9-83B0-4694-B76A-073377EC1311}.Release|x86.ActiveCfg = Release|Win32
+		{ED0041E9-83B0-4694-B76A-073377EC1311}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
