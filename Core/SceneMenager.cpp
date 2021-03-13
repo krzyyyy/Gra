@@ -1,6 +1,7 @@
 #include "SceneMenager.h"
 #include "ObjectGenerator.h"
 #include "IObjectGenerator.h"
+#include "LiveObject.h"
 //#include <iostream>
 //#include <memory>
 
@@ -12,6 +13,7 @@ SceneMenager::SceneMenager()
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>());
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::SphereCreator>>("Bullet"));
 	objects.emplace_back(std::make_shared<ObjectGenerator< ParametricCilinder, ParametricSphere>>("Generator", "CilinderModel"));
+	objects.emplace_back(std::make_shared<LiveObject< ParametricCilinder>>(Object<ParametricCilinder>("Generator", "CilinderModel"), Logic::ObjectLogic()));
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>("Sword"));
 	//objects.emplace_back(std::make_shared < ObjectGenerator< ModelCreators::CubeCreator, ModelCreators::SphereCreator>>("Generator"));
 	//objects.emplace_back(std::make_unique< Object<RenderObject<ModelCreators::CylinderCreator>>>());
@@ -30,11 +32,9 @@ SceneMenager::SceneMenager()
 	}
 
 	sword = std::make_shared < Object<ParametricCilinder>>("Sword", "CilinderModel");
-	sword->Scale(glm::vec3(4, 4, 1));
-	sword->Rotate(90., glm::vec3(1, 0, 0));
+	sword->Scale(glm::vec3(0.25, 0.25, 4));
 	lastTime = std::chrono::steady_clock::now();
-	generationTimer = Timer(std::chrono::seconds(10));
-	renderTimer = Timer(std::chrono::milliseconds(33));
+	generationTimer = Timer(std::chrono::seconds(5));
 }
 
 void SceneMenager::UpdatePosition(std::chrono::duration<double> deltaT)
@@ -53,8 +53,6 @@ void SceneMenager::UpdateScene(glm::vec3 targetPosition)
 	UpdatePosition(deltaT);
 	objectsBouncer.FindCollisions(objects, sword);
 	generationTimer.RunEvent(&SceneMenager::GenerateNewObjects, this, targetPosition);
-	//renderTimer.RunEvent(&SceneMenager::RenderScene, this, camera);
-	//RenderScene(camera);
 }
 
 std::vector<std::shared_ptr<IObject>> SceneMenager::GetObjects()

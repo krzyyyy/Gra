@@ -60,6 +60,9 @@
     <ClInclude Include="TemplatesUtilities.h">
       <Filter>Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="LiveObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BounceObject.cpp">
@@ -69,6 +72,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LiveObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

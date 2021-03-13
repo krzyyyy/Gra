@@ -9,6 +9,7 @@
 
 
 
+
 template<typename Model>
 class Object:public ObjectCounter<Object<typename Model>>, public IObject, public IBounceable
 {
@@ -33,7 +34,6 @@ public:
 	//IBounceable methods
 	ParametricModel GetParametricModel()const;
 	void Bounce(glm::vec3 collisionPoint);
-
 protected:
 	glm::vec3 getPosition()const;
 	glm::vec3 scale;

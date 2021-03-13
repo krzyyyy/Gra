@@ -145,6 +145,7 @@
     <ClInclude Include="IBounceable.h" />
     <ClInclude Include="IObject.h" />
     <ClInclude Include="IObjectGenerator.h" />
+    <ClInclude Include="LiveObject.h" />
     <ClInclude Include="MathHelperFunctions.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectCounter.h" />
@@ -157,8 +158,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BounceObject.cpp" />
+    <ClCompile Include="LiveObject.cpp" />
     <ClCompile Include="SceneMenager.cpp" />
     <ClCompile Include="Timer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ObjectLogic\ObjectLogic.vcxproj">
+      <Project>{ed0041e9-83b0-4694-b76a-073377ec1311}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
