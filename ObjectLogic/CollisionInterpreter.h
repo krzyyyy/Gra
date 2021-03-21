@@ -18,11 +18,11 @@ inline void CollisionInterpreter::InterpretCollision(Object1& object1, Object2& 
 template<>
 inline void CollisionInterpreter::InterpretCollision<Logic::ObjectLogic, Logic::Bullet>(Logic::ObjectLogic& object1, Logic::Bullet& bullet)
 {
-	object1.TakeDamage(bullet.Damage);
+	object1.currentLive-=bullet.Damage;
 	bullet.Used = true;
 }
 template<>
 inline void CollisionInterpreter::InterpretCollision<Logic::ObjectLogic, Logic::ObjectLogic>(Logic::ObjectLogic& object1, Logic::ObjectLogic& object2)
 {
-	object2.TakeDamage(object1.Attack());
+	object2.currentLive-= object1.damage;
 }
