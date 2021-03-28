@@ -5,6 +5,7 @@
 #include "CilinderCreator.h"
 #include "CubeCreator.h"
 #include "SphereCreator.h"
+#include "RectangleCreator.h"
 
 
 class RenderObjectFactory
@@ -23,6 +24,10 @@ public:
 		else if (modelName == "CilinderModel")
 		{
 			return RenderObject<ModelCreators::CylinderCreator>::getInstance();
+		}
+		else if (modelName == "RectangleModel")
+		{
+			return RenderObject<ModelCreators::RectangleCreator>::getInstance();
 		}
 		throw std::exception("Model does not exist");
 		//return std::make_unique<IRenderObject>();

@@ -60,15 +60,27 @@ void Program::setUniform(const glm::vec3& vec, std::string uniformName) const
     glUniform3fv(uniformLocation, 1, glm::value_ptr(vec));
 }
 
+void Program::setUniform(float number, std::string uniformName) const
+{
+    int uniformLocation = glGetUniformLocation(idProgram, uniformName.c_str());
+    glUniform1f(uniformLocation, number);
+}
+
+void Program::setUniform(bool state, std::string uniformName) const
+{
+    int uniformLocation = glGetUniformLocation(idProgram, uniformName.c_str());
+    glUniform1i(uniformLocation, state);
+}
+
 void Program::useProgram()const
 {
     glUseProgram(idProgram);
 }
 
-void Program::Render(const std::shared_ptr<IObject>& object, IRenderObject& renderObject)
+void Program::Render(const glm::mat4& matrix, IRenderObject& renderObject)
 {
     //program.useProgram();
-    setUniform(object->GetGlobalPosition(), "model");
+    setUniform(matrix, "model");
     renderObject.Load();
 }
 

@@ -63,6 +63,9 @@
     <ClCompile Include="BasicShapesCreators.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FrenderFunctions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MultidimensionalVector.h">
@@ -113,6 +116,12 @@
     <ClInclude Include="RenderObjectFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FrenderFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RectangleCreator.h">
+      <Filter>Models\ModelCreators</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="FragmentShader.glsl">
@@ -125,6 +134,12 @@
       <Filter>Renders\Shaders</Filter>
     </None>
     <None Include="GeneratorsFragmentShader.glsl">
+      <Filter>Renders\Shaders</Filter>
+    </None>
+    <None Include="ParametersBarFragmentShader.glsl">
+      <Filter>Renders\Shaders</Filter>
+    </None>
+    <None Include="ParametersBarVertexShader.glsl">
       <Filter>Renders\Shaders</Filter>
     </None>
   </ItemGroup>

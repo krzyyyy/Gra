@@ -58,13 +58,13 @@ namespace ModelCreators
 			}
 		return modelTriangeVector;
 		};
-		static ParametricCilinder ComputeParametricModel(const glm::mat4& objectPosition, const glm::vec3& scale)
-		{
-			return ParametricCilinder{
-				.Center = glm::vec3(objectPosition[3].x, objectPosition[3].y, objectPosition[3].z),
-				.R = scale.x,
-			};
-		};
+		//static ParametricCilinder ComputeParametricModel(const glm::mat4& objectPosition, const glm::vec3& scale)
+		//{
+		//	return ParametricCilinder{
+		//		.Center = glm::vec3(objectPosition[3].x, objectPosition[3].y, objectPosition[3].z),
+		//		.R = scale.x,
+		//	};
+		//};
 	};
 
 }

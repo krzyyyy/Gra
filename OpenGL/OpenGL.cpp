@@ -47,6 +47,8 @@ int main()
 	auto fragmenShaderPath = fs::path("FragmentShader.glsl");
 	auto fragmenShader2Path = fs::path("FragmentShader2.glsl");
 	auto fragmenShaderGeneratorPath = fs::path("GeneratorsFragmentShader.glsl");
+	auto fragmenShaderParametesBar = fs::path("ParametersBarFragmentShader.glsl");
+	auto vertexShaderParametesBar = fs::path("ParametersBarVertexShader.glsl");
 	RenderObjectFactory renderObjectFactory;
 	// glfw: initialize and configure
 	// ------------------------------
@@ -80,10 +82,6 @@ int main()
 	glfwSetScrollCallback(window, scrollCallback);
 
 	
-	auto& cubeModel = RenderObject<ModelCreators::CubeCreator>::getInstance();
-	cubeModel.Initialize();
-	RenderObject<ModelCreators::CylinderCreator>::getInstance().Initialize();
-	RenderObject<ModelCreators::SphereCreator>::getInstance().Initialize();
 
 	auto renderScene = RenderScene();
 	SceneMenager sceneMenager;
@@ -91,6 +89,7 @@ int main()
 		std::make_tuple("Bullet", vertexShaderPath.string(), fragmenShaderPath.string()),
 		std::make_tuple("Sword", vertexShaderPath.string(), fragmenShader2Path.string()),
 		std::make_tuple("Generator", vertexShaderPath.string(), fragmenShaderGeneratorPath.string()),
+		std::make_tuple("LiveBar", vertexShaderParametesBar.string(), fragmenShaderParametesBar.string())
 		});
 	renderScene.AddModel(
 		"CubeModel",
@@ -104,6 +103,11 @@ int main()
 		"SphereModel",
 		renderObjectFactory.CreateRenderObjects("SphereModel")
 	);
+	renderScene.AddModel(
+		"RectangleModel",
+		renderObjectFactory.CreateRenderObjects("RectangleModel")
+	);
+	renderScene.InitializeModels();
 
 
 	// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind

@@ -165,6 +165,7 @@
   <ItemGroup>
     <ClCompile Include="BasicShapesCreators.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="FrenderFunctions.cpp" />
     <ClCompile Include="GLAD\src\glad.c" />
     <ClCompile Include="MultidimensionalVector.cpp" />
     <ClCompile Include="OpenGL.cpp" />
@@ -177,12 +178,14 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CilinderCreator.h" />
     <ClInclude Include="CubeCreator.h" />
+    <ClInclude Include="FrenderFunctions.h" />
     <ClInclude Include="IModelCreator.h" />
     <ClInclude Include="IRenderObject.h" />
     <ClInclude Include="IShader.h" />
     <ClInclude Include="MultidimensionalConvertable.h" />
     <ClInclude Include="MultidimensionalVector.h" />
     <ClInclude Include="Program.h" />
+    <ClInclude Include="RectangleCreator.h" />
     <ClInclude Include="RenderObject.h" />
     <ClInclude Include="RenderObjectFactory.h" />
     <ClInclude Include="RenderScene.h" />
@@ -194,6 +197,8 @@
     <None Include="FragmentShader.glsl" />
     <None Include="FragmentShader2.glsl" />
     <None Include="GeneratorsFragmentShader.glsl" />
+    <None Include="ParametersBarFragmentShader.glsl" />
+    <None Include="ParametersBarVertexShader.glsl" />
     <None Include="VertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>
