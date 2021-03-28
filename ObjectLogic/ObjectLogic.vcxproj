@@ -154,6 +154,7 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="CollisionInterpreter.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="ILiveObject.h" />
     <ClInclude Include="LiveTypes.h" />
     <ClInclude Include="ObjectLogic.h" />
     <ClInclude Include="pch.h" />

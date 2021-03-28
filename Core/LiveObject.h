@@ -1,14 +1,15 @@
 #pragma once
 #include "Object.h"
 #include "..\ObjectLogic\LiveTypes.h" 
+#include "..\ObjectLogic\ILiveObject.h"
 template<typename Model>
 class LiveObject :
-    public Object<Model>
+    public Object<Model>, public Logic::ILiveObject
 {
 public:
-    LiveObject(Object<Model> object, Logic::LiveTypes logicObject);
-    Logic::LiveTypes GetLiveParameters();
-    void SetLiveParameters(Logic::LiveTypes newLiveParameters);
+    LiveObject(Object<Model> object, Logic::LiveTypes logicObject) ;
+    Logic::LiveTypes GetLiveParameters() const override;
+    void SetLiveParameters(Logic::LiveTypes newLiveParameters) override;
 private:
     Logic::LiveTypes objectLogic;
 
@@ -21,7 +22,7 @@ LiveObject<typename Model>::LiveObject(Object<Model> object, Logic::LiveTypes lo
 }
 
 template<typename Model>
-inline Logic::LiveTypes LiveObject<Model>::GetLiveParameters()
+inline Logic::LiveTypes LiveObject<Model>::GetLiveParameters() const
 {
     return objectLogic;
 }

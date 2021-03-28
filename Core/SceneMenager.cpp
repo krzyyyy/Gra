@@ -13,7 +13,14 @@ SceneMenager::SceneMenager()
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>());
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::SphereCreator>>("Bullet"));
 	objects.emplace_back(std::make_shared<ObjectGenerator< ParametricCilinder, ParametricSphere>>("Generator", "CilinderModel"));
-	objects.emplace_back(std::make_shared<LiveObject< ParametricCilinder>>(Object<ParametricCilinder>("Generator", "CilinderModel"), Logic::ObjectLogic()));
+	objects.emplace_back(std::make_shared<LiveObject< ParametricCilinder>>(Object<ParametricCilinder>("Generator", "CilinderModel"),
+		Logic::ObjectLogic
+		{
+			.maxLive = 100,
+			.currentLive = 20,
+			.damage = 5
+		}
+		));
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>("Sword"));
 	//objects.emplace_back(std::make_shared < ObjectGenerator< ModelCreators::CubeCreator, ModelCreators::SphereCreator>>("Generator"));
 	//objects.emplace_back(std::make_unique< Object<RenderObject<ModelCreators::CylinderCreator>>>());
