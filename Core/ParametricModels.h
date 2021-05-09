@@ -56,9 +56,3 @@ struct ParametricCilinder
 };
 using ParametricModel = std::variant<ParametricSphere, ParametricCilinder>;
 
-struct Match
-{
-	std::size_t QueryIdx;
-	std::size_t TrainIdx;
-	glm::vec3 ColissionPoint;
-};

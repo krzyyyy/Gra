@@ -11,7 +11,7 @@
 
 
 template<typename Model>
-class Object:public ObjectCounter<Object<typename Model>>, public IObject, public IBounceable
+class Object:public ObjectCounter<Object<typename Model>>, public IObject/*, public IBounceable*/
 {
 public:
 	Object();

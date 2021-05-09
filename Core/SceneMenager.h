@@ -2,6 +2,7 @@
 #include <istream>
 
 #include "Object.h"
+#include "IObjectGenerator.h"
 #include "ObjectGenerator.h"
 #include "Timer.h"
 #include "BounceObject.h"
@@ -23,12 +24,13 @@ public:
 	std::vector<std::shared_ptr<IObject>> GetObjects();
 private:
 	void GenerateNewObjects(glm::vec3 posiotion);
-	std::vector<std::shared_ptr<IObject>> objects;
+	//objects
+	std::vector<std::shared_ptr<IObject>> bullets;
+	std::vector<std::shared_ptr<IObjectGenerator>> enemies;
 	std::shared_ptr<IObject> sword;
 
 	glm::vec3 swordPosition;
 	std::chrono::steady_clock::time_point lastTime;
 	Timer generationTimer;
-	Timer renderTimer;
 	BounceObjects objectsBouncer;
 };

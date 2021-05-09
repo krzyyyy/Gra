@@ -1,25 +1,54 @@
 #include "BounceObject.h"
 #include "IBounceable.h"
 #include "MathHelperFunctions.h"
+#include "..\ObjectLogic\ILiveObject.h"
 
-std::vector<Match> BounceObjects::FindCollisions(std::vector<std::shared_ptr<IObject>>& objects, const std::shared_ptr<IObject>& sword)
+std::optional<Match> BounceObjects::FindCollision(std::shared_ptr<IObject>& object, const std::shared_ptr<IObject>& sword)
 {
-    std::shared_ptr<IBounceable> boucableSword = std::dynamic_pointer_cast<IBounceable>(sword);
-    if (boucableSword == nullptr)
-        throw std::exception{ "Miecz musi byc obiektem odbijalnym" };
-    ParametricModel swordModel = boucableSword->GetParametricModel();
-    for (auto& object : objects)
+    auto collisions = std::vector<Match>();
+    ParametricModel swordModel = sword->GetParametricModel();
+	ParametricModel objectModel = object->GetParametricModel();
+	auto colision = std::visit(*this, objectModel, swordModel);
+	if (colision.first)
+	{
+        //object->Bounce(colision.second);
+		return Match{ .QueryIdx = object, .TrainIdx = sword, .ColissionPoint = colision.second };
+        
+	}
+    return std::nullopt;
+    //for (auto obejectIterator = objects.cbegin(); obejectIterator != objects.cend(); ++obejectIterator)
+    //{
+    //    std::shared_ptr<IBounceable> bounceObject = std::dynamic_pointer_cast<IBounceable>(*obejectIterator);
+    //    if (!bounceObject)
+    //        continue;
+    //    ParametricModel objectParametricModel = bounceObject->GetParametricModel();
+    //    for (auto obejectIterator2 = obejectIterator+1; obejectIterator2 != objects.cend(); ++obejectIterator2)
+    //    {
+    //        std::shared_ptr<IBounceable> bounceObject2 = std::dynamic_pointer_cast<IBounceable>(*obejectIterator2);
+    //        if (!bounceObject2)
+    //            continue;
+    //        ParametricModel object2ParametricModel = bounceObject2->GetParametricModel();
+    //        auto colision = std::visit(*this, objectParametricModel, object2ParametricModel);
+    //        if (colision.first)
+    //        {
+    //            //collisions.emplace_back(Match{ .QueryIdx = object, .TrainIdx = sword, .ColissionPoint = colision.second });
+    //            //bouncableObject->Bounce(colision.second);
+    //        }
+    //    }
+    //}
+    //return collisions;
+}
+
+void BounceObjects::InterpretCollisions(const std::vector<Match>& collisions)
+{
+    for (const auto& collision : collisions)
     {
-        std::shared_ptr<IBounceable> bouncableObject = std::dynamic_pointer_cast<IBounceable>(object);
-        if (bouncableObject == nullptr)
-            continue;
-        ParametricModel objectModel = bouncableObject->GetParametricModel();
-        auto colision = std::visit(*this, objectModel, swordModel);
-        if (colision.first)
+        auto liveObject1 = std::dynamic_pointer_cast<Logic::ILiveObject>(collision.QueryIdx);
+        auto liveObject2 = std::dynamic_pointer_cast<Logic::ILiveObject>(collision.TrainIdx);
+        if (liveObject1 && liveObject2)
         {
-            bouncableObject->Bounce(colision.second);
+            collisionInterpreter.InterpretCollision(liveObject1, liveObject2);
         }
     }
-    return std::vector<Match>();
 }
 

@@ -4,6 +4,8 @@
 #include "../glm/gtc/matrix_transform.hpp"
 #include "../glm/glm.hpp"
 
+#include "ParametricModels.h"
+
 class IObject
 {
 public:
@@ -17,4 +19,14 @@ public:
 	virtual glm::mat4 GetGlobalPosition()const = 0;
 	virtual std::string GetObjectType()const =0;
 	virtual std::string GetObjectModel() const = 0;
+
+	virtual ParametricModel GetParametricModel()const = 0;
+	virtual void Bounce(glm::vec3 collisionPoint) = 0;
+};
+
+struct Match
+{
+	std::shared_ptr<IObject> QueryIdx;
+	std::shared_ptr<IObject> TrainIdx;
+	glm::vec3 ColissionPoint;
 };

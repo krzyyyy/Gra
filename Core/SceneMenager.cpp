@@ -8,12 +8,12 @@
 
 SceneMenager::SceneMenager()
 {
-	objects = std::vector<std::shared_ptr<IObject>>();
+	bullets = std::vector<std::shared_ptr<IObject>>();
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>());
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>());
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::SphereCreator>>("Bullet"));
-	objects.emplace_back(std::make_shared<ObjectGenerator< ParametricCilinder, ParametricSphere>>("Generator", "CilinderModel"));
-	objects.emplace_back(std::make_shared<LiveObject< ParametricCilinder>>(Object<ParametricCilinder>("Generator", "CilinderModel"),
+	enemies.emplace_back(std::make_shared<ObjectGenerator< ParametricSphere, ParametricSphere>>("Generator", "CilinderModel"));
+	enemies.emplace_back(std::make_shared<LiveObject< ObjectGenerator< ParametricSphere, ParametricSphere>>>(ObjectGenerator< ParametricSphere, ParametricSphere>("Generator", "CilinderModel"),
 		Logic::ObjectLogic
 		{
 			.maxLive = 100,
@@ -33,9 +33,11 @@ SceneMenager::SceneMenager()
 	glm::vec3(2.4f, -0.4f, -3.5f),
 	glm::vec3(-1.7f,  3.0f, -7.5f),
 	};
-	for (int i = 0; i < objects.size(); ++i)
+	for (int i = 0; i < enemies.size(); ++i)
 	{
-		objects[i]->Translate(cubePositions[i]);
+		auto object = std::dynamic_pointer_cast<IObject>(enemies[i]);
+		if(object)
+			object->Translate(cubePositions[i]);
 	}
 
 	sword = std::make_shared < Object<ParametricCilinder>>("Sword", "CilinderModel");
@@ -47,24 +49,66 @@ SceneMenager::SceneMenager()
 void SceneMenager::UpdatePosition(std::chrono::duration<double> deltaT)
 {
 
-	for (auto& element : objects)
+	for (auto& element : enemies)
 	{
-		element->UpdatePosition(deltaT);
+		auto object = std::dynamic_pointer_cast<IObject>(element);
+		if(object)
+			object->UpdatePosition(deltaT);
+	}
+	for (auto& element : bullets)
+	{
+		auto object = std::dynamic_pointer_cast<IObject>(element);
+		if (object)
+			object->UpdatePosition(deltaT);
 	}
 }
 void SceneMenager::UpdateScene(glm::vec3 targetPosition)
 {
+	auto collisions = std::vector<Match>();
 	auto currentTime = std::chrono::steady_clock::now();
 	auto deltaT = currentTime - lastTime;
 	lastTime = currentTime;
 	UpdatePosition(deltaT);
-	objectsBouncer.FindCollisions(objects, sword);
+	for (auto& bullet : bullets)
+	{
+
+		std::optional<Match> collision = objectsBouncer.FindCollision(bullet, sword);
+		if (auto collisionPointer = collision)
+		{
+			collisions.emplace_back(*collisionPointer);
+		}
+	}
+	for (auto& bullet : bullets)
+	{
+		for (auto& enemy : enemies)
+		{
+			auto enemyObject = std::dynamic_pointer_cast<IObject>(enemy);
+			if (!enemyObject)
+				continue;
+			std::optional<Match> collision = objectsBouncer.FindCollision(bullet, enemyObject);
+			if (auto collisionPointer = collision)
+			{
+				collisions.emplace_back(*collisionPointer);
+			}
+		}
+	}
 	generationTimer.RunEvent(&SceneMenager::GenerateNewObjects, this, targetPosition);
 }
 
 std::vector<std::shared_ptr<IObject>> SceneMenager::GetObjects()
 {
-	auto allObjects = objects;
+	auto allObjects = std::vector<std::shared_ptr<IObject>>();
+	for (auto& enemy : enemies)
+	{
+		auto object = std::dynamic_pointer_cast<IObject>(enemy);
+		if (!object)
+			continue;
+		allObjects.push_back(object);
+	}
+	for (auto& bullet : bullets)
+	{
+		allObjects.push_back(bullet);
+	}
 	allObjects.push_back(sword);
 	return allObjects;
 }
@@ -73,14 +117,9 @@ std::vector<std::shared_ptr<IObject>> SceneMenager::GetObjects()
 
 void SceneMenager::GenerateNewObjects(glm::vec3 posiotion)
 {
-	auto newObjects = decltype(objects)();
-	for (const auto& object : objects)
+	for (const auto& enemy : enemies)
 	{
-		auto generateableObject = std::dynamic_pointer_cast<IObjectGenerator>(object);
-		if (generateableObject != nullptr)
-		{
-			newObjects.push_back(generateableObject->generate(posiotion));
-		}
+		bullets.push_back(enemy->generate(posiotion));
 	}
-	std::move(newObjects.begin(), newObjects.end(), std::back_inserter(objects));
+	//std::move(newObjects.begin(), newObjects.end(), std::back_inserter(objects));
 }

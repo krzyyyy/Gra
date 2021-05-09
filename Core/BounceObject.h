@@ -1,23 +1,27 @@
 #pragma once
 #include <iostream>
-#include <cstddef>
+//#include <cstddef>
 #include <vector>
 #include <utility>
+#include <optional>
 #include "IObject.h"
 #include "ParametricModels.h"
+#include "..\ObjectLogic\CollisionInterpreter.h"
+//#include "ParametricModels.h"
 
 class BounceObjects
 {
 public:
 
-	std::vector<Match> FindCollisions(std::vector<std::shared_ptr<IObject>>& objects, const std::shared_ptr<IObject>& sword);
+	std::optional<Match> FindCollision(std::shared_ptr<IObject>& objects, const std::shared_ptr<IObject>& sword);
+	void InterpretCollisions(const std::vector<Match>& collisions) ;
 	template<typename ParametricModel1, typename ParametricModel2>
 	std::pair<bool, glm::vec3> operator()(ParametricModel1 model1, ParametricModel2 model2);
 private:
-	
+	Logic::CollisionInterpreter collisionInterpreter;
 	//auto selectBounceMethod(ParametricModel model1, Para)
-	template<typename ParametricModel1, typename ParametricModel2>
-	auto bounceMethodSelector();
+	//template<typename ParametricModel1, typename ParametricModel2>
+	//auto bounceMethodSelector();
 };
 
 
@@ -98,33 +102,33 @@ inline std::pair<bool, glm::vec3> BounceObjects::operator() < ParametricCilinder
 	return std::make_pair(false, glm::vec3());
 }
 
-template<typename ParametricModel1, typename ParametricModel2>
-inline auto BounceObjects::bounceMethodSelector()
-{
-	constexpr bool hasBounceMethod = requires()
-	{
-		BounceObjects::FindBounce(ParametricModel1, ParametricModel2);
-	};
-	if constexpr (hasBounceMethod)
-	{
-		return [this](ParametricModel1 model1, ParametricModel2 model2)
-		{
-			//return this->FindBounce(model1, model2);
-		};
-	}
-	constexpr bool hasBounceMethodWithSwappedArgs = requires()
-	{
-		BounceObjects::FindBounce(ParametricModel2, ParametricModel1);
-	};
-	if constexpr (hasBounceMethodWithSwappedArgs)
-	{
-		return [this](ParametricModel1 model1, ParametricModel2 model2)
-		{
-			//return this->FindBounce(model2, model1);
-		};
-	}
-	return [this](ParametricModel1 model1, ParametricModel2 model2)
-	{
-		return std::make_pair(false, glm::vec3());
-	};
-}
+//template<typename ParametricModel1, typename ParametricModel2>
+//inline auto BounceObjects::bounceMethodSelector()
+//{
+//	constexpr bool hasBounceMethod = requires()
+//	{
+//		BounceObjects::FindBounce(ParametricModel1, ParametricModel2);
+//	};
+//	if constexpr (hasBounceMethod)
+//	{
+//		return [this](ParametricModel1 model1, ParametricModel2 model2)
+//		{
+//			//return this->FindBounce(model1, model2);
+//		};
+//	}
+//	constexpr bool hasBounceMethodWithSwappedArgs = requires()
+//	{
+//		BounceObjects::FindBounce(ParametricModel2, ParametricModel1);
+//	};
+//	if constexpr (hasBounceMethodWithSwappedArgs)
+//	{
+//		return [this](ParametricModel1 model1, ParametricModel2 model2)
+//		{
+//			//return this->FindBounce(model2, model1);
+//		};
+//	}
+//	return [this](ParametricModel1 model1, ParametricModel2 model2)
+//	{
+//		return std::make_pair(false, glm::vec3());
+//	};
+//}

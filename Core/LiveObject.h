@@ -2,12 +2,12 @@
 #include "Object.h"
 #include "..\ObjectLogic\LiveTypes.h" 
 #include "..\ObjectLogic\ILiveObject.h"
-template<typename Model>
+template<typename Object>
 class LiveObject :
-    public Object<Model>, public Logic::ILiveObject
+    public Object, public Logic::ILiveObject
 {
 public:
-    LiveObject(Object<Model> object, Logic::LiveTypes logicObject) ;
+    LiveObject(Object object, Logic::LiveTypes logicObject) ;
     Logic::LiveTypes GetLiveParameters() const override;
     void SetLiveParameters(Logic::LiveTypes newLiveParameters) override;
 private:
@@ -15,20 +15,20 @@ private:
 
 };
 
-template<typename Model>
-LiveObject<typename Model>::LiveObject(Object<Model> object, Logic::LiveTypes logicObject):Object<Model>(object), objectLogic(logicObject)
+template<typename Object>
+LiveObject<typename Object>::LiveObject(Object object, Logic::LiveTypes logicObject):Object(object), objectLogic(logicObject)
 {
 
 }
 
-template<typename Model>
-inline Logic::LiveTypes LiveObject<Model>::GetLiveParameters() const
+template<typename Object>
+inline Logic::LiveTypes LiveObject<Object>::GetLiveParameters() const
 {
     return objectLogic;
 }
 
-template<typename Model>
-inline void LiveObject<Model>::SetLiveParameters(Logic::LiveTypes newLiveParameters)
+template<typename Object>
+inline void LiveObject<Object>::SetLiveParameters(Logic::LiveTypes newLiveParameters)
 {
     objectLogic = newLiveParameters;
 }

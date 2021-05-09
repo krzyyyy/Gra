@@ -68,7 +68,7 @@ void RenderScene::renderParametersBar(const std::shared_ptr<IObject>& object, co
 	auto isLive = std::holds_alternative<Logic::ObjectLogic>(liveParameters);
 	if (!isLive)
 		return;
-	auto liveobject = std::get<Logic::ObjectLogic>(liveParameters);
+	const auto& liveobject = std::get<Logic::ObjectLogic>(liveParameters);
 	double liveFactor = liveobject.currentLive / liveobject.maxLive;
 	//auto objectGlobalPositionRed = glm::scale(objectGlobalPosition, glm::vec3(1-liveFactor, 1, 1));
 	//objectGlobalPositionRed = glm::translate(objectGlobalPositionRed, glm::vec3(-(liveFactor)/2, 0, 0));
