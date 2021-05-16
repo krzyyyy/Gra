@@ -3,16 +3,20 @@
 #include "MathHelperFunctions.h"
 #include "..\ObjectLogic\ILiveObject.h"
 
-std::optional<Match> BounceObjects::FindCollision(std::shared_ptr<IObject>& object, const std::shared_ptr<IObject>& sword)
+std::optional<Match> BounceObjects::FindCollision(std::shared_ptr<IObject>& object1, const std::shared_ptr<IObject>& object2)
 {
-    auto collisions = std::vector<Match>();
-    ParametricModel swordModel = sword->GetParametricModel();
-	ParametricModel objectModel = object->GetParametricModel();
+
+    ParametricModel swordModel = object2->GetParametricModel();
+	ParametricModel objectModel = object1->GetParametricModel();
+    if (object1->IsMovingAway(object2))
+    {
+        return std::nullopt;
+    }
 	auto colision = std::visit(*this, objectModel, swordModel);
 	if (colision.first)
 	{
         //object->Bounce(colision.second);
-		return Match{ .QueryIdx = object, .TrainIdx = sword, .ColissionPoint = colision.second };
+		return Match{ .QueryIdx = object1, .TrainIdx = object2, .ColissionPoint = colision.second };
         
 	}
     return std::nullopt;

@@ -142,6 +142,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BounceObject.h" />
+    <ClInclude Include="DeleteConditionVisitor.h" />
     <ClInclude Include="IBounceable.h" />
     <ClInclude Include="IObject.h" />
     <ClInclude Include="IObjectGenerator.h" />

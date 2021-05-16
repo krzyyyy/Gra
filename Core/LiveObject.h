@@ -10,6 +10,7 @@ public:
     LiveObject(Object object, Logic::LiveTypes logicObject) ;
     Logic::LiveTypes GetLiveParameters() const override;
     void SetLiveParameters(Logic::LiveTypes newLiveParameters) override;
+    //void BounceReaction(glm::vec3 collisionPoint) override;
 private:
     Logic::LiveTypes objectLogic;
 
@@ -32,3 +33,9 @@ inline void LiveObject<Object>::SetLiveParameters(Logic::LiveTypes newLiveParame
 {
     objectLogic = newLiveParameters;
 }
+
+//template<typename Object>
+//inline void LiveObject<Object>::BounceReaction(glm::vec3 collisionPoint)
+//{
+//
+//}

@@ -2,7 +2,7 @@
 #include <iostream>
 #include <memory>
 
-#include "Object.h"
+#include "LiveObject.h"
 #include "IObjectGenerator.h"
 
 template<typename Model, typename GeneratedModel>
@@ -35,10 +35,15 @@ inline ObjectGenerator<Model, GeneratedModel>::ObjectGenerator( std::string obje
 template<typename Model, typename GeneratedModel>
 inline std::shared_ptr<IObject> ObjectGenerator<Model, GeneratedModel>::generate(glm::vec3 targetPosition)const
 {
-	auto generatorPosition = Object<Model>::getPosition();
+	auto generatorGlobalPosition = Object<Model>::GetGlobalPosition();
+	auto generatorPosition = Math::GetVectorPosition(generatorGlobalPosition);
 	glm::vec3 targetDirection = targetPosition - generatorPosition;
 	glm::vec3 velociti = glm::normalize(targetDirection);
-	auto newObject = std::make_shared<Object<GeneratedModel>>(velociti, "Bullet", "SphereModel");
-	newObject->Translate(generatorPosition);
+	auto newObject = std::make_shared<LiveObject<Object<GeneratedModel>>>(Object<GeneratedModel>(velociti, "Bullet", "SphereModel"), Logic::Bullet
+		{
+			.Damage = 20,
+			.Used = false,
+		});
+	newObject->Translate(generatorPosition );
 	return newObject;
 }

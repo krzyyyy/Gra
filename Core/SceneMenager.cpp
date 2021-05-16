@@ -2,6 +2,7 @@
 #include "ObjectGenerator.h"
 #include "IObjectGenerator.h"
 #include "LiveObject.h"
+#include "..\ObjectLogic\DeleteConditionVisitor.h"
 //#include <iostream>
 //#include <memory>
 
@@ -12,7 +13,14 @@ SceneMenager::SceneMenager()
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>());
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>());
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::SphereCreator>>("Bullet"));
-	enemies.emplace_back(std::make_shared<ObjectGenerator< ParametricSphere, ParametricSphere>>("Generator", "CilinderModel"));
+	enemies.emplace_back(std::make_shared<LiveObject< ObjectGenerator< ParametricSphere, ParametricSphere>>>(ObjectGenerator< ParametricSphere, ParametricSphere>("Generator", "CilinderModel"),
+		Logic::ObjectLogic
+		{
+			.maxLive = 120,
+			.currentLive = 120,
+			.damage = 5
+		}
+	));
 	enemies.emplace_back(std::make_shared<LiveObject< ObjectGenerator< ParametricSphere, ParametricSphere>>>(ObjectGenerator< ParametricSphere, ParametricSphere>("Generator", "CilinderModel"),
 		Logic::ObjectLogic
 		{
@@ -64,7 +72,6 @@ void SceneMenager::UpdatePosition(std::chrono::duration<double> deltaT)
 }
 void SceneMenager::UpdateScene(glm::vec3 targetPosition)
 {
-	auto collisions = std::vector<Match>();
 	auto currentTime = std::chrono::steady_clock::now();
 	auto deltaT = currentTime - lastTime;
 	lastTime = currentTime;
@@ -75,7 +82,8 @@ void SceneMenager::UpdateScene(glm::vec3 targetPosition)
 		std::optional<Match> collision = objectsBouncer.FindCollision(bullet, sword);
 		if (auto collisionPointer = collision)
 		{
-			collisions.emplace_back(*collisionPointer);
+			//collisions.emplace_back(*collisionPointer);
+			bullet->BounceReaction(collisionPointer->ColissionPoint);
 		}
 	}
 	for (auto& bullet : bullets)
@@ -88,11 +96,15 @@ void SceneMenager::UpdateScene(glm::vec3 targetPosition)
 			std::optional<Match> collision = objectsBouncer.FindCollision(bullet, enemyObject);
 			if (auto collisionPointer = collision)
 			{
-				collisions.emplace_back(*collisionPointer);
+				auto liveBullet = std::dynamic_pointer_cast<Logic::ILiveObject>(bullet);
+				auto liveEnemy = std::dynamic_pointer_cast<Logic::ILiveObject>(enemy);
+				collisionInterpreter.InterpretCollision(liveBullet, liveEnemy);
+				//collisions.emplace_back(*collisionPointer);
 			}
 		}
 	}
 	generationTimer.RunEvent(&SceneMenager::GenerateNewObjects, this, targetPosition);
+	EraseUnusedElements();
 }
 
 std::vector<std::shared_ptr<IObject>> SceneMenager::GetObjects()
@@ -114,6 +126,29 @@ std::vector<std::shared_ptr<IObject>> SceneMenager::GetObjects()
 }
 
 
+
+void SceneMenager::EraseUnusedElements()
+{
+	auto deletePredicat = [](auto& bullet)
+	{
+		std::shared_ptr<Logic::ILiveObject> liveObject = std::dynamic_pointer_cast<Logic::ILiveObject>(bullet);
+		if (!liveObject)
+		{
+			return false;
+		}
+		DeleteConditionVisitor deleter;
+		auto liveType = liveObject->GetLiveParameters();
+		bool toDelete = std::visit(deleter, liveType);
+		if (toDelete)
+		{
+			return true;
+		}
+		return false;
+	};
+	std::erase_if(bullets, deletePredicat);
+	std::erase_if(enemies, deletePredicat);
+
+}
 
 void SceneMenager::GenerateNewObjects(glm::vec3 posiotion)
 {

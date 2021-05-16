@@ -70,11 +70,12 @@ void RenderScene::renderParametersBar(const std::shared_ptr<IObject>& object, co
 		return;
 	const auto& liveobject = std::get<Logic::ObjectLogic>(liveParameters);
 	double liveFactor = liveobject.currentLive / liveobject.maxLive;
+	if (liveFactor < 0)
+		liveFactor = 0.;
 	//auto objectGlobalPositionRed = glm::scale(objectGlobalPosition, glm::vec3(1-liveFactor, 1, 1));
 	//objectGlobalPositionRed = glm::translate(objectGlobalPositionRed, glm::vec3(-(liveFactor)/2, 0, 0));
-	program.setUniform(float(1.f - liveFactor), "liveFactor");
-	program.setUniform(true, "lowerBar");
-	program.setUniform(glm::vec3(1.f, 0.f, 0.f), "color");
+	program.setUniform( float(liveFactor), "liveFactor");
+	program.setUniform(float(liveFactor), "liveFactorF");
 	program.Render(objectGlobalPosition, *models["RectangleModel"]);
 
 

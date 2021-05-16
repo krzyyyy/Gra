@@ -63,6 +63,9 @@
     <ClInclude Include="LiveObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DeleteConditionVisitor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BounceObject.cpp">

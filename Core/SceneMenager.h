@@ -23,6 +23,7 @@ public:
 	void UpdateScene(glm::vec3 targetPosition);
 	std::vector<std::shared_ptr<IObject>> GetObjects();
 private:
+	void EraseUnusedElements();
 	void GenerateNewObjects(glm::vec3 posiotion);
 	//objects
 	std::vector<std::shared_ptr<IObject>> bullets;
@@ -33,4 +34,5 @@ private:
 	std::chrono::steady_clock::time_point lastTime;
 	Timer generationTimer;
 	BounceObjects objectsBouncer;
+	Logic::CollisionInterpreter collisionInterpreter;
 };

@@ -11,7 +11,7 @@
 
 
 template<typename Model>
-class Object:public ObjectCounter<Object<typename Model>>, public IObject/*, public IBounceable*/
+class Object:public ObjectCounter<Object<typename Model>>, public IObject
 {
 public:
 	Object();
@@ -33,9 +33,10 @@ public:
 	std::string GetObjectModel() const override;
 	//IBounceable methods
 	ParametricModel GetParametricModel()const;
-	void Bounce(glm::vec3 collisionPoint);
+	void BounceReaction(glm::vec3 collisionPoint) override;
+
+	bool IsMovingAway(const std::shared_ptr<IObject>& object) override;
 protected:
-	glm::vec3 getPosition()const;
 	glm::vec3 scale;
 	glm::mat4 globalPosition;
 	glm::vec3 moveDirection;
@@ -99,16 +100,24 @@ inline ParametricModel Object<Model>::GetParametricModel()const
 	return Model::ComputeParametricModel(globalPosition, scale);
 }
 template<typename Model>
-inline void Object<Model>::Bounce(glm::vec3 collisionPoint)
+inline void Object<Model>::BounceReaction(glm::vec3 collisionPoint)
 {
 	//moveDirection = -moveDirection;
 	auto parametricModel = Model::ComputeParametricModel(globalPosition, scale);
 	moveDirection = parametricModel.ComputeNewDirection(collisionPoint, moveDirection);
 }
 template<typename Model>
-inline glm::vec3 Object<Model>::getPosition() const
+inline bool Object<Model>::IsMovingAway(const std::shared_ptr<IObject>& object)
 {
-	return  glm::vec3(this->globalPosition[3].x, this->globalPosition[3].y, this->globalPosition[3].z);
+	double epsilon = 0.01;
+	glm::mat4 object1GlobalPosition = object->GetGlobalPosition();
+	glm::vec3 object1Center  = Math::GetVectorPosition(object1GlobalPosition);
+	glm::vec3 difference = object1Center - Math::GetVectorPosition(globalPosition);
+
+	difference = glm::normalize(difference);
+	auto dotProdact = glm::dot(difference, moveDirection);
+	auto diff = std::abs(dotProdact - (-1));
+	return diff < epsilon;
 }
 template<typename Model>
 inline glm::mat4 Object<Model>::GetGlobalPosition()  const

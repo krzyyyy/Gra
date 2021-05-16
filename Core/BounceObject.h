@@ -13,7 +13,7 @@ class BounceObjects
 {
 public:
 
-	std::optional<Match> FindCollision(std::shared_ptr<IObject>& objects, const std::shared_ptr<IObject>& sword);
+	std::optional<Match> FindCollision(std::shared_ptr<IObject>& object1, const std::shared_ptr<IObject>& object2);
 	void InterpretCollisions(const std::vector<Match>& collisions) ;
 	template<typename ParametricModel1, typename ParametricModel2>
 	std::pair<bool, glm::vec3> operator()(ParametricModel1 model1, ParametricModel2 model2);
@@ -76,7 +76,6 @@ inline std::pair<bool, glm::vec3> BounceObjects::operator() < ParametricSphere, 
 		glm::vec3 projectionDirection = outsitePointPrejection - outsiteCenter;
 		if (glm::length(distanceObjectToProjectcionPoint) < object1.R && glm::length(projectionDirection) < object2.R)
 		{
-			std::cout << "circle Bounce \n";
 			return std::make_pair(true, outsitePointPrejection);
 		}
 		
@@ -85,7 +84,6 @@ inline std::pair<bool, glm::vec3> BounceObjects::operator() < ParametricSphere, 
 		glm::vec3 contourPointSphereDifference = object1.Center - contourPoint;
 		if (glm::length(contourPointSphereDifference) < object1.R)
 		{
-			std::cout << "Contour bounce \n";
 			return std::make_pair(true, contourPoint);
 		}
 		

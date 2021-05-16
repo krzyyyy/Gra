@@ -28,8 +28,17 @@ inline void CollisionInterpreter::operator ()(Object1& object1, Object2& object2
 template<>
 inline void CollisionInterpreter::operator () <Logic::ObjectLogic, Logic::Bullet>(Logic::ObjectLogic& object1, Logic::Bullet& bullet)
 {
-	object1.currentLive-=bullet.Damage;
-	bullet.Used = true;
+	if (!bullet.Used)
+	{
+		object1.currentLive -= bullet.Damage;
+		bullet.Used = true;
+	}
+
+}
+template<>
+inline void CollisionInterpreter::operator() < Logic::Bullet, Logic::ObjectLogic > (Logic::Bullet& bullet, Logic::ObjectLogic& object1)
+{
+	this->operator()(object1, bullet);
 }
 template<>
 inline void CollisionInterpreter::operator () <Logic::ObjectLogic, Logic::ObjectLogic>(Logic::ObjectLogic& object1, Logic::ObjectLogic& object2)

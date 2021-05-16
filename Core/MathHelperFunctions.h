@@ -5,6 +5,17 @@
 
 namespace Math
 {
+	inline glm::vec3 GetVectorPosition(glm::mat4 globalPosiotion)
+	{
+		return  glm::vec3(globalPosiotion[3].x, globalPosiotion[3].y, globalPosiotion[3].z);
+	}
+	inline bool IsMovingAway(glm::vec3 object1Center, glm::vec3 object2Center, glm::vec3 object2MovingDirection)
+	{
+		glm::vec3 difference = object1Center - object2Center;
+		difference = glm::normalize(difference);
+		auto dotProdact = glm::dot(difference, object2MovingDirection);
+		return dotProdact == -1.f;
+	}
 	inline glm::vec3 ProjectPointOntoStraight(glm::vec3 straightPoint, glm::vec3 straightDirection, glm::vec3 projectedPoint)
 	{
 		straightDirection = glm::normalize(straightDirection);

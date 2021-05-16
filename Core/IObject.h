@@ -21,7 +21,9 @@ public:
 	virtual std::string GetObjectModel() const = 0;
 
 	virtual ParametricModel GetParametricModel()const = 0;
-	virtual void Bounce(glm::vec3 collisionPoint) = 0;
+	virtual void BounceReaction(glm::vec3 collisionPoint) = 0;
+
+	virtual bool IsMovingAway(const std::shared_ptr<IObject>& object) = 0;
 };
 
 struct Match
