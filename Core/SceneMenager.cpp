@@ -129,9 +129,9 @@ std::vector<std::shared_ptr<IObject>> SceneMenager::GetObjects()
 
 void SceneMenager::EraseUnusedElements()
 {
-	auto deletePredicat = [](auto& bullet)
+	auto deleteLiveObjectPredicat = [](auto& object)
 	{
-		std::shared_ptr<Logic::ILiveObject> liveObject = std::dynamic_pointer_cast<Logic::ILiveObject>(bullet);
+		std::shared_ptr<Logic::ILiveObject> liveObject = std::dynamic_pointer_cast<Logic::ILiveObject>(object);
 		if (!liveObject)
 		{
 			return false;
@@ -145,8 +145,21 @@ void SceneMenager::EraseUnusedElements()
 		}
 		return false;
 	};
-	std::erase_if(bullets, deletePredicat);
-	std::erase_if(enemies, deletePredicat);
+	glm::vec3 swordPosition = Math::GetVectorPosition(sword->GetGlobalPosition());
+	auto deleteSpaceObjectPredicat = [swordPosition](auto& object)
+	{
+		glm::vec3 objectPosition = Math::GetVectorPosition(object->GetGlobalPosition());
+		float distance = glm::length(objectPosition - swordPosition);
+		if (distance > 30)
+		{
+			return true;
+		}
+		return false;
+	};
+	std::erase_if(bullets, deleteLiveObjectPredicat);
+	std::erase_if(bullets, deleteSpaceObjectPredicat);
+	std::erase_if(enemies, deleteLiveObjectPredicat);
+	std::cout << bullets.size() << std::endl;
 
 }
 
