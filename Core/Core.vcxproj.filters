@@ -19,6 +19,9 @@
     <Filter Include="Utilities">
       <UniqueIdentifier>{567a0c2f-d01a-465b-a49a-adf82472463c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\SwordControler">
+      <UniqueIdentifier>{ec78cea0-e145-4652-980b-335cdcb00c75}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BounceObject.h">
@@ -65,6 +68,9 @@
     </ClInclude>
     <ClInclude Include="DeleteConditionVisitor.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ISwordControler.h">
+      <Filter>Header Files\SwordControler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
