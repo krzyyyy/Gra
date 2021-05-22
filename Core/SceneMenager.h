@@ -35,4 +35,6 @@ private:
 	Timer generationTimer;
 	BounceObjects objectsBouncer;
 	Logic::CollisionInterpreter collisionInterpreter;
+
+	const static int radiusOfVisibility = 30;
 };

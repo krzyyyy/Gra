@@ -150,7 +150,7 @@ void SceneMenager::EraseUnusedElements()
 	{
 		glm::vec3 objectPosition = Math::GetVectorPosition(object->GetGlobalPosition());
 		float distance = glm::length(objectPosition - swordPosition);
-		if (distance > 30)
+		if (distance > radiusOfVisibility)
 		{
 			return true;
 		}
@@ -159,7 +159,6 @@ void SceneMenager::EraseUnusedElements()
 	std::erase_if(bullets, deleteLiveObjectPredicat);
 	std::erase_if(bullets, deleteSpaceObjectPredicat);
 	std::erase_if(enemies, deleteLiveObjectPredicat);
-	std::cout << bullets.size() << std::endl;
 
 }
 
