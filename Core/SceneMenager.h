@@ -6,6 +6,7 @@
 #include "ObjectGenerator.h"
 #include "Timer.h"
 #include "BounceObject.h"
+#include "ISwordControler.h"
 #ifdef EXPORT_FLAG
 #define EXPORT_MODULES __declspec(dllexport)
 #else
@@ -22,6 +23,8 @@ public:
 	void UpdatePosition(std::chrono::duration<double> deltaT);
 	void UpdateScene(glm::vec3 targetPosition);
 	std::vector<std::shared_ptr<IObject>> GetObjects();
+
+	void SetSwordControler(std::unique_ptr<ISwordControler> swordControler);
 private:
 	void EraseUnusedElements();
 	void GenerateNewObjects(glm::vec3 posiotion);
@@ -29,6 +32,7 @@ private:
 	std::vector<std::shared_ptr<IObject>> bullets;
 	std::vector<std::shared_ptr<IObjectGenerator>> enemies;
 	std::shared_ptr<IObject> sword;
+	std::unique_ptr<ISwordControler> swordControler;
 
 	glm::vec3 swordPosition;
 	std::chrono::steady_clock::time_point lastTime;

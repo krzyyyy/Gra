@@ -88,11 +88,12 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;BOOST_ASIO_DISABLE_CONCEPTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\GLFW\include\;$(ProjectDir)\GLAD\include\;%OpenCV43Path%\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\GLFW\include\;$(ProjectDir)\GLAD\include\;%OpenCV43Path%\include\;%BOOST%\</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <AdditionalOptions>-DBOOST_DATE_TIME_NO_LIB -DBOOST_REGEX_NO_LIB  %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -148,10 +149,11 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;BOOST_ASIO_DISABLE_CONCEPTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\GLFW\include\;$(ProjectDir)\GLAD\include\;%OpenCV43Path%\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\GLFW\include\;$(ProjectDir)\GLAD\include\;%OpenCV43Path%\include\;%BOOST%\</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <AdditionalOptions>-DBOOST_DATE_TIME_NO_LIB -DBOOST_REGEX_NO_LIB  %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -207,6 +209,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.vcxproj">
       <Project>{0fce3ea5-d98d-4e98-b235-8328b41d23df}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\SwordControler\SwordControler.vcxproj">
+      <Project>{032f611b-94bb-43f0-86df-f542256f0dca}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

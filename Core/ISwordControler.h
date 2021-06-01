@@ -3,9 +3,10 @@
 #include "../glm/glm.hpp"
 
 
-class ISwordControler
+class __declspec (dllexport)  ISwordControler
 {
 public:
-	virtual bool Initialize() = 0;
+	virtual bool Start() = 0;
 	virtual glm::mat4 ActualizePosition() = 0;
+	virtual void Close() = 0;
 };

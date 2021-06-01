@@ -65,9 +65,7 @@ void SceneMenager::UpdatePosition(std::chrono::duration<double> deltaT)
 	}
 	for (auto& element : bullets)
 	{
-		auto object = std::dynamic_pointer_cast<IObject>(element);
-		if (object)
-			object->UpdatePosition(deltaT);
+		element->UpdatePosition(deltaT);
 	}
 }
 void SceneMenager::UpdateScene(glm::vec3 targetPosition)
@@ -105,6 +103,7 @@ void SceneMenager::UpdateScene(glm::vec3 targetPosition)
 	}
 	generationTimer.RunEvent(&SceneMenager::GenerateNewObjects, this, targetPosition);
 	EraseUnusedElements();
+	
 }
 
 std::vector<std::shared_ptr<IObject>> SceneMenager::GetObjects()
@@ -123,6 +122,11 @@ std::vector<std::shared_ptr<IObject>> SceneMenager::GetObjects()
 	}
 	allObjects.push_back(sword);
 	return allObjects;
+}
+
+void SceneMenager::SetSwordControler(std::unique_ptr<ISwordControler> swordControler)
+{
+	this->swordControler = std::move(swordControler);
 }
 
 

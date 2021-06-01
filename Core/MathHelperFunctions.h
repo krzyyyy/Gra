@@ -24,4 +24,16 @@ namespace Math
 		glm::vec3 Pprojected = glm::vec3((straightDirection.x * t) + straightPoint.x, (straightDirection.y * t) + straightPoint.y, (straightDirection.z * t) + straightPoint.z);
 		return Pprojected;
 	}
+	inline glm::mat4 RodrigezTransformation(const glm::vec3& a, const glm::vec3& b)
+	{
+		glm::vec3 v = glm::cross(a, b);
+		float c = glm::dot(a, b);
+		float matrixValues[] = { 0, -v.z, v.y, 0,
+								v.z, 0, -v.x, 0,
+								-v.y, v.x, 0, 0,
+								0, 0, 0, 1};
+		glm::mat4 vMat = glm::make_mat4(matrixValues);
+
+
+	}
 }

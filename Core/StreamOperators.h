@@ -7,6 +7,19 @@
 
 	std::ostream& operator <<(std::ostream& stream,const glm::vec3& vector)
 	{
-		stream << vector.x << "," << vector.y << "," << vector.y << std::endl;
+		stream << vector.x << "," << vector.y << "," << vector.z << std::endl;
+		return stream;
+	};
+	std::ostream& operator << (std::ostream & stream, const glm::mat4 & matrix)
+	{
+		for (int i = 0; i < 4; ++i)
+		{
+			for (int j = 0; j < 4; ++j)
+			{
+				stream << matrix[i][j] << " , ";
+			}
+			stream << std::endl;
+		}
+		
 		return stream;
 	};

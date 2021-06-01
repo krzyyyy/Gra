@@ -22,16 +22,16 @@
 #include "BasicShapesCreators.h"
 #include "SphereCreator.h"
 
+#include "..\SwordControler\SwordControler.h"
+
+
 
 namespace fs = std::filesystem;
 using namespace std;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
-struct temporary
-{
-	void getShape() {};
-};
+
 
 // settings
 const unsigned int SCR_WIDTH = 800;
@@ -42,6 +42,7 @@ void scrollCallback(GLFWwindow* window, double xOffset, double yOffset);
 
 int main()
 {
+	
 	
 	auto vertexShaderPath = fs::path("VertexShader.glsl");
 	auto fragmenShaderPath = fs::path("FragmentShader.glsl");
