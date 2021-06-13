@@ -1,9 +1,11 @@
 #include "pch.h"
+#include <numeric>
 #include "SwordControler.h"
 #include <boost/asio.hpp>
 #include <boost/algorithm/string.hpp>
 #include "..\Core\StreamOperators.h"
 #include "..\glm\gtc\matrix_transform.hpp"
+#include "..\glm\gtc\type_ptr.hpp"
 
 //#include "SwordControler.h"
 //
@@ -23,6 +25,11 @@ SwordControler::SwordControler() :
         {
             Start();
             io_context.run();
+        });
+    auto initializeSample = glm::vec3(0., 1., 0.);
+    std::for_each(samples.begin(), samples.end(), [initializeSample](glm::vec3& element)
+        {
+            element = initializeSample;
         });
     
 }
@@ -51,7 +58,6 @@ bool SwordControler::Start()
 glm::mat4 SwordControler::ActualizePosition()
 {
     std::scoped_lock csoped_lock(mutex);
-    std::cout << globalPosition << std::endl;
     return globalPosition;
 }
 
@@ -67,6 +73,11 @@ SwordControler::~SwordControler()
 
 glm::mat4 SwordControler::ParseInput(const std::string& inputData)
 {
+    static int i = 0;
+    if(i% 10 ==0)
+        std::cout << inputData <<std::endl;
+    ++i;
+    //std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     glm::vec3 orientationVector = glm::vec3(0, 0, 0);
     auto numberList = std::vector<double>();
     std::vector<std::string> stringList = std::vector<std::string>();
@@ -86,11 +97,25 @@ glm::mat4 SwordControler::ParseInput(const std::string& inputData)
         orientationVector = glm::vec3(numberList[2], numberList[3], numberList[4]);
     }
     orientationVector = glm::normalize(orientationVector);
-    auto basicDirection = glm::vec3(0., 0., 1.);
-    glm::vec3 rotationAxis = glm::cross(basicDirection, orientationVector);
-    float teta = glm::dot(basicDirection, orientationVector);
-    auto globalPosition = glm::mat4(1);
-    globalPosition = glm::rotate(globalPosition, teta, rotationAxis);
-    std::cout << orientationVector << std::endl;
+    auto basicDirection = glm::vec3(0., 1., 0.);
+    //glm::vec3 rotationAxis = std::accumulate(samples.cbegin(), samples.cend(), glm::vec3(0, 0, 0)) / float(samples.size());
+    float rcos = glm::dot(basicDirection, orientationVector);
+    auto crossProduct = glm::cross(basicDirection, orientationVector);
+    float rsin = glm::length(crossProduct);
+    float u = crossProduct.x;
+    float v = crossProduct.y;
+    float w = crossProduct.z;
+    float matrixData[] = {rcos + (u * u * (1 - rcos)), w * rsin + v * u * (1 - rcos), -v * rsin + w * u * (1 - rcos),0 ,
+                          -w * rsin + u * v * (1 - rcos) , rcos + v * v * (1 - rcos) , u * rsin + w * v * (1 - rcos) , 0,
+                          v * rsin + u * w * (1 - rcos) , -u * rsin + v * w * (1 - rcos) , rcos + w * w * (1 - rcos) , 0 ,
+                            0, 0, 0, 1};
+    globalPosition = glm::make_mat4(matrixData);
+    //std::cout << orientationVector << std::endl;
     return globalPosition;
+}
+
+glm::vec3 SwordControler::ComputeMeanValue()
+{
+    auto averageValue = std::accumulate(samples.cbegin(), samples.cend(), glm::vec3(0, 0, 0))/float( samples.size());
+    return averageValue;
 }

@@ -20,6 +20,10 @@ public:
 	virtual std::string GetObjectType()const =0;
 	virtual std::string GetObjectModel() const = 0;
 
+
+	//seters 
+	virtual void SetGlobalPosition(const glm::mat4& globalPosition) = 0;
+
 	virtual ParametricModel GetParametricModel()const = 0;
 	virtual void BounceReaction(glm::vec3 collisionPoint) = 0;
 

@@ -36,10 +36,12 @@ private:
 	//bufor variable
 	glm::mat4 globalPosition;
 
-
+	std::array<glm::vec3, 6> samples;
 	
 //	//tool method 
 	glm::mat4 ParseInput(const std::string& inputData);
+
+	glm::vec3 ComputeMeanValue();
 //	glm::mat4 swordPosition;
 //	//void k
 //	// Inherited via ISwordControler

@@ -42,8 +42,6 @@ void scrollCallback(GLFWwindow* window, double xOffset, double yOffset);
 
 int main()
 {
-	
-	
 	auto vertexShaderPath = fs::path("VertexShader.glsl");
 	auto fragmenShaderPath = fs::path("FragmentShader.glsl");
 	auto fragmenShader2Path = fs::path("FragmentShader2.glsl");
@@ -86,6 +84,7 @@ int main()
 
 	auto renderScene = RenderScene();
 	SceneMenager sceneMenager;
+	sceneMenager.SetSwordControler(std::make_unique<SwordControler>());
 	renderScene.InitilizeShaders({
 		std::make_tuple("Bullet", vertexShaderPath.string(), fragmenShaderPath.string()),
 		std::make_tuple("Sword", vertexShaderPath.string(), fragmenShader2Path.string()),

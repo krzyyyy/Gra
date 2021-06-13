@@ -13,22 +13,22 @@ SceneMenager::SceneMenager()
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>());
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>());
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::SphereCreator>>("Bullet"));
-	enemies.emplace_back(std::make_shared<LiveObject< ObjectGenerator< ParametricSphere, ParametricSphere>>>(ObjectGenerator< ParametricSphere, ParametricSphere>("Generator", "CilinderModel"),
-		Logic::ObjectLogic
-		{
-			.maxLive = 120,
-			.currentLive = 120,
-			.damage = 5
-		}
-	));
-	enemies.emplace_back(std::make_shared<LiveObject< ObjectGenerator< ParametricSphere, ParametricSphere>>>(ObjectGenerator< ParametricSphere, ParametricSphere>("Generator", "CilinderModel"),
-		Logic::ObjectLogic
-		{
-			.maxLive = 100,
-			.currentLive = 20,
-			.damage = 5
-		}
-		));
+	//enemies.emplace_back(std::make_shared<LiveObject< ObjectGenerator< ParametricSphere, ParametricSphere>>>(ObjectGenerator< ParametricSphere, ParametricSphere>("Generator", "CilinderModel"),
+	//	Logic::ObjectLogic
+	//	{
+	//		.maxLive = 120,
+	//		.currentLive = 120,
+	//		.damage = 5
+	//	}
+	//));
+	//enemies.emplace_back(std::make_shared<LiveObject< ObjectGenerator< ParametricSphere, ParametricSphere>>>(ObjectGenerator< ParametricSphere, ParametricSphere>("Generator", "CilinderModel"),
+	//	Logic::ObjectLogic
+	//	{
+	//		.maxLive = 100,
+	//		.currentLive = 20,
+	//		.damage = 5
+	//	}
+	//	));
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>("Sword"));
 	//objects.emplace_back(std::make_shared < ObjectGenerator< ModelCreators::CubeCreator, ModelCreators::SphereCreator>>("Generator"));
 	//objects.emplace_back(std::make_unique< Object<RenderObject<ModelCreators::CylinderCreator>>>());
@@ -67,6 +67,7 @@ void SceneMenager::UpdatePosition(std::chrono::duration<double> deltaT)
 	{
 		element->UpdatePosition(deltaT);
 	}
+	sword->SetGlobalPosition(swordControler->ActualizePosition());
 }
 void SceneMenager::UpdateScene(glm::vec3 targetPosition)
 {

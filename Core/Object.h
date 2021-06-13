@@ -43,6 +43,13 @@ protected:
 	std::string objectType;
 	std::string modelType;
 
+
+	// Inherited via IObject
+	virtual void SetGlobalPosition(const glm::mat4& globalPosition) override
+	{
+		this->globalPosition = globalPosition;
+	}
+
 };
 
 template<typename Model>
