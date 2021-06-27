@@ -1,4 +1,5 @@
 #include "SceneMenager.h"
+#include "Object.h"
 #include "ObjectGenerator.h"
 #include "IObjectGenerator.h"
 #include "LiveObject.h"
@@ -13,14 +14,14 @@ SceneMenager::SceneMenager()
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>());
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>());
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::SphereCreator>>("Bullet"));
-	//enemies.emplace_back(std::make_shared<LiveObject< ObjectGenerator< ParametricSphere, ParametricSphere>>>(ObjectGenerator< ParametricSphere, ParametricSphere>("Generator", "CilinderModel"),
-	//	Logic::ObjectLogic
-	//	{
-	//		.maxLive = 120,
-	//		.currentLive = 120,
-	//		.damage = 5
-	//	}
-	//));
+	enemies.emplace_back(std::make_shared<LiveObject< ObjectGenerator< ParametricSphere, ParametricSphere>>>(ObjectGenerator< ParametricSphere, ParametricSphere>("Generator", "CilinderModel"),
+		Logic::ObjectLogic
+		{
+			.maxLive = 120,
+			.currentLive = 120,
+			.damage = 5
+		}
+	));
 	//enemies.emplace_back(std::make_shared<LiveObject< ObjectGenerator< ParametricSphere, ParametricSphere>>>(ObjectGenerator< ParametricSphere, ParametricSphere>("Generator", "CilinderModel"),
 	//	Logic::ObjectLogic
 	//	{

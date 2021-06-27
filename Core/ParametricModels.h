@@ -18,7 +18,7 @@ struct ParametricSphere
 			.R = 0.5,
 		};
 	}
-	glm::vec3 ComputeNewDirection(glm::vec3 collisionPoint, glm::vec3 currentDirection)
+	glm::vec3 ComputeNewDirection(glm::vec3 collisionPoint, glm::vec3 currentDirection) const
 	{
 		glm::vec3 P = collisionPoint - currentDirection;
 		glm::vec3 direction = collisionPoint - Center;
@@ -44,7 +44,7 @@ struct ParametricCilinder
 			.Height = 1. * scale[2],
 		};
 	}
-	glm::vec3 ComputeNewDirection(glm::vec3 collisionPoint, glm::vec3 currentDirection)
+	glm::vec3 ComputeNewDirection(glm::vec3 collisionPoint, glm::vec3 currentDirection) const
 	{
 		glm::vec3 collisionPointProjectedOntoMainAxis = Math::ProjectPointOntoStraight(Center, HeightDirection, collisionPoint);
 		glm::vec3 P = collisionPoint - currentDirection;

@@ -1,7 +1,7 @@
 #pragma once
 #include <istream>
 
-#include "Object.h"
+//#include "Object.h"
 #include "IObjectGenerator.h"
 #include "ObjectGenerator.h"
 #include "Timer.h"

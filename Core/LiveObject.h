@@ -1,7 +1,10 @@
 #pragma once
-#include "Object.h"
+//#include "Object.h"
+
 #include "..\ObjectLogic\LiveTypes.h" 
 #include "..\ObjectLogic\ILiveObject.h"
+
+
 template<typename Object>
 class LiveObject :
     public Object, public Logic::ILiveObject

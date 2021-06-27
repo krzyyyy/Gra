@@ -5,6 +5,8 @@
 #include <iostream>
 #include <math.h>
 
+
+
 #include "RenderObject.h"
 #include "Shader.h"
 #include <filesystem>
@@ -14,7 +16,7 @@
 //#include "glm/glm.hpp"
 //#include "glm/gtc/matrix_transform.hpp"
 //#include "glm/gtc/type_ptr.hpp"
-#include "..\Core\Object.h"
+//#include "..\Core\Object.h"
 #include "Camera.h"
 #include "RenderObjectFactory.h"
 #include "..\Core\SceneMenager.h"

@@ -42,12 +42,12 @@ void Camera::mauseCallback(GLFWwindow* window, double posX, double posY)
     yoffset *= sensitivity;
 
     yaw += xoffset;
-    //pitch += yoffset;
+    pitch += yoffset;
 
-    //if (pitch > 89.0f)
-    //    pitch = 89.0f;
-    //if (pitch < -89.0f)
-    //    pitch = -89.0f;
+    if (pitch > 89.0f)
+        pitch = 89.0f;
+    if (pitch < -89.0f)
+        pitch = -89.0f;
 
     glm::vec3 direction;
     direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));

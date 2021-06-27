@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "LiveObject.h"
+#include "Object.h"
 #include "IObjectGenerator.h"
 
 template<typename Model, typename GeneratedModel>
@@ -39,7 +40,7 @@ inline std::shared_ptr<IObject> ObjectGenerator<Model, GeneratedModel>::generate
 	auto generatorPosition = Math::GetVectorPosition(generatorGlobalPosition);
 	glm::vec3 targetDirection = targetPosition - generatorPosition;
 	glm::vec3 velociti = glm::normalize(targetDirection);
-	auto newObject = std::make_shared<LiveObject<Object<GeneratedModel>>>(Object<GeneratedModel>(velociti, "Bullet", "SphereModel"), Logic::Bullet
+	auto newObject = std::make_shared<LiveObject<Object<GeneratedModel>>>(Object<GeneratedModel>("Bullet", "SphereModel", MoveModels::RectilinearMovement(1, velociti)), Logic::Bullet
 		{
 			.Damage = 20,
 			.Used = false,
