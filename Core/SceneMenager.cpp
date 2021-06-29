@@ -36,9 +36,7 @@ SceneMenager::SceneMenager()
 	};
 	for (int i = 0; i < enemies.size(); ++i)
 	{
-		auto object = std::dynamic_pointer_cast<IObject>(enemies[i]);
-		if(object)
-			object->Translate(cubePositions[i]);
+		enemies[i]->Translate(cubePositions[i]);
 	}
 
 	sword = std::make_shared < Object<ParametricCilinder>>("Sword", "CilinderModel");
@@ -54,9 +52,7 @@ void SceneMenager::UpdatePosition(std::chrono::duration<double> deltaT)
 
 	for (auto& element : enemies)
 	{
-		auto object = std::dynamic_pointer_cast<IObject>(element);
-		if(object)
-			object->UpdatePosition(deltaT);
+		element->UpdatePosition(deltaT);
 	}
 	for (auto& element : bullets)
 	{
@@ -84,10 +80,7 @@ void SceneMenager::UpdateScene(glm::vec3 targetPosition)
 	{
 		for (auto& enemy : enemies)
 		{
-			auto enemyObject = std::dynamic_pointer_cast<IObject>(enemy);
-			if (!enemyObject)
-				continue;
-			std::optional<Match> collision = objectsBouncer.FindCollision(bullet, enemyObject);
+			std::optional<Match> collision = objectsBouncer.FindCollision(bullet, enemy);
 			if (auto collisionPointer = collision)
 			{
 				auto liveBullet = std::dynamic_pointer_cast<Logic::ILiveObject>(bullet);
@@ -108,10 +101,7 @@ std::vector<std::shared_ptr<IObject>> SceneMenager::GetObjects()
 	auto allObjects = std::vector<std::shared_ptr<IObject>>();
 	for (auto& enemy : enemies)
 	{
-		auto object = std::dynamic_pointer_cast<IObject>(enemy);
-		if (!object)
-			continue;
-		allObjects.push_back(object);
+		allObjects.push_back(enemy);
 	}
 	for (auto& bullet : bullets)
 	{
