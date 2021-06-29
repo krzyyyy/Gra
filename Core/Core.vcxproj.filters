@@ -50,7 +50,7 @@
     <ClInclude Include="ParametricModels.h">
       <Filter>Models</Filter>
     </ClInclude>
-    <ClInclude Include="MoveModels.h">
+    <ClInclude Include="MotionModels.h">
       <Filter>Models</Filter>
     </ClInclude>
     <ClInclude Include="IEnemyPrototype.h">
@@ -88,7 +88,7 @@
     <ClCompile Include="WeekEnemyPrototype.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MoveModels.cpp">
+    <ClCompile Include="MotionModels.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EnemiesMenager.cpp">

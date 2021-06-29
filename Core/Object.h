@@ -6,12 +6,12 @@
 #include "IObject.h"
 //#include "glm/gtc/matrix_transform.hpp"
 #include "IBounceable.h"
-#include "MoveModels.h"
+#include "MotionModels.h"
 
 
 
 
-template<typename Model, typename MoveModel = MoveModels::RectilinearMovement>
+template<typename Model, typename MoveModel = MotionModels::RectilinearMotion>
 class Object:public ObjectCounter<Object<typename Model>>, virtual public IObject
 {
 public:

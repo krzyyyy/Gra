@@ -149,7 +149,7 @@
     <ClInclude Include="ISwordControler.h" />
     <ClInclude Include="LiveObject.h" />
     <ClInclude Include="MathHelperFunctions.h" />
-    <ClInclude Include="MoveModels.h" />
+    <ClInclude Include="MotionModels.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectCounter.h" />
     <ClInclude Include="ObjectGenerator.h" />
@@ -163,7 +163,7 @@
     <ClCompile Include="BounceObject.cpp" />
     <ClCompile Include="EnemiesMenager.cpp" />
     <ClCompile Include="LiveObject.cpp" />
-    <ClCompile Include="MoveModels.cpp" />
+    <ClCompile Include="MotionModels.cpp" />
     <ClCompile Include="SceneMenager.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="WeekEnemyPrototype.cpp" />
