@@ -12,7 +12,7 @@
 
 
 template<typename Model, typename MoveModel = MoveModels::RectilinearMovement>
-class Object:public ObjectCounter<Object<typename Model>>, public IObject
+class Object:public ObjectCounter<Object<typename Model>>, virtual public IObject
 {
 public:
 	Object();

@@ -5,7 +5,7 @@
 #include "IObject.h"
 #include "../glm/gtc/matrix_transform.hpp"
 
-class IObjectGenerator
+class IObjectGenerator : virtual public IObject
 {
 public:
 	virtual ~IObjectGenerator() {};

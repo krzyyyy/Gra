@@ -9,18 +9,14 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Models">
       <UniqueIdentifier>{c16dd99b-1bf5-447e-bb20-5b3797e8edef}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\SwordControler">
-      <UniqueIdentifier>{ec78cea0-e145-4652-980b-335cdcb00c75}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Tools">
+    <Filter Include="Tools">
       <UniqueIdentifier>{6255660d-0642-4f96-bac9-259e98f77c8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SwordControler">
+      <UniqueIdentifier>{ec78cea0-e145-4652-980b-335cdcb00c75}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -49,7 +45,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ISwordControler.h">
-      <Filter>Header Files\SwordControler</Filter>
+      <Filter>SwordControler</Filter>
     </ClInclude>
     <ClInclude Include="ParametricModels.h">
       <Filter>Models</Filter>
@@ -61,13 +57,19 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
-      <Filter>Header Files\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="MathHelperFunctions.h">
-      <Filter>Header Files\Tools</Filter>
+      <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="StreamOperators.h">
-      <Filter>Header Files\Tools</Filter>
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="WeekEnemyPrototype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemiesMenager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -81,6 +83,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WeekEnemyPrototype.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveModels.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemiesMenager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

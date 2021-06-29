@@ -7,6 +7,7 @@
 #include "Timer.h"
 #include "BounceObject.h"
 #include "ISwordControler.h"
+#include "EnemiesMenager.h"
 #ifdef EXPORT_FLAG
 #define EXPORT_MODULES __declspec(dllexport)
 #else
@@ -17,10 +18,9 @@ class EXPORT_MODULES SceneMenager
 public:
 	SceneMenager();
 	SceneMenager(const SceneMenager& object) = default;
-	SceneMenager(SceneMenager&& object) = default;
+	SceneMenager(SceneMenager&& object) noexcept = default;
 	SceneMenager& operator=(const SceneMenager& object) = default;
 	SceneMenager& operator=(SceneMenager&& object) = default;
-	void UpdatePosition(std::chrono::duration<double> deltaT);
 	void UpdateScene(glm::vec3 targetPosition);
 	std::vector<std::shared_ptr<IObject>> GetObjects();
 
@@ -28,17 +28,20 @@ public:
 private:
 	void EraseUnusedElements();
 	void GenerateNewObjects(glm::vec3 posiotion);
+
+	void UpdatePosition(std::chrono::duration<double> deltaT);
 	//objects
 	std::vector<std::shared_ptr<IObject>> bullets;
 	std::vector<std::shared_ptr<IObjectGenerator>> enemies;
+
 	std::shared_ptr<IObject> sword;
 	std::unique_ptr<ISwordControler> swordControler;
 
-	glm::vec3 swordPosition;
 	std::chrono::steady_clock::time_point lastTime;
 	Timer generationTimer;
+	Timer enemyCreationTimer;
 	BounceObjects objectsBouncer;
 	Logic::CollisionInterpreter collisionInterpreter;
-
+	EnemiesMenager enemyMenager;
 	const static int radiusOfVisibility = 30;
 };

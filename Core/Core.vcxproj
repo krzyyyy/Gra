@@ -142,6 +142,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BounceObject.h" />
+    <ClInclude Include="EnemiesMenager.h" />
     <ClInclude Include="IEnemyPrototype.h" />
     <ClInclude Include="IObject.h" />
     <ClInclude Include="IObjectGenerator.h" />
@@ -156,12 +157,16 @@
     <ClInclude Include="SceneMenager.h" />
     <ClInclude Include="StreamOperators.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="WeekEnemyPrototype.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BounceObject.cpp" />
+    <ClCompile Include="EnemiesMenager.cpp" />
     <ClCompile Include="LiveObject.cpp" />
+    <ClCompile Include="MoveModels.cpp" />
     <ClCompile Include="SceneMenager.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="WeekEnemyPrototype.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ObjectLogic\ObjectLogic.vcxproj">

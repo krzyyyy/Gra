@@ -14,22 +14,14 @@ SceneMenager::SceneMenager()
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>());
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>());
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::SphereCreator>>("Bullet"));
-	enemies.emplace_back(std::make_shared<LiveObject< ObjectGenerator< ParametricSphere, ParametricSphere>>>(ObjectGenerator< ParametricSphere, ParametricSphere>("Generator", "CilinderModel"),
-		Logic::ObjectLogic
-		{
-			.maxLive = 120,
-			.currentLive = 120,
-			.damage = 5
-		}
-	));
 	//enemies.emplace_back(std::make_shared<LiveObject< ObjectGenerator< ParametricSphere, ParametricSphere>>>(ObjectGenerator< ParametricSphere, ParametricSphere>("Generator", "CilinderModel"),
 	//	Logic::ObjectLogic
 	//	{
-	//		.maxLive = 100,
-	//		.currentLive = 20,
+	//		.maxLive = 120,
+	//		.currentLive = 120,
 	//		.damage = 5
 	//	}
-	//	));
+	//));
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>("Sword"));
 	//objects.emplace_back(std::make_shared < ObjectGenerator< ModelCreators::CubeCreator, ModelCreators::SphereCreator>>("Generator"));
 	//objects.emplace_back(std::make_unique< Object<RenderObject<ModelCreators::CylinderCreator>>>());
@@ -53,6 +45,8 @@ SceneMenager::SceneMenager()
 	sword->Scale(glm::vec3(0.25, 0.25, 4));
 	lastTime = std::chrono::steady_clock::now();
 	generationTimer = Timer(std::chrono::seconds(5));
+	enemyCreationTimer = Timer(std::chrono::seconds(10));
+	enemyMenager.LoadEnemyPrototypes();
 }
 
 void SceneMenager::UpdatePosition(std::chrono::duration<double> deltaT)
@@ -104,6 +98,7 @@ void SceneMenager::UpdateScene(glm::vec3 targetPosition)
 		}
 	}
 	generationTimer.RunEvent(&SceneMenager::GenerateNewObjects, this, targetPosition);
+	enemyCreationTimer.RunEvent(&EnemiesMenager::AddEnemies, enemyMenager, enemies);
 	EraseUnusedElements();
 	
 }
@@ -130,6 +125,7 @@ void SceneMenager::SetSwordControler(std::unique_ptr<ISwordControler> swordContr
 {
 	this->swordControler = std::move(swordControler);
 }
+
 
 
 
