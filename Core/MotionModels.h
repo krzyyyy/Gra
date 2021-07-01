@@ -15,11 +15,11 @@ namespace MotionModels
 	class RectilinearMotion
 	{
 	public:
-		RectilinearMotion() : _velocity(0) {};
+		RectilinearMotion();
 		//RectilinearMotion(float velocity): _velo
-		RectilinearMotion(float velocity, glm::vec3 moveDirection) : _velocity(velocity), _moveDirection(moveDirection) {};
+		RectilinearMotion(float velocity, glm::vec3 moveDirection) ;
 
-		void GetNextPosition(std::chrono::duration<double> duration, glm::mat4& globalPosition) const;
+		void GetNextPosition(std::chrono::duration<double> duration, glm::mat4& globalPosition);
 		glm::vec3 GetNextDirection() const;
 		template<typename Model>
 		void BounceObject(const Model& model, glm::vec3 colisionPoint);
@@ -36,7 +36,32 @@ namespace MotionModels
 	void RectilinearMotion::BounceObject(const Model& model, glm::vec3 colisionPoint)
 	{
 		_moveDirection = model.ComputeNewDirection(colisionPoint, _moveDirection);
-	}/*
-	class */
+	}
+
+
+
+	class OrbitalMotion
+	{
+	public:
+		OrbitalMotion();
+		OrbitalMotion(float angularVelocity, glm::vec3 center, float radius, glm::vec3 rotationAxis);
+		void GetNextPosition(std::chrono::duration<double> duration, glm::mat4& globalPosition);
+		glm::vec3 GetNextDirection() const;
+		template<typename Model>
+		void BounceObject(const Model& model, glm::vec3 colisionPoint);
+
+	private:
+		float _angularVelocity;
+		glm::vec3 _center;
+		float _radius;
+		glm::vec3 _rotationAxis;
+		float _angle;
+		glm::vec3 perpendicularToRotation;
+
+	};
+	template<typename Model>
+	inline void OrbitalMotion::BounceObject(const Model& model, glm::vec3 colisionPoint)
+	{
+	}
 };
 

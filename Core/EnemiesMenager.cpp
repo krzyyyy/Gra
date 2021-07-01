@@ -1,5 +1,6 @@
 #include "EnemiesMenager.h"
 #include "WeekEnemyPrototype.h"
+#include "OrbitalEnemyPrototype.h"
 #include <random>
 
 EnemiesMenager::EnemiesMenager()
@@ -11,14 +12,14 @@ EnemiesMenager::EnemiesMenager()
 void EnemiesMenager::LoadEnemyPrototypes()
 {
 	enemiesPrototype.push(
-		std::make_unique<WeekEnemyPrototype>(WeekEnemyPrototype())
+		std::make_unique<OrbitalEnemyPrototype>(OrbitalEnemyPrototype(5, 3, glm::vec3(0, 0, 1.)))
 	);
-	enemiesPrototype.push(
-		std::make_unique<WeekEnemyPrototype>(WeekEnemyPrototype())
-	);
-	enemiesPrototype.push(
-		std::make_unique<WeekEnemyPrototype>(WeekEnemyPrototype())
-	);
+	//enemiesPrototype.push(
+	//	std::make_unique<OrbitalEnemyPrototype>(OrbitalEnemyPrototype(2, 6, glm::vec3(0, 1, 0)))
+	//);
+	//enemiesPrototype.push(
+	//	std::make_unique<WeekEnemyPrototype>(WeekEnemyPrototype())
+	//);
 }
 
 
@@ -30,7 +31,7 @@ void EnemiesMenager::AddEnemies(std::vector<std::shared_ptr<IObjectGenerator>>& 
 		return;
 	}
 	auto enemy = enemiesPrototype.top()->Clone();
-	enemy->Translate(RandPosition());
+	enemy->Translate(glm::vec3(1, 1, 1));
 	enemies.push_back(enemy);
 	enemiesPrototype.pop();
 }

@@ -5,6 +5,6 @@
 class IEnemyPrototype
 {
 public:
-	virtual std::shared_ptr<IObjectGenerator> Clone() = 0;
+	virtual std::shared_ptr<IObjectGenerator> Clone() const = 0;
 
 };

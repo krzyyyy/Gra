@@ -8,7 +8,7 @@ public:
 
 
 	// Inherited via IEnemyPrototype
-	virtual std::shared_ptr<IObjectGenerator> Clone() override;
+	virtual std::shared_ptr<IObjectGenerator> Clone()const override;
 
 };
 

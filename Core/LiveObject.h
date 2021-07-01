@@ -20,7 +20,7 @@ private:
 };
 
 template<typename Object>
-LiveObject<typename Object>::LiveObject(Object object, Logic::LiveTypes logicObject):Object(object), objectLogic(logicObject)
+LiveObject<typename Object>::LiveObject(Object object, Logic::LiveTypes logicObject):Object(std::move(object)), objectLogic(logicObject)
 {
 
 }

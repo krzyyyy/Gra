@@ -71,6 +71,15 @@
     <ClInclude Include="EnemiesMenager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="OrbitalEnemyPrototype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IBulletPrototype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalBulletPrototype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BounceObject.cpp">
@@ -92,6 +101,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EnemiesMenager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OrbitalEnemyPrototype.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

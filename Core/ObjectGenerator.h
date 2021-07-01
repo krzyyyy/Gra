@@ -5,46 +5,42 @@
 #include "LiveObject.h"
 #include "Object.h"
 #include "IObjectGenerator.h"
+#include "IBulletPrototype.h"
 
-template<typename Model, typename GeneratedModel>
-class ObjectGenerator: public IObjectGenerator, public Object<Model>
+template<typename Model, typename MotionModel>
+class ObjectGenerator: public IObjectGenerator, public Object<Model, MotionModel>
 {
 public:
 	ObjectGenerator() ;
 	ObjectGenerator(const ObjectGenerator& object) = default;
 	ObjectGenerator(ObjectGenerator&& object) = default;
-	ObjectGenerator( std::string objectType_, std::string modelType_);
+	ObjectGenerator(Object<Model, MotionModel> object, std::unique_ptr<IBulletPrototype> bulletPrototype);
 
 
 	std::shared_ptr<IObject> generate(glm::vec3 targetPosition)const;
 
 private:
-
+	std::unique_ptr<IBulletPrototype> _bulletPrototype;
 };
 
-template<typename Model, typename GeneratedModel>
-inline ObjectGenerator<Model, GeneratedModel>::ObjectGenerator():Object<Model>()
+template<typename Model, typename MotionModel>
+inline ObjectGenerator<Model, MotionModel>::ObjectGenerator():Object<Model, MotionModel>()
 {
 }
 
-template<typename Model, typename GeneratedModel>
-inline ObjectGenerator<Model, GeneratedModel>::ObjectGenerator( std::string objectType_, std::string modelType_): Object<Model>(objectType_, modelType_)
+template<typename Model, typename MotionModel>
+inline ObjectGenerator<Model, MotionModel>::ObjectGenerator(Object<Model, MotionModel> object,
+	std::unique_ptr<IBulletPrototype> bulletPrototype):
+	Object<Model, MotionModel>(object),
+	_bulletPrototype(std::move(bulletPrototype))
 {
 
 }
 
-template<typename Model, typename GeneratedModel>
-inline std::shared_ptr<IObject> ObjectGenerator<Model, GeneratedModel>::generate(glm::vec3 targetPosition)const
+template<typename Model, typename MotionModel>
+inline std::shared_ptr<IObject> ObjectGenerator<Model, MotionModel>::generate(glm::vec3 targetPosition)const
 {
-	auto generatorGlobalPosition = Object<Model>::GetGlobalPosition();
-	auto generatorPosition = Math::GetVectorPosition(generatorGlobalPosition);
-	glm::vec3 targetDirection = targetPosition - generatorPosition;
-	glm::vec3 velociti = glm::normalize(targetDirection);
-	auto newObject = std::make_shared<LiveObject<Object<GeneratedModel>>>(Object<GeneratedModel>("Bullet", "SphereModel", MotionModels::RectilinearMotion(1, velociti)), Logic::Bullet
-		{
-			.Damage = 20,
-			.Used = false,
-		});
-	newObject->Translate(generatorPosition );
-	return newObject;
+	
+	
+	return _bulletPrototype->Clone();// newObject;
 }
