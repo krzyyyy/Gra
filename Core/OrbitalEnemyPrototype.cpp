@@ -25,8 +25,8 @@ std::shared_ptr<IObjectGenerator> OrbitalEnemyPrototype::Clone() const
 		.Damage = 20,
 		.Used = false,
 	};
-	auto bulletPrototype = std::make_unique<NormalBulletPrototype<MotionModels::RectilinearMotion>>(bulletLiveParams, bulletMotionModel);
-	auto generatorMotionModel = MotionModels::OrbitalMotion(_angularVelocity, glm::vec3(0, 0, 0), _radius, glm::vec3(0, 0, 1.));
+	auto bulletPrototype = std::make_unique<NormalBulletPrototype<MotionModels::RectilinearMotion>>(bulletLiveParams, 5);
+	auto generatorMotionModel = MotionModels::OrbitalMotion(_angularVelocity, glm::vec3(0, 4, 0), _radius, _rotationAxis);
 	auto generatorObject = Object<ParametricSphere, MotionModels::OrbitalMotion>("Generator", "CilinderModel", generatorMotionModel);
 	auto objectGenerator = ObjectGenerator(generatorObject, std::move( bulletPrototype));
 	auto liveParams = Logic::ObjectLogic

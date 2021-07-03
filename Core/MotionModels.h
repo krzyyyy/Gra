@@ -18,6 +18,7 @@ namespace MotionModels
 		RectilinearMotion();
 		//RectilinearMotion(float velocity): _velo
 		RectilinearMotion(float velocity, glm::vec3 moveDirection) ;
+		RectilinearMotion(glm::vec3 beginTrajectory, glm::vec3 endTrajetory, float velocity) noexcept;
 
 		void GetNextPosition(std::chrono::duration<double> duration, glm::mat4& globalPosition);
 		glm::vec3 GetNextDirection() const;
@@ -45,6 +46,7 @@ namespace MotionModels
 	public:
 		OrbitalMotion();
 		OrbitalMotion(float angularVelocity, glm::vec3 center, float radius, glm::vec3 rotationAxis);
+		OrbitalMotion(glm::vec3 beginTrajectory, glm::vec3 endTrajetory, float velocity);
 		void GetNextPosition(std::chrono::duration<double> duration, glm::mat4& globalPosition);
 		glm::vec3 GetNextDirection() const;
 		template<typename Model>

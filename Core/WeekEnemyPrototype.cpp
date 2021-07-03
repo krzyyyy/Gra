@@ -10,8 +10,8 @@ std::shared_ptr<IObjectGenerator> WeekEnemyPrototype::Clone() const
 		.Damage = 20,
 		.Used = false,
 	};
-	auto motionModel = MotionModels::RectilinearMotion(1, glm::vec3(0, 0, 1));
-	auto bulletPrototype = std::make_unique < NormalBulletPrototype<MotionModels::RectilinearMotion>>(liveTypeBullet, motionModel);
+	//auto motionModel = MotionModels::RectilinearMotion(1, glm::vec3(0, 0, 1));
+	auto bulletPrototype = std::make_unique < NormalBulletPrototype<MotionModels::RectilinearMotion>>(liveTypeBullet, 1);
 	auto object = Object< ParametricSphere, MotionModels::OrbitalMotion>("Generator", "CilinderModel", MotionModels::OrbitalMotion(0.01, glm::vec3(0, 0, 0), 3, glm::vec3(0, 0, 1)));
 	auto objectGenerator = ObjectGenerator(object, std::move(bulletPrototype));
 	auto liveParams = Logic::ObjectLogic

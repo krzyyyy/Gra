@@ -4,5 +4,5 @@
 class IBulletPrototype
 {
 public :
-	virtual std::shared_ptr<IObject> Clone() const = 0;
+	virtual std::shared_ptr<IObject> Clone(glm::vec3 beginTrajectory, glm::vec3 pointOnTrajectory) const = 0;
 };

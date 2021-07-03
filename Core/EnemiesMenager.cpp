@@ -12,11 +12,11 @@ EnemiesMenager::EnemiesMenager()
 void EnemiesMenager::LoadEnemyPrototypes()
 {
 	enemiesPrototype.push(
-		std::make_unique<OrbitalEnemyPrototype>(OrbitalEnemyPrototype(5, 3, glm::vec3(0, 0, 1.)))
+		std::make_unique<OrbitalEnemyPrototype>(OrbitalEnemyPrototype(1, 3, glm::vec3(0, 0, 1.)))
 	);
-	//enemiesPrototype.push(
-	//	std::make_unique<OrbitalEnemyPrototype>(OrbitalEnemyPrototype(2, 6, glm::vec3(0, 1, 0)))
-	//);
+	enemiesPrototype.push(
+		std::make_unique<OrbitalEnemyPrototype>(OrbitalEnemyPrototype(0.5, 6, glm::vec3(0, 1, 0)))
+	);
 	//enemiesPrototype.push(
 	//	std::make_unique<WeekEnemyPrototype>(WeekEnemyPrototype())
 	//);

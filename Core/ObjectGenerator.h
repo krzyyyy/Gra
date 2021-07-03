@@ -40,7 +40,14 @@ inline ObjectGenerator<Model, MotionModel>::ObjectGenerator(Object<Model, Motion
 template<typename Model, typename MotionModel>
 inline std::shared_ptr<IObject> ObjectGenerator<Model, MotionModel>::generate(glm::vec3 targetPosition)const
 {
+	auto globalPosition = ObjectGenerator<Model, MotionModel>::globalPosition;
+	auto scale = Object<Model, MotionModel>::scale.x;
+	auto objectPosition = Math::GetVectorPosition(globalPosition);
+	auto direction = targetPosition - objectPosition;
+	direction = (direction / glm::length(direction))* scale;
 	
+	auto bullet = _bulletPrototype->Clone(objectPosition, targetPosition);
+	bullet->Translate(objectPosition+direction);
 	
-	return _bulletPrototype->Clone();// newObject;
+	return bullet;// newObject;
 }

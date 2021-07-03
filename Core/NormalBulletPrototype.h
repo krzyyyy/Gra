@@ -8,21 +8,20 @@ class NormalBulletPrototype :
     public IBulletPrototype
 {
 public:
-    NormalBulletPrototype(Logic::Bullet bullet, MotionType motionType);
+    NormalBulletPrototype(Logic::Bullet bullet, float velocity);
     void SetLiveObject(Logic::Bullet bullet);
-    void SetMotionType(MotionType motionType);
     ~NormalBulletPrototype();
     // Inherited via IBulletPrototype
-    virtual std::shared_ptr<IObject> Clone() const override;
+    virtual std::shared_ptr<IObject> Clone(glm::vec3 beginTrajectory, glm::vec3 pointOnTrajectory) const override;
 private:
     Logic::Bullet _bullet;
-    MotionType _motionType;
+    float _velocity;
 };
 
 template<typename MotionType>
-inline NormalBulletPrototype<MotionType>::NormalBulletPrototype(Logic::Bullet bullet, MotionType motionType):
+inline NormalBulletPrototype<MotionType>::NormalBulletPrototype(Logic::Bullet bullet, float velocity):
     _bullet(bullet),
-    _motionType(motionType)
+    _velocity(velocity)
 {
 }
 
@@ -32,11 +31,6 @@ inline void NormalBulletPrototype<MotionType>::SetLiveObject(Logic::Bullet bulle
     _bullet = bullet;
 }
 
-template<typename MotionType>
-inline void NormalBulletPrototype<MotionType>::SetMotionType(MotionType motionType)
-{
-    _motionType = motionType;
-}
 
 template<typename MotionType>
 inline NormalBulletPrototype<MotionType>::~NormalBulletPrototype()
@@ -44,9 +38,9 @@ inline NormalBulletPrototype<MotionType>::~NormalBulletPrototype()
 }
 
 template<typename MotionType>
-inline std::shared_ptr<IObject> NormalBulletPrototype<MotionType>::Clone() const
+inline std::shared_ptr<IObject> NormalBulletPrototype<MotionType>::Clone(glm::vec3 beginTrajectory, glm::vec3 pointOnTrajectory) const
 {
-    auto object = Object<ParametricSphere>("Bullet", "SphereModel", _motionType);
+    auto object = Object<ParametricSphere>("Bullet", "SphereModel", MotionType(beginTrajectory, pointOnTrajectory, _velocity));
     auto liveObject = LiveObject(object, _bullet);
     return std::make_shared<decltype(liveObject)>(std::move(liveObject));
 }
