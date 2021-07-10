@@ -169,8 +169,9 @@
   <ItemGroup>
     <ClCompile Include="BasicShapesCreators.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="FrenderFunctions.cpp" />
     <ClCompile Include="GLAD\src\glad.c" />
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="MultidimensionalVector.cpp" />
     <ClCompile Include="OpenGL.cpp" />
     <ClCompile Include="Program.cpp" />
@@ -182,10 +183,10 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CilinderCreator.h" />
     <ClInclude Include="CubeCreator.h" />
-    <ClInclude Include="FrenderFunctions.h" />
-    <ClInclude Include="IModelCreator.h" />
     <ClInclude Include="IRenderObject.h" />
     <ClInclude Include="IShader.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="MultidimensionalConvertable.h" />
     <ClInclude Include="MultidimensionalVector.h" />
     <ClInclude Include="Program.h" />
@@ -200,10 +201,13 @@
   <ItemGroup>
     <None Include="FragmentShader.glsl" />
     <None Include="FragmentShader2.glsl" />
+    <None Include="FragmentShaderModel.glsl" />
     <None Include="GeneratorsFragmentShader.glsl" />
+    <None Include="packages.config" />
     <None Include="ParametersBarFragmentShader.glsl" />
     <None Include="ParametersBarVertexShader.glsl" />
     <None Include="VertexShader.glsl" />
+    <None Include="VertexShaderModel.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Textures\wall.jpg" />
@@ -218,5 +222,14 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\Assimp.redist.3.0.0\build\native\Assimp.redist.targets" Condition="Exists('..\packages\Assimp.redist.3.0.0\build\native\Assimp.redist.targets')" />
+    <Import Project="..\packages\Assimp.3.0.0\build\native\Assimp.targets" Condition="Exists('..\packages\Assimp.3.0.0\build\native\Assimp.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Assimp.redist.3.0.0\build\native\Assimp.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Assimp.redist.3.0.0\build\native\Assimp.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\Assimp.3.0.0\build\native\Assimp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Assimp.3.0.0\build\native\Assimp.targets'))" />
+  </Target>
 </Project>
