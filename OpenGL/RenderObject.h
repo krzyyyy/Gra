@@ -21,7 +21,7 @@ public:
 	RenderObject(const RenderObject< ModelCreator>& obj) = delete;
 	void operator=(RenderObject< ModelCreator> const&) = delete;
 	void Initialize();
-	void Load();
+	void Load(Program& program);
     //using ModelCreator::computeMeshVertexes;
 	~RenderObject();
     
@@ -67,11 +67,11 @@ void RenderObject<typename Model>::Initialize()
 
     //glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
     //glEnableVertexAttribArray(2);
-    addTexture("Textures/wall.jpg");
+    //addTexture("Textures/wall.jpg");
 }
 
 template<typename Model>
-void RenderObject<typename Model>::Load()
+void RenderObject<typename Model>::Load(Program& program)
 {
     glBindTexture(GL_TEXTURE_2D, texture);
     glBindVertexArray(VAO);

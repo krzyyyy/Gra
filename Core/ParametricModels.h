@@ -36,12 +36,12 @@ struct ParametricCilinder
 	static ParametricCilinder ComputeParametricModel(const glm::mat4& objectPosition, const glm::vec3& scale)
 	{
 		auto vector = glm::vec3(objectPosition[0][0], objectPosition[0][1], objectPosition[0][2]);
-		glm::vec3 heightDirection = glm::mat3(objectPosition) * glm::vec3(0, 0, 1);
+		glm::vec3 heightDirection = glm::mat3(objectPosition) * glm::vec3(0, 1, 0);
 		return ParametricCilinder{
 			.Center = glm::vec3(objectPosition[3].x, objectPosition[3].y, objectPosition[3].z),
 			.HeightDirection = heightDirection,
 			.R = 0.5 * scale[0],
-			.Height = 1. * scale[2],
+			.Height = 1. * scale[1],
 		};
 	}
 	glm::vec3 ComputeNewDirection(glm::vec3 collisionPoint, glm::vec3 currentDirection) const

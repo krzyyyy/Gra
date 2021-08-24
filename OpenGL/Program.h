@@ -2,7 +2,7 @@
 #include <iostream>
 #include <memory>
 #include "Shader.h"
-#include "IRenderObject.h"
+#include "Camera.h"
 #include "..\glm\glm.hpp"
 
 class Program
@@ -23,7 +23,8 @@ public:
 	void setUniform(float number, std::string uniformName)const;
 	void setUniform(bool state, std::string uniformName)const;
 	void useProgram()const;
-	void Render(const glm::mat4& matrix, IRenderObject& renderObject);
+	void setCameraAndModel( const glm::mat4& model, const Camera& camera);
+	unsigned int GetID() const;
 	~Program();
 private:
 	Shader<GL_VERTEX_SHADER> vertexShader;

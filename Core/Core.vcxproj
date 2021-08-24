@@ -144,10 +144,11 @@
     <ClInclude Include="BounceObject.h" />
     <ClInclude Include="EnemiesMenager.h" />
     <ClInclude Include="IBulletPrototype.h" />
+    <ClInclude Include="ICamera.h" />
     <ClInclude Include="IEnemyPrototype.h" />
     <ClInclude Include="IObject.h" />
     <ClInclude Include="IObjectGenerator.h" />
-    <ClInclude Include="ISwordControler.h" />
+    <ClInclude Include="IShipControler.h" />
     <ClInclude Include="LiveObject.h" />
     <ClInclude Include="MathHelperFunctions.h" />
     <ClInclude Include="MotionModels.h" />

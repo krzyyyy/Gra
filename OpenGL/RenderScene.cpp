@@ -60,9 +60,7 @@ void RenderScene::renderParametersBar(const std::shared_ptr<IObject>& object, co
 		return;
 	}
 	auto& program = programs["LiveBar"];
-	program.useProgram();
-	program.setUniform(camera.getViewMatrix(), "view");
-	program.setUniform(camera.getProjectionMatrix(), "projection");
+	
 	glm::mat4 objectGlobalPosition = object->GetGlobalPosition();
 	Logic::LiveTypes liveParameters = liveObject->GetLiveParameters();
 	auto isLive = std::holds_alternative<Logic::ObjectLogic>(liveParameters);
@@ -72,12 +70,16 @@ void RenderScene::renderParametersBar(const std::shared_ptr<IObject>& object, co
 	double liveFactor = liveobject.currentLive / liveobject.maxLive;
 	if (liveFactor < 0)
 		liveFactor = 0.;
+	program.useProgram();/*
+	program.setUniform(camera.getViewMatrix(), "view");
+	program.setUniform(camera.getProjectionMatrix(), "projection");*/
+	program.setCameraAndModel( objectGlobalPosition, camera);
 	//auto objectGlobalPositionRed = glm::scale(objectGlobalPosition, glm::vec3(1-liveFactor, 1, 1));
 	//objectGlobalPositionRed = glm::translate(objectGlobalPositionRed, glm::vec3(-(liveFactor)/2, 0, 0));
 	program.setUniform( float(liveFactor), "liveFactor");
 	program.setUniform(float(liveFactor), "liveFactorF");
-	program.Render(objectGlobalPosition, *models["RectangleModel"]);
-
+	//program.Render(objectGlobalPosition, *);
+	models["RectangleModel"]->Load(program);
 
 	//auto objectGlobalPositionGreen = glm::scale(objectGlobalPosition, glm::vec3( liveFactor, 1, 1));
 	//objectGlobalPositionGreen = glm::translate(objectGlobalPositionGreen, glm::vec3(0.4, 0, 0));
@@ -87,7 +89,8 @@ void RenderScene::renderParametersBar(const std::shared_ptr<IObject>& object, co
 	program.setUniform(glm::vec3(0.f, 1.f, 0.f), "color");
 
 	
-	program.Render(objectGlobalPosition, *models["RectangleModel"]);
+	//program.Render(objectGlobalPosition, *models["RectangleModel"]);
+	models["RectangleModel"]->Load(program);
 
 
 }
@@ -97,9 +100,10 @@ void RenderScene::renderObject(const std::shared_ptr<IObject>& object, const Cam
 	std::string objectType = object->GetObjectType();
 	auto modelName = object->GetObjectModel();
 	auto& program = programs[objectType];
+	auto objectPosition = object->GetGlobalPosition();
 	program.useProgram();
-	program.setUniform(camera.getViewMatrix(), "view");
-	program.setUniform(camera.getProjectionMatrix(), "projection");
-	program.Render(object->GetGlobalPosition(), *models[modelName]);
+	program.setCameraAndModel( objectPosition, camera);
+	//program.Render(object->GetGlobalPosition(), *models[modelName]);
+	models[modelName]->Load(program);
 }
 

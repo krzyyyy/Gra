@@ -23,8 +23,10 @@
 #include "RenderScene.h"
 #include "BasicShapesCreators.h"
 #include "SphereCreator.h"
+#include "stb_image.h"
 
-#include "..\SwordControler\SwordControler.h"
+
+#include "..\SwordControler\ShipControler.h"
 
 
 
@@ -33,6 +35,8 @@ using namespace std;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
+std::shared_ptr< glm::vec2> mausePosition;
+std::shared_ptr< std::optional<char>> clickedButton;
 
 
 // settings
@@ -44,12 +48,18 @@ void scrollCallback(GLFWwindow* window, double xOffset, double yOffset);
 
 int main()
 {
+	mausePosition = std::make_shared<glm::vec2>();
+	clickedButton = std::make_shared<std::optional<char>>(nullopt);
+
 	auto vertexShaderPath = fs::path("VertexShader.glsl");
 	auto fragmenShaderPath = fs::path("FragmentShader.glsl");
 	auto fragmenShader2Path = fs::path("FragmentShader2.glsl");
 	auto fragmenShaderGeneratorPath = fs::path("GeneratorsFragmentShader.glsl");
 	auto fragmenShaderParametesBar = fs::path("ParametersBarFragmentShader.glsl");
 	auto vertexShaderParametesBar = fs::path("ParametersBarVertexShader.glsl");
+
+	auto vertexShaderModel = fs::path("VertexShaderModel.glsl");
+	auto fragmentShaderModel = fs::path("FragmentShaderModel.glsl");
 	RenderObjectFactory renderObjectFactory;
 	// glfw: initialize and configure
 	// ------------------------------
@@ -83,16 +93,22 @@ int main()
 	glfwSetScrollCallback(window, scrollCallback);
 
 	
-
+	stbi_set_flip_vertically_on_load(false);
 	auto renderScene = RenderScene();
 	SceneMenager sceneMenager;
-	sceneMenager.SetSwordControler(std::make_unique<SwordControler>());
+	auto shipControler = std::make_unique<ShipControler>(mausePosition, clickedButton);
+	sceneMenager.SetShipControler(std::move(shipControler));
 	renderScene.InitilizeShaders({
 		std::make_tuple("Bullet", vertexShaderPath.string(), fragmenShaderPath.string()),
 		std::make_tuple("Sword", vertexShaderPath.string(), fragmenShader2Path.string()),
 		std::make_tuple("Generator", vertexShaderPath.string(), fragmenShaderGeneratorPath.string()),
-		std::make_tuple("LiveBar", vertexShaderParametesBar.string(), fragmenShaderParametesBar.string())
+		std::make_tuple("LiveBar", vertexShaderParametesBar.string(), fragmenShaderParametesBar.string()),
+		std::make_tuple("Model", vertexShaderModel.string(), fragmentShaderModel.string())
 		});
+	Model ship2 = Model("models/ship2/OBJ/Intergalactic_Spaceships_Version_2.obj");
+	//Model shipModel = Model("models/ship/Ship.obj");
+	Model shot = Model("models/shot2/shot2.obj");
+	auto swordModel = Model("models/sword/sword.obj");
 	renderScene.AddModel(
 		"CubeModel",
 		renderObjectFactory.CreateRenderObjects("CubeModel")
@@ -109,6 +125,22 @@ int main()
 		"RectangleModel",
 		renderObjectFactory.CreateRenderObjects("RectangleModel")
 	);
+	renderScene.AddModel(
+		"Ship2",
+		ship2
+	);
+	//renderScene.AddModel(
+	//	"ShipModel",
+	//	shipModel
+	//);
+	renderScene.AddModel(
+		"ShotModel",
+		shot
+	);
+	renderScene.AddModel(
+		"SwordModel",
+		swordModel
+	);
 	renderScene.InitializeModels();
 
 
@@ -123,12 +155,11 @@ int main()
 		// input
 		// -----
 		processInput(window);
-		camera.processInput(window);
 		auto time = glfwGetTime();
 
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-		sceneMenager.UpdateScene(camera.getCameraPos());
+		sceneMenager.UpdateScene(camera);
 		std::vector<std::shared_ptr<IObject>> objects = sceneMenager.GetObjects();
 		renderScene.RenderObjects(objects, camera);
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
@@ -154,11 +185,43 @@ void processInput(GLFWwindow* window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
+	else if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+	{
+		*clickedButton = 'w';
+	}
+	else if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+	{
+		*clickedButton = 's';
+	}
+	else if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+	{
+		*clickedButton = 'a';
+	}
+	else if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+	{
+		*clickedButton = 'd';
+	}
+	else if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS)
+	{
+		*clickedButton = 'r';
+	}
+	else if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS)
+	{
+		*clickedButton = 'f';
+	}
+	else if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS)
+	{
+		*clickedButton = 'k';
+	}
+	else
+	{
+		*clickedButton = nullopt;
+	}
 }
 
 void mauseCallback(GLFWwindow* window, double posX, double posY)
 {
-	camera.mauseCallback(window, posX, posY);
+	*mausePosition = glm::vec2(posX, posY);
 }
 
 void scrollCallback(GLFWwindow* window, double xOffset, double yOffset)

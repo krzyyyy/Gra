@@ -6,6 +6,7 @@
 #include "CubeCreator.h"
 #include "SphereCreator.h"
 #include "RectangleCreator.h"
+#include "Model.h"
 
 
 class RenderObjectFactory

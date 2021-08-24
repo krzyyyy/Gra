@@ -15,8 +15,11 @@
     <Filter Include="Tools">
       <UniqueIdentifier>{6255660d-0642-4f96-bac9-259e98f77c8d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SwordControler">
+    <Filter Include="ShipControler">
       <UniqueIdentifier>{ec78cea0-e145-4652-980b-335cdcb00c75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ICamera">
+      <UniqueIdentifier>{0b5aed5d-ec1e-4e46-8ed1-7473de335643}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -44,8 +47,8 @@
     <ClInclude Include="LiveObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ISwordControler.h">
-      <Filter>SwordControler</Filter>
+    <ClInclude Include="IShipControler.h">
+      <Filter>ShipControler</Filter>
     </ClInclude>
     <ClInclude Include="ParametricModels.h">
       <Filter>Models</Filter>
@@ -79,6 +82,9 @@
     </ClInclude>
     <ClInclude Include="NormalBulletPrototype.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ICamera.h">
+      <Filter>ICamera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

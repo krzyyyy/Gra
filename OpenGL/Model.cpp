@@ -1,12 +1,17 @@
 #include "Model.h"
+#include "stb_image.h"
 
 Model::Model(std::string const& path, bool gamma) : gammaCorrection(gamma)
 {
     loadModel(path);
 }
 
+void Model::Initialize()
+{
+}
 
-void Model::Draw(Program& shader)
+
+void Model::Load(Program& shader)
 {
     for (unsigned int i = 0; i < meshes.size(); i++)
         meshes[i].Draw(shader);
@@ -59,6 +64,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
     std::vector<Texture> textures;
 
     // walk through each of the mesh's vertices
+    float maxDestance = -1;
     for (unsigned int i = 0; i < mesh->mNumVertices; i++)
     {
         Vertex vertex;
@@ -101,6 +107,17 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 
         vertices.push_back(vertex);
     }
+    auto maxElementIt = std::max_element(vertices.cbegin(), vertices.cend(), [](const Vertex& verticle1, const Vertex& verticle2)
+        {
+            float maxElement1 = std::max({ std::abs(verticle1.Position.x), std::abs(verticle1.Position.y), std::abs(verticle1.Position.z) });
+            float maxElement2 = std::max({ std::abs(verticle2.Position.x), std::abs(verticle2.Position.y), std::abs(verticle2.Position.z) });
+            return maxElement1 < maxElement2;
+        });
+    float maxElement = std::max({ std::abs(maxElementIt->Position.x), std::abs(maxElementIt->Position.y), std::abs(maxElementIt->Position.z) })*2;
+    std::for_each(vertices.begin(), vertices.end(), [maxElement](auto& element)
+        {
+            element.Position = element.Position / maxElement;
+        });
     // now wak through each of the mesh's faces (a face is a mesh its triangle) and retrieve the corresponding vertex indices.
     for (unsigned int i = 0; i < mesh->mNumFaces; i++)
     {
@@ -175,21 +192,20 @@ unsigned int Model::TextureFromFile(const char* path, const std::string& directo
     unsigned int textureID;
     glGenTextures(1, &textureID);
 
-    //int width, height, nrComponents;
-    cv::Mat image = cv::imread(filename);
-    //unsigned char* data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
-    if (!image.empty())
+    int width, height, nrComponents;
+    unsigned char* data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
+    if (data)
     {
         GLenum format;
-        if (image.channels() == 1)
+        if (nrComponents == 1)
             format = GL_RED;
-        else if (image.channels() == 3)
+        else if (nrComponents == 3)
             format = GL_RGB;
-        else if (image.channels() == 4)
+        else if (nrComponents == 4)
             format = GL_RGBA;
 
         glBindTexture(GL_TEXTURE_2D, textureID);
-        glTexImage2D(GL_TEXTURE_2D, 0, format, image.cols, image.rows, 0, format, GL_UNSIGNED_BYTE, image.data);
+        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -197,10 +213,12 @@ unsigned int Model::TextureFromFile(const char* path, const std::string& directo
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
+        stbi_image_free(data);
     }
     else
     {
         std::cout << "Texture failed to load at path: " << path << std::endl;
+        stbi_image_free(data);
     }
 
     return textureID;

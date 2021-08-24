@@ -6,7 +6,7 @@
 #include "ObjectGenerator.h"
 #include "Timer.h"
 #include "BounceObject.h"
-#include "ISwordControler.h"
+#include "IShipControler.h"
 #include "EnemiesMenager.h"
 #ifdef EXPORT_FLAG
 #define EXPORT_MODULES __declspec(dllexport)
@@ -21,10 +21,10 @@ public:
 	SceneMenager(SceneMenager&& object) noexcept = default;
 	SceneMenager& operator=(const SceneMenager& object) = default;
 	SceneMenager& operator=(SceneMenager&& object) = default;
-	void UpdateScene(glm::vec3 targetPosition);
+	void UpdateScene(ICamera& camera);
 	std::vector<std::shared_ptr<IObject>> GetObjects();
 
-	void SetSwordControler(std::unique_ptr<ISwordControler> swordControler);
+	void SetShipControler(std::unique_ptr<IShipControler> swordControler);
 private:
 	void EraseUnusedElements();
 	void GenerateNewObjects(glm::vec3 posiotion);
@@ -34,8 +34,8 @@ private:
 	std::vector<std::shared_ptr<IObject>> bullets;
 	std::vector<std::shared_ptr<IObjectGenerator>> enemies;
 
-	std::shared_ptr<IObject> sword;
-	std::unique_ptr<ISwordControler> swordControler;
+	std::shared_ptr<IObjectGenerator> ship;
+	std::unique_ptr<IShipControler> shipControler;
 
 	std::chrono::steady_clock::time_point lastTime;
 	Timer generationTimer;

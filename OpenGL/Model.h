@@ -12,10 +12,11 @@
 
 #include "Mesh.h"
 #include "Program.h"
+#include "IRenderObject.h"
 
 
 
-class Model
+class Model: public IRenderObject
 {
 public:
     // model data 
@@ -26,8 +27,9 @@ public:
 
     // constructor, expects a filepath to a 3D model.
     Model(std::string const& path, bool gamma = false);
+    void Initialize() override;
     // draws the model, and thus all its meshes
-    void Draw(Program& shader);
+    void Load(Program& shader) override;
 
 private:
     // loads a model with supported ASSIMP extensions from file and stores the resulting meshes in the meshes vector.

@@ -24,6 +24,7 @@
     <ProjectGuid>{032f611b-94bb-43f0-86df-f542256f0dca}</ProjectGuid>
     <RootNamespace>SwordControler</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>ShipControler</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -124,9 +125,9 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(BOOST)\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(BOOST)\;$(SolutionDir)\GLFW\include\</AdditionalIncludeDirectories>
       <AdditionalOptions>-DBOOST_DATE_TIME_NO_LIB -DBOOST_REGEX_NO_LIB %(AdditionalOptions)</AdditionalOptions>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -144,9 +145,9 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(BOOST)\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(BOOST)\;$(SolutionDir)\GLFW\include\</AdditionalIncludeDirectories>
       <AdditionalOptions>-DBOOST_DATE_TIME_NO_LIB -DBOOST_REGEX_NO_LIB %(AdditionalOptions)</AdditionalOptions>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -158,18 +159,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
+    <ClInclude Include="KeyboardInfo.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="SwordControler.h" />
+    <ClInclude Include="ShipControler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="KeyboardInfo.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="SwordControler.cpp" />
+    <ClCompile Include="ShipControler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.vcxproj">

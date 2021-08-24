@@ -77,11 +77,17 @@ void Program::useProgram()const
     glUseProgram(idProgram);
 }
 
-void Program::Render(const glm::mat4& matrix, IRenderObject& renderObject)
+void Program::setCameraAndModel(const glm::mat4& model, const Camera& camera)
 {
-    //program.useProgram();
-    setUniform(matrix, "model");
-    renderObject.Load();
+    setUniform(camera.getViewMatrix(), "view");
+    setUniform(camera.getProjectionMatrix(), "projection");
+    setUniform(model, "model");
+}
+
+
+unsigned int Program::GetID() const
+{
+    return idProgram;
 }
 
 Program::~Program()

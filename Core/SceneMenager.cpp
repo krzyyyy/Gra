@@ -4,6 +4,7 @@
 #include "IObjectGenerator.h"
 #include "LiveObject.h"
 #include "..\ObjectLogic\DeleteConditionVisitor.h"
+#include "NormalBulletPrototype.h"
 //#include <iostream>
 //#include <memory>
 
@@ -26,6 +27,7 @@ SceneMenager::SceneMenager()
 	//objects.emplace_back(std::make_shared < ObjectGenerator< ModelCreators::CubeCreator, ModelCreators::SphereCreator>>("Generator"));
 	//objects.emplace_back(std::make_unique< Object<RenderObject<ModelCreators::CylinderCreator>>>());
 	//objects[0]->Scale(glm::vec3(0.5, 0.5, 4));
+	//ship = 
 	glm::vec3 cubePositions[] = {
 	glm::vec3(0.0f,  3.0f,  0.0f),
 	glm::vec3(2.0f,  5.0f, -15.0f),
@@ -39,8 +41,8 @@ SceneMenager::SceneMenager()
 		enemies[i]->Translate(cubePositions[i]);
 	}
 
-	sword = std::make_shared < Object<ParametricCilinder>>("Sword", "CilinderModel");
-	sword->Scale(glm::vec3(0.25, 0.25, 4));
+	//sword = std::make_shared < Object<ParametricCilinder>>("Model", "SwordModel");
+	//sword->Scale(glm::vec3(0.25, 4, 0.25));
 	lastTime = std::chrono::steady_clock::now();
 	generationTimer = Timer(std::chrono::seconds(5));
 	enemyCreationTimer = Timer(std::chrono::seconds(10));
@@ -58,9 +60,9 @@ void SceneMenager::UpdatePosition(std::chrono::duration<double> deltaT)
 	{
 		element->UpdatePosition(deltaT);
 	}
-	sword->SetGlobalPosition(swordControler->ActualizePosition());
+	ship->UpdatePosition(deltaT);
 }
-void SceneMenager::UpdateScene(glm::vec3 targetPosition)
+void SceneMenager::UpdateScene(ICamera& camera)
 {
 	auto currentTime = std::chrono::steady_clock::now();
 	auto deltaT = currentTime - lastTime;
@@ -69,11 +71,12 @@ void SceneMenager::UpdateScene(glm::vec3 targetPosition)
 	for (auto& bullet : bullets)
 	{
 
-		std::optional<Match> collision = objectsBouncer.FindCollision(bullet, sword);
+		std::optional<Match> collision = objectsBouncer.FindCollision(bullet, ship);
 		if (auto collisionPointer = collision)
 		{
-			//collisions.emplace_back(*collisionPointer);
-			bullet->BounceReaction(collisionPointer->ColissionPoint);
+			auto liveBullet = std::dynamic_pointer_cast<Logic::ILiveObject>(bullet);
+			auto liveEnemy = std::dynamic_pointer_cast<Logic::ILiveObject>(ship);
+			collisionInterpreter.InterpretCollision(liveBullet, liveEnemy);
 		}
 	}
 	for (auto& bullet : bullets)
@@ -90,9 +93,12 @@ void SceneMenager::UpdateScene(glm::vec3 targetPosition)
 			}
 		}
 	}
-	generationTimer.RunEvent(&SceneMenager::GenerateNewObjects, this, targetPosition);
+	glm::mat4 shipOrientation = ship->GetGlobalPosition();
+	auto shipPosition = Math::GetVectorPosition(shipOrientation);
+	generationTimer.RunEvent(&SceneMenager::GenerateNewObjects, this, shipPosition);
 	enemyCreationTimer.RunEvent(&EnemiesMenager::AddEnemies, enemyMenager, enemies);
 	EraseUnusedElements();
+	shipControler->SetCameraParameters(camera);
 	
 }
 
@@ -107,13 +113,29 @@ std::vector<std::shared_ptr<IObject>> SceneMenager::GetObjects()
 	{
 		allObjects.push_back(bullet);
 	}
-	allObjects.push_back(sword);
+	allObjects.push_back(ship);
 	return allObjects;
 }
 
-void SceneMenager::SetSwordControler(std::unique_ptr<ISwordControler> swordControler)
+void SceneMenager::SetShipControler(std::unique_ptr<IShipControler> swordControler)
 {
-	this->swordControler = std::move(swordControler);
+	this->shipControler = std::move(swordControler);
+	auto bulletMotionModel = MotionModels::RectilinearMotion(1, glm::vec3(0, 0, 1.));
+	auto bulletLiveParams = Logic::Bullet{
+		.Damage = 20,
+		.Used = false,
+	};
+	auto bulletPrototype = std::make_unique<NormalBulletPrototype<MotionModels::RectilinearMotion>>(bulletLiveParams, 5);
+	auto generatorObject = Object<ParametricSphere, IShipControler&>("Model", "Ship2", *shipControler.get());
+	auto objectGenerator = ObjectGenerator(generatorObject, std::move(bulletPrototype));
+	auto liveParams = Logic::ObjectLogic
+	{
+		.maxLive = 120,
+		.currentLive = 120,
+		.damage = 5
+	};
+	auto liveObject = LiveObject(std::move(objectGenerator), liveParams);
+	ship = std::make_shared<decltype(liveObject)>(std::move(liveObject));
 }
 
 
@@ -137,7 +159,7 @@ void SceneMenager::EraseUnusedElements()
 		}
 		return false;
 	};
-	glm::vec3 swordPosition = Math::GetVectorPosition(sword->GetGlobalPosition());
+	glm::vec3 swordPosition = Math::GetVectorPosition(ship->GetGlobalPosition());
 	auto deleteSpaceObjectPredicat = [swordPosition](auto& object)
 	{
 		glm::vec3 objectPosition = Math::GetVectorPosition(object->GetGlobalPosition());
@@ -160,5 +182,6 @@ void SceneMenager::GenerateNewObjects(glm::vec3 posiotion)
 	{
 		bullets.push_back(enemy->generate(posiotion));
 	}
+	//ship->generate(shipControler->GetNextPosition)
 	//std::move(newObjects.begin(), newObjects.end(), std::back_inserter(objects));
 }

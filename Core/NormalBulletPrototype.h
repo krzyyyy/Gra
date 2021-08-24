@@ -40,7 +40,7 @@ inline NormalBulletPrototype<MotionType>::~NormalBulletPrototype()
 template<typename MotionType>
 inline std::shared_ptr<IObject> NormalBulletPrototype<MotionType>::Clone(glm::vec3 beginTrajectory, glm::vec3 pointOnTrajectory) const
 {
-    auto object = Object<ParametricSphere>("Bullet", "SphereModel", MotionType(beginTrajectory, pointOnTrajectory, _velocity));
+    auto object = Object<ParametricSphere>("Model", "ShotModel", MotionType(beginTrajectory, pointOnTrajectory, _velocity));
     auto liveObject = LiveObject(object, _bullet);
     return std::make_shared<decltype(liveObject)>(std::move(liveObject));
 }

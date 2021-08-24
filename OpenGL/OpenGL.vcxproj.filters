@@ -63,7 +63,13 @@
     <ClCompile Include="BasicShapesCreators.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FrenderFunctions.cpp">
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stb_image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -107,20 +113,23 @@
     <ClInclude Include="BasicShapesCreators.h">
       <Filter>Models\ModelCreators</Filter>
     </ClInclude>
-    <ClInclude Include="IModelCreator.h">
-      <Filter>Models\ModelCreators</Filter>
-    </ClInclude>
     <ClInclude Include="SphereCreator.h">
       <Filter>Models\ModelCreators</Filter>
     </ClInclude>
     <ClInclude Include="RenderObjectFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FrenderFunctions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="RectangleCreator.h">
       <Filter>Models\ModelCreators</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -140,6 +149,13 @@
       <Filter>Renders\Shaders</Filter>
     </None>
     <None Include="ParametersBarVertexShader.glsl">
+      <Filter>Renders\Shaders</Filter>
+    </None>
+    <None Include="packages.config" />
+    <None Include="FragmentShaderModel.glsl">
+      <Filter>Renders\Shaders</Filter>
+    </None>
+    <None Include="VertexShaderModel.glsl">
       <Filter>Renders\Shaders</Filter>
     </None>
   </ItemGroup>
