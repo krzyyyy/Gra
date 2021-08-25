@@ -14,11 +14,10 @@ public:
 	void scrollCallback(GLFWwindow* window, double xOffset, double yOffset);
 	glm::mat4 getViewMatrix()const;
 	glm::mat4 getProjectionMatrix()const;
-	virtual void SetPosition(glm::vec3 position) override;
-	virtual void SetDiretion(glm::vec3 direction) override;
+	virtual void SetCameraPosition(glm::mat4 objectOrientation) override;
 private:
-	glm::vec3 lastObjectPosition = glm::vec3(0.0f, 0.0f, 3.0f);
-	glm::vec3 lastObjectDirection = glm::vec3(0.0f, 0.0f, -1.0f);
+	glm::vec3 cameraPosition;
+	glm::vec3 cameraDirection;
 	glm::vec3 cameraUp = glm::vec3(1.0f, 0.0f, 0.0f);
 	double zoom =45;
 

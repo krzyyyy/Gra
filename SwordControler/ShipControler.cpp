@@ -123,12 +123,8 @@
 //}
 
 ShipControler::ShipControler() noexcept:
-cameraPos(0.0f, 0.0f, 3.0f),
-cameraFront(0.0f, 0.0f, -1.0f),
-cameraUp(0.0f, 0.0f, 1.0f),
-lastX(400),
-lastY(300),
-firstMouse(true),
+currentFrontVector(0.f, 0.f, 1.f),
+currentPosition(0.f, 0.f, 1.f),
 yaw(0),
 pitch(0),
 mausePosition_(nullptr),
@@ -137,12 +133,8 @@ button_(nullptr)
 }
 
 ShipControler::ShipControler(std::shared_ptr<glm::vec2> mausePosition, std::shared_ptr<std::optional<char>> button) noexcept :
-    cameraPos(0.0f, 0.0f, 3.0f),
-    cameraFront(0.0f, 0.0f, -1.0f),
-    cameraUp(0.0f, 0.0f, 1.0f),
-    lastX(400),
-    lastY(300),
-    firstMouse(true),
+    currentFrontVector(0.f, 0.f, 1.f),
+    currentPosition(0.f, 0.f, 1.f),
     yaw(0),
     pitch(0),
     mausePosition_(mausePosition),
@@ -154,19 +146,13 @@ ShipControler::ShipControler(std::shared_ptr<glm::vec2> mausePosition, std::shar
 
 void ShipControler::ActualizeShipDirection(glm::mat4& globalPosition)
 {
-    if (firstMouse)
-    {
-        lastX = mausePosition_->x;
-        lastY = mausePosition_->y;
-        firstMouse = false;
-    }
 
     float xoffset = 0;
     float yoffset = 0;
-    auto moveVector = glm::vec3(0.f, 0.f, 0.f);
-    auto rotateAxisPitch = glm::vec3(0.f, 0.f, 0.f);
-    auto rotateAxisYaw = glm::vec3(0.f, 0.f, 0.f);
-    double moveSensitive = 0.1;
+    auto objectDirection = glm::vec3(0.f, 0.f, 1.f);
+    auto rotateAxisPitch = glm::vec3(1.f, 0.f, 0.f);
+    auto rotateAxisYaw = glm::vec3(0., 1., 0.);
+    float moveSensitive = 0.f;
     if (auto pressedButton = button_.get())
     {
         if (*pressedButton == 'w')
@@ -178,46 +164,25 @@ void ShipControler::ActualizeShipDirection(glm::mat4& globalPosition)
         else if (*pressedButton == 'd')
             yoffset = -0.01;
         else if (*pressedButton == 'r')
-            moveVector = glm::vec3(0.f, 0.f, 1.f);
+            moveSensitive = 0.1f;
         else if (*pressedButton == 'f')
-            moveVector = -glm::vec3(0.f, 0.f, 1.f);
-        moveVector *= moveSensitive;
+            moveSensitive = -0.1f;
     }
-    //if (std::abs(pitch + yoffset) > std::numbers::pi)
-    //    return;
-    //if (std::abs(yaw + xoffset) > std::numbers::pi )
-    //    return;
     pitch += yoffset;
     yaw += xoffset;
 
-
-    //float sensitivity = 0.1f;
-    //xoffset *= sensitivity;
-    //yoffset *= sensitivity;
-    //glm::decompose
     if(xoffset != 0.f)
-        globalPosition = glm::rotate(globalPosition, -xoffset, glm::vec3(1., 0.,  0.));
+        globalPosition = glm::rotate(globalPosition, -xoffset, rotateAxisPitch);
     if (yoffset != 0.f)
-		globalPosition = glm::rotate(globalPosition, -yoffset, glm::vec3(0., 1., 0.));
+		globalPosition = glm::rotate(globalPosition, -yoffset, rotateAxisYaw);
 
-    if(glm::length(moveVector) > 0.001)
-        std::cout << "Move vektor: " << moveVector ;
-    glm::vec4 rotatedMovementFull =  globalPosition * glm::vec4(moveVector, 0.f);
-    if (glm::length(moveVector) > 0.001)
-    {
+    currentFrontVector =  globalPosition * glm::vec4(objectDirection, 0.f);
+    glm::vec3 movementVector = currentFrontVector * moveSensitive;
 
-        std::cout << globalPosition << std::endl;
-        std::cout << "Rotated vektor: " << rotatedMovementFull << std::endl << std::endl << std::endl;
-    }
-    
-    float x = rotatedMovementFull.x;
-    float y = rotatedMovementFull.y;
-    float z = rotatedMovementFull.z;
-    auto rotatedMovement = glm::vec3(x, y, z);
-    //std::cout << rotatedMovement << std::endl;
-    globalPosition[3].x += x;
-    globalPosition[3].y += y;
-    globalPosition[3].z += z;
+    globalPosition[3].x += movementVector.x;
+    globalPosition[3].y += movementVector.y;
+    globalPosition[3].z += movementVector.z;
+    currentPosition = glm::vec3(globalPosition[3].x, globalPosition[3].y, globalPosition[3].z);
     //std::cout << globalPosition << std::endl;
 
     
@@ -225,32 +190,17 @@ void ShipControler::ActualizeShipDirection(glm::mat4& globalPosition)
     
 }
 
-void ShipControler::ActualizeShipPosition(std::chrono::duration<double> duration)
-{
-
-    //float cameraSpeed = 2.5 * duration.count();
-    //if (auto pressedButton = button_.get())
-    //{
-    //    if (*pressedButton == 'w')
-    //        cameraPos += cameraSpeed * cameraFront;
-    //    if (*pressedButton == 's')
-    //        cameraPos -= cameraSpeed * cameraFront;
-    //    if (*pressedButton == 'a')
-    //        cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-    //    if (*pressedButton == 'd')
-    //        cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-    //}
-
-}
-
-bool ShipControler::IsShoting() const
+std::optional<glm::vec3> ShipControler::IsShoting() const
 {
     if (auto pressedButton = button_.get())
     {
         if (*pressedButton == 'k')
-            return true;
+        {
+            auto currentFrontVectorNormal = glm::normalize(currentFrontVector);
+            return std::make_optional(currentPosition + (currentFrontVectorNormal * 10.f));
+        }
     }
-    return false;
+    return std::nullopt;
 }
 
 void ShipControler::GetNextPosition(std::chrono::duration<double> duration, glm::mat4& globalPosition)
@@ -261,11 +211,6 @@ void ShipControler::GetNextPosition(std::chrono::duration<double> duration, glm:
 
 glm::vec3 ShipControler::GetNextDirection() const
 {
-    return cameraFront;
+    return glm::vec3();
 }
 
-void ShipControler::SetCameraParameters(ICamera& camera) const
-{
-    //camera.SetPosition(cameraPos);
-    //camera.SetDiretion(-cameraFront);
-}

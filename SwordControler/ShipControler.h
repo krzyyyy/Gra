@@ -19,16 +19,13 @@ public:
 	// Inherited via IShipControler
 	virtual void GetNextPosition(std::chrono::duration<double> duration, glm::mat4& globalPosition) override;
 	virtual glm::vec3 GetNextDirection() const override;
-	virtual void SetCameraParameters(ICamera& camera) const override;
+	// Inherited via IShipControler
+	virtual std::optional<glm::vec3> IsShoting() const override;
 
 private:
 	void ActualizeShipDirection(glm::mat4& globalPosition);
-	void ActualizeShipPosition(std::chrono::duration<double> duration);
-	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-	float lastX = 400, lastY = 300;
-	bool firstMouse = true;
+	glm::vec3 currentFrontVector;
+	glm::vec3 currentPosition;
 	double yaw = 0;
 	double pitch = 0;
 	std::shared_ptr<glm::vec2> mausePosition_;
@@ -36,8 +33,7 @@ private:
 
 
 
-	// Inherited via IShipControler
-	virtual bool IsShoting() const override;
+
 
 };
 //class __declspec (dllexport) ShipControler: public ISwordControler

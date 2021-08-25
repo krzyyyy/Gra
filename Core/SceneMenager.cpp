@@ -98,7 +98,7 @@ void SceneMenager::UpdateScene(ICamera& camera)
 	generationTimer.RunEvent(&SceneMenager::GenerateNewObjects, this, shipPosition);
 	enemyCreationTimer.RunEvent(&EnemiesMenager::AddEnemies, enemyMenager, enemies);
 	EraseUnusedElements();
-	shipControler->SetCameraParameters(camera);
+	camera.SetCameraPosition(shipOrientation);
 	
 }
 
@@ -181,6 +181,10 @@ void SceneMenager::GenerateNewObjects(glm::vec3 posiotion)
 	for (const auto& enemy : enemies)
 	{
 		bullets.push_back(enemy->generate(posiotion));
+	}
+	if (auto forwardPoint = shipControler->IsShoting())
+	{
+		bullets.push_back(ship->generate(*forwardPoint));
 	}
 	//ship->generate(shipControler->GetNextPosition)
 	//std::move(newObjects.begin(), newObjects.end(), std::back_inserter(objects));
