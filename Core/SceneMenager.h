@@ -38,7 +38,6 @@ private:
 	std::shared_ptr<IShipControler> shipControler;
 
 	std::chrono::steady_clock::time_point lastTime;
-	Timer generationTimer;
 	Timer enemyCreationTimer;
 	BounceObjects objectsBouncer;
 	Logic::CollisionInterpreter collisionInterpreter;

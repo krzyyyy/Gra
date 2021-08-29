@@ -31,6 +31,17 @@ public:
 		}
 		return executionTime;
 	}
+	bool TimePeriodDone()
+	{
+		auto currentTime = std::chrono::steady_clock::now();
+		std::chrono::duration<double> elapsedTime = currentTime - lastTime;
+		if (elapsedTime >= interval)
+		{
+			lastTime = currentTime;
+			return true;
+		}
+		return false;
+	}
 
 private:
 	std::chrono::steady_clock::time_point lastTime;

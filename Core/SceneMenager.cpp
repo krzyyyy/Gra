@@ -44,8 +44,8 @@ SceneMenager::SceneMenager():
 
 	//sword = std::make_shared < Object<ParametricCilinder>>("Model", "SwordModel");
 	//sword->Scale(glm::vec3(0.25, 4, 0.25));
-	lastTime = std::chrono::steady_clock::now();
-	generationTimer = Timer(std::chrono::seconds(5));
+	lastTime = std::chrono::steady_clock::now();/*
+	generationTimer = Timer(std::chrono::seconds(5));*/
 	enemyCreationTimer = Timer(std::chrono::seconds(10));
 	enemyMenager.LoadEnemyPrototypes();
 }
@@ -96,8 +96,8 @@ void SceneMenager::UpdateScene(ICamera& camera)
 	}
 	glm::mat4 shipOrientation = ship->GetGlobalPosition();
 	auto shipPosition = Math::GetVectorPosition(shipOrientation);
-	generationTimer.RunEvent(&SceneMenager::GenerateNewObjects, this, shipPosition);
 	enemyCreationTimer.RunEvent(&EnemiesMenager::AddEnemies, enemyMenager, enemies);
+	GenerateNewObjects(shipPosition);
 	EraseUnusedElements();
 	camera.SetCameraPosition(shipOrientation);
 	
@@ -128,7 +128,7 @@ void SceneMenager::SetShipControler(std::shared_ptr<IShipControler> swordControl
 	};
 	auto bulletPrototype = std::make_unique<NormalBulletPrototype<MotionModels::RectilinearMotion>>(bulletLiveParams, 5);
 	auto generatorObject = Object<ParametricSphere, IShipControler&>("Model", "Ship2", *shipControler.get());
-	auto objectGenerator = ObjectGenerator(generatorObject, std::move(bulletPrototype));
+	auto objectGenerator = ObjectGenerator(generatorObject, std::move(bulletPrototype), std::chrono::milliseconds(100));
 	auto liveParams = Logic::ObjectLogic
 	{
 		.maxLive = 120,
@@ -181,11 +181,17 @@ void SceneMenager::GenerateNewObjects(glm::vec3 posiotion)
 {
 	for (const auto& enemy : enemies)
 	{
-		bullets.push_back(enemy->generate(posiotion));
+		if (auto bullet = enemy->generate(posiotion))
+		{
+			bullets.push_back(*bullet);
+		}
 	}
 	if (auto forwardPoint = shipControler->IsShoting())
 	{
-		bullets.push_back(ship->generate(*forwardPoint));
+		if (auto bullet = ship->generate(*forwardPoint))
+		{
+			bullets.push_back(*bullet);
+		}
 	}
 	//ship->generate(shipControler->GetNextPosition)
 	//std::move(newObjects.begin(), newObjects.end(), std::back_inserter(objects));

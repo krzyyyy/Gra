@@ -164,10 +164,6 @@ void ShipControler::ActualizeShipDirection(glm::mat4& globalPosition)
     currentPosition = glm::vec3(globalPosition[3].x, globalPosition[3].y, globalPosition[3].z);
     //std::cout << globalPosition << std::endl;
     ResetMoveParams();
-
-    
-
-    
 }
 
 void ShipControler::ResetMoveParams()
