@@ -31,7 +31,7 @@
 
 namespace fs = std::filesystem;
 using namespace std;
-
+GLFWwindow* openGLInitialization( );
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 std::shared_ptr< glm::vec2> mausePosition;
@@ -47,34 +47,7 @@ void scrollCallback(GLFWwindow* window, double xOffset, double yOffset);
 
 int main()
 {
-	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-	// glfw window creation
-	// --------------------
-	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
-	if (window == NULL)
-	{
-		std::cout << "Failed to create GLFW window" << std::endl;
-		glfwTerminate();
-		return -1;
-	}
-
-	glfwMakeContextCurrent(window);
-	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
-	// glad: load all OpenGL function pointers
-	// ---------------------------------------
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-	{
-		std::cout << "Failed to initialize GLAD" << std::endl;
-		return -1;
-	}
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-	glfwSetCursorPosCallback(window, mauseCallback);
-	glfwSetScrollCallback(window, scrollCallback);
+	GLFWwindow* window = openGLInitialization();
 	mausePosition = std::make_shared<glm::vec2>();
 	clickedButtons = std::make_shared<MultiThreadFIFO<char>>();
 	auto keyboardInfo = KeyboardInfo(clickedButtons);
@@ -122,6 +95,12 @@ int main()
 		[shipControler]()
 		{
 			shipControler->SetAction(ShipActions::Foreward);
+		}
+	);
+	keyboardInfo.AddCommand(' ',
+		[shipControler]()
+		{
+			shipControler->SetAction(ShipActions::Shot);
 		}
 	);
 	sceneMenager.SetShipControler(shipControler);
@@ -246,6 +225,10 @@ void processInput(GLFWwindow* window)
 	{
 		clickedButtons->Push('k');
 	}
+	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+	{
+		clickedButtons->Push(' ');
+	}
 }
 
 void mauseCallback(GLFWwindow* window, double posX, double posY)
@@ -256,6 +239,40 @@ void mauseCallback(GLFWwindow* window, double posX, double posY)
 void scrollCallback(GLFWwindow* window, double xOffset, double yOffset)
 {
 	camera.scrollCallback(window, xOffset, yOffset);
+}
+
+GLFWwindow* openGLInitialization()
+{
+	GLFWwindow* window = nullptr;
+	glfwInit();
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+	// glfw window creation
+	// --------------------
+	window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+	if (window == NULL)
+	{
+		std::cout << "Failed to create GLFW window" << std::endl;
+		glfwTerminate();
+		throw std::exception("Window initialization error");
+	}
+
+	glfwMakeContextCurrent(window);
+	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+	// glad: load all OpenGL function pointers
+	// ---------------------------------------
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	{
+		std::cout << "Failed to initialize GLAD" << std::endl;
+		throw std::exception("Failed to initialize GLAD");
+	}
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetCursorPosCallback(window, mauseCallback);
+	glfwSetScrollCallback(window, scrollCallback);
+	return window;
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
