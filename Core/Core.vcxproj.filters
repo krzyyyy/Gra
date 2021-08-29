@@ -12,9 +12,6 @@
     <Filter Include="Models">
       <UniqueIdentifier>{c16dd99b-1bf5-447e-bb20-5b3797e8edef}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Tools">
-      <UniqueIdentifier>{6255660d-0642-4f96-bac9-259e98f77c8d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ShipControler">
       <UniqueIdentifier>{ec78cea0-e145-4652-980b-335cdcb00c75}</UniqueIdentifier>
     </Filter>
@@ -59,15 +56,6 @@
     <ClInclude Include="IEnemyPrototype.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="MathHelperFunctions.h">
-      <Filter>Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="StreamOperators.h">
-      <Filter>Tools</Filter>
-    </ClInclude>
     <ClInclude Include="WeekEnemyPrototype.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -95,9 +83,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LiveObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WeekEnemyPrototype.cpp">

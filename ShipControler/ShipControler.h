@@ -11,29 +11,37 @@
 
 #include <GLFW/glfw3.h>
 
+enum class ShipActions
+{
+	PitchUp = 0,
+	PitchDown,
+	YawUp,
+	YawDown,
+	Foreward,
+	Shot
+};
 class __declspec (dllexport) ShipControler : public IShipControler
 {
 public:
 	ShipControler() noexcept;
-	ShipControler(std::shared_ptr<glm::vec2> mausePosition, std::shared_ptr<std::optional<char>> button) noexcept;
+	ShipControler(std::shared_ptr<glm::vec2> mausePosition) noexcept;
 	// Inherited via IShipControler
 	virtual void GetNextPosition(std::chrono::duration<double> duration, glm::mat4& globalPosition) override;
 	virtual glm::vec3 GetNextDirection() const override;
 	// Inherited via IShipControler
-	virtual std::optional<glm::vec3> IsShoting() const override;
+	virtual std::optional<glm::vec3> IsShoting() override;
+	void SetAction(ShipActions shipRotation);
+
 
 private:
 	void ActualizeShipDirection(glm::mat4& globalPosition);
+	void ResetMoveParams();
 	glm::vec3 currentFrontVector;
 	glm::vec3 currentPosition;
-	double yaw = 0;
-	double pitch = 0;
-	std::shared_ptr<glm::vec2> mausePosition_;
-	std::shared_ptr<std::optional<char>> button_;
-
-
-
-
+	float xoffset;
+	float yoffset;
+	float moveSensitive;
+	bool shoted;
 
 };
 //class __declspec (dllexport) ShipControler: public ISwordControler

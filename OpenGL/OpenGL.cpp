@@ -13,20 +13,19 @@
 #include "Program.h"
 #include <opencv2/opencv.hpp>
 #include <concepts>
-//#include "glm/glm.hpp"
-//#include "glm/gtc/matrix_transform.hpp"
-//#include "glm/gtc/type_ptr.hpp"
-//#include "..\Core\Object.h"
+
 #include "Camera.h"
 #include "RenderObjectFactory.h"
 #include "..\Core\SceneMenager.h"
 #include "RenderScene.h"
 #include "BasicShapesCreators.h"
 #include "SphereCreator.h"
+#include "..\SharedUtilities\MultiThreadFIFO.h"
+#include "..\ShipControler\KeyboardInfo.h"
 #include "stb_image.h"
 
 
-#include "..\SwordControler\ShipControler.h"
+#include "..\ShipControler\ShipControler.h"
 
 
 
@@ -36,7 +35,7 @@ using namespace std;
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 std::shared_ptr< glm::vec2> mausePosition;
-std::shared_ptr< std::optional<char>> clickedButton;
+std::shared_ptr< MultiThreadFIFO<char>> clickedButtons;
 
 
 // settings
@@ -48,21 +47,6 @@ void scrollCallback(GLFWwindow* window, double xOffset, double yOffset);
 
 int main()
 {
-	mausePosition = std::make_shared<glm::vec2>();
-	clickedButton = std::make_shared<std::optional<char>>(nullopt);
-
-	auto vertexShaderPath = fs::path("VertexShader.glsl");
-	auto fragmenShaderPath = fs::path("FragmentShader.glsl");
-	auto fragmenShader2Path = fs::path("FragmentShader2.glsl");
-	auto fragmenShaderGeneratorPath = fs::path("GeneratorsFragmentShader.glsl");
-	auto fragmenShaderParametesBar = fs::path("ParametersBarFragmentShader.glsl");
-	auto vertexShaderParametesBar = fs::path("ParametersBarVertexShader.glsl");
-
-	auto vertexShaderModel = fs::path("VertexShaderModel.glsl");
-	auto fragmentShaderModel = fs::path("FragmentShaderModel.glsl");
-	RenderObjectFactory renderObjectFactory;
-	// glfw: initialize and configure
-	// ------------------------------
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -91,13 +75,56 @@ int main()
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glfwSetCursorPosCallback(window, mauseCallback);
 	glfwSetScrollCallback(window, scrollCallback);
-
+	mausePosition = std::make_shared<glm::vec2>();
+	clickedButtons = std::make_shared<MultiThreadFIFO<char>>();
+	auto keyboardInfo = KeyboardInfo(clickedButtons);
 	
-	stbi_set_flip_vertically_on_load(false);
+
+	auto vertexShaderPath = fs::path("VertexShader.glsl");
+	auto fragmenShaderPath = fs::path("FragmentShader.glsl");
+	auto fragmenShader2Path = fs::path("FragmentShader2.glsl");
+	auto fragmenShaderGeneratorPath = fs::path("GeneratorsFragmentShader.glsl");
+	auto fragmenShaderParametesBar = fs::path("ParametersBarFragmentShader.glsl");
+	auto vertexShaderParametesBar = fs::path("ParametersBarVertexShader.glsl");
+
+	auto vertexShaderModel = fs::path("VertexShaderModel.glsl");
+	auto fragmentShaderModel = fs::path("FragmentShaderModel.glsl");
+	RenderObjectFactory renderObjectFactory;
+
 	auto renderScene = RenderScene();
 	SceneMenager sceneMenager;
-	auto shipControler = std::make_unique<ShipControler>(mausePosition, clickedButton);
-	sceneMenager.SetShipControler(std::move(shipControler));
+	auto shipControler = std::make_shared<ShipControler>(mausePosition);
+	keyboardInfo.AddCommand('w',
+		[shipControler]()
+		{
+			shipControler->SetAction(ShipActions::PitchUp);
+		}
+	);
+	keyboardInfo.AddCommand('s',
+		[shipControler]()
+		{
+			shipControler->SetAction(ShipActions::PitchDown);
+		}
+	);
+	keyboardInfo.AddCommand('a',
+		[shipControler]()
+		{
+			shipControler->SetAction(ShipActions::YawDown);
+		}
+	);
+	keyboardInfo.AddCommand('d',
+		[shipControler]()
+		{
+			shipControler->SetAction(ShipActions::YawUp);
+		}
+	);
+	keyboardInfo.AddCommand('r',
+		[shipControler]()
+		{
+			shipControler->SetAction(ShipActions::Foreward);
+		}
+	);
+	sceneMenager.SetShipControler(shipControler);
 	renderScene.InitilizeShaders({
 		std::make_tuple("Bullet", vertexShaderPath.string(), fragmenShaderPath.string()),
 		std::make_tuple("Sword", vertexShaderPath.string(), fragmenShader2Path.string()),
@@ -143,7 +170,11 @@ int main()
 	);
 	renderScene.InitializeModels();
 
+	//OpenGL initialization
+	
 
+
+	stbi_set_flip_vertically_on_load(false);
 	// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glEnable(GL_DEPTH_TEST);
@@ -159,6 +190,8 @@ int main()
 
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		keyboardInfo.ProccessCommands();
 		sceneMenager.UpdateScene(camera);
 		std::vector<std::shared_ptr<IObject>> objects = sceneMenager.GetObjects();
 		renderScene.RenderObjects(objects, camera);
@@ -185,37 +218,33 @@ void processInput(GLFWwindow* window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
-	else if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 	{
-		*clickedButton = 'w';
+		clickedButtons->Push('w');
 	}
-	else if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 	{
-		*clickedButton = 's';
+		clickedButtons->Push('s');
 	}
-	else if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 	{
-		*clickedButton = 'a';
+		clickedButtons->Push('a');
 	}
-	else if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 	{
-		*clickedButton = 'd';
+		clickedButtons->Push('d');
 	}
-	else if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS)
 	{
-		*clickedButton = 'r';
+		clickedButtons->Push('r');
 	}
-	else if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS)
 	{
-		*clickedButton = 'f';
+		clickedButtons->Push('f');
 	}
-	else if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS)
 	{
-		*clickedButton = 'k';
-	}
-	else
-	{
-		*clickedButton = nullopt;
+		clickedButtons->Push('k');
 	}
 }
 

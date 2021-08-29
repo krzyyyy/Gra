@@ -1,5 +1,5 @@
 #include "MotionModels.h"
-#include "MathHelperFunctions.h"
+#include "..\SharedUtilities\MathHelperFunctions.h"
 
 namespace MotionModels
 {

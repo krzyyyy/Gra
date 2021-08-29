@@ -9,7 +9,8 @@
 //#include <memory>
 
 
-SceneMenager::SceneMenager()
+SceneMenager::SceneMenager():
+	enemyMenager()
 {
 	bullets = std::vector<std::shared_ptr<IObject>>();
 	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>());
@@ -117,7 +118,7 @@ std::vector<std::shared_ptr<IObject>> SceneMenager::GetObjects()
 	return allObjects;
 }
 
-void SceneMenager::SetShipControler(std::unique_ptr<IShipControler> swordControler)
+void SceneMenager::SetShipControler(std::shared_ptr<IShipControler> swordControler)
 {
 	this->shipControler = std::move(swordControler);
 	auto bulletMotionModel = MotionModels::RectilinearMotion(1, glm::vec3(0, 0, 1.));

@@ -1,6 +1,6 @@
 #include "Camera.h"
-#include "..\Core\StreamOperators.h"
-#include "..\Core\MathHelperFunctions.h"
+#include "..\SharedUtilities\StreamOperators.h"
+#include "..\SharedUtilities\MathHelperFunctions.h"
 
 
 Camera::Camera():

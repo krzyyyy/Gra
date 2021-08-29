@@ -4,7 +4,7 @@
 //#include "Object.h"
 #include "IObjectGenerator.h"
 #include "ObjectGenerator.h"
-#include "Timer.h"
+#include "..\SharedUtilities\Timer.h"
 #include "BounceObject.h"
 #include "IShipControler.h"
 #include "EnemiesMenager.h"
@@ -17,14 +17,14 @@ class EXPORT_MODULES SceneMenager
 {
 public:
 	SceneMenager();
-	SceneMenager(const SceneMenager& object) = default;
+	SceneMenager(const SceneMenager& object) = delete;
 	SceneMenager(SceneMenager&& object) noexcept = default;
-	SceneMenager& operator=(const SceneMenager& object) = default;
+	SceneMenager& operator=(const SceneMenager& object) = delete;
 	SceneMenager& operator=(SceneMenager&& object) = default;
 	void UpdateScene(ICamera& camera);
 	std::vector<std::shared_ptr<IObject>> GetObjects();
 
-	void SetShipControler(std::unique_ptr<IShipControler> swordControler);
+	void SetShipControler(std::shared_ptr<IShipControler> swordControler);
 private:
 	void EraseUnusedElements();
 	void GenerateNewObjects(glm::vec3 posiotion);
@@ -35,7 +35,7 @@ private:
 	std::vector<std::shared_ptr<IObjectGenerator>> enemies;
 
 	std::shared_ptr<IObjectGenerator> ship;
-	std::unique_ptr<IShipControler> shipControler;
+	std::shared_ptr<IShipControler> shipControler;
 
 	std::chrono::steady_clock::time_point lastTime;
 	Timer generationTimer;

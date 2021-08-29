@@ -1,6 +1,6 @@
 #include "BounceObject.h"
 #include "IBounceable.h"
-#include "MathHelperFunctions.h"
+//#include "MathHelperFunctions.h"
 #include "..\ObjectLogic\ILiveObject.h"
 
 std::optional<Match> BounceObjects::FindCollision(std::shared_ptr<IObject>& object1, const std::shared_ptr<IObject>& object2)

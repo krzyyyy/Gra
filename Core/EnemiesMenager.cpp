@@ -3,7 +3,8 @@
 #include "OrbitalEnemyPrototype.h"
 #include <random>
 
-EnemiesMenager::EnemiesMenager()
+EnemiesMenager::EnemiesMenager():
+	enemiesPrototype()
 {
 }
 

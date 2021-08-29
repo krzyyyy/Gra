@@ -14,7 +14,7 @@ public:
 	template<typename Model>
 	void BounceObject(const Model& model, glm::vec3 colisionPoint) {};
 	//virtual void SetCameraParameters(ICamera& camera) const = 0;
-	virtual std::optional<glm::vec3> IsShoting() const = 0;
+	virtual std::optional<glm::vec3> IsShoting() = 0;
 
 	
 };

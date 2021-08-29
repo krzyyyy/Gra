@@ -218,7 +218,7 @@
     <ProjectReference Include="..\Core\Core.vcxproj">
       <Project>{0fce3ea5-d98d-4e98-b235-8328b41d23df}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\SwordControler\SwordControler.vcxproj">
+    <ProjectReference Include="..\ShipControler\SwordControler.vcxproj">
       <Project>{032f611b-94bb-43f0-86df-f542256f0dca}</Project>
     </ProjectReference>
   </ItemGroup>

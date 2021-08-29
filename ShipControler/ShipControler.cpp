@@ -4,7 +4,7 @@
 #include "ShipControler.h"
 //#include <boost/asio.hpp>
 //#include <boost/algorithm/string.hpp>
-#include "..\Core\StreamOperators.h"
+#include "..\SharedUtilities\StreamOperators.h"
 #include "..\glm\gtc\matrix_transform.hpp"
 #include "..\glm\gtc\type_ptr.hpp"
 #include "..\glm/gtx/matrix_decompose.hpp"
@@ -125,20 +125,20 @@
 ShipControler::ShipControler() noexcept:
 currentFrontVector(0.f, 0.f, 1.f),
 currentPosition(0.f, 0.f, 1.f),
-yaw(0),
-pitch(0),
-mausePosition_(nullptr),
-button_(nullptr)
+xoffset(0.f),
+yoffset(0.f),
+moveSensitive(0.f),
+shoted(false)
 {
 }
 
-ShipControler::ShipControler(std::shared_ptr<glm::vec2> mausePosition, std::shared_ptr<std::optional<char>> button) noexcept :
+ShipControler::ShipControler(std::shared_ptr<glm::vec2> mausePosition) noexcept :
     currentFrontVector(0.f, 0.f, 1.f),
     currentPosition(0.f, 0.f, 1.f),
-    yaw(0),
-    pitch(0),
-    mausePosition_(mausePosition),
-    button_(button)
+    xoffset(0.f),
+    yoffset(0.f),
+    moveSensitive(0.f),
+    shoted(false)
 {
 }
 
@@ -146,30 +146,9 @@ ShipControler::ShipControler(std::shared_ptr<glm::vec2> mausePosition, std::shar
 
 void ShipControler::ActualizeShipDirection(glm::mat4& globalPosition)
 {
-
-    float xoffset = 0;
-    float yoffset = 0;
     auto objectDirection = glm::vec3(0.f, 0.f, 1.f);
     auto rotateAxisPitch = glm::vec3(1.f, 0.f, 0.f);
-    auto rotateAxisYaw = glm::vec3(0., 1., 0.);
-    float moveSensitive = 0.f;
-    if (auto pressedButton = button_.get())
-    {
-        if (*pressedButton == 'w')
-            xoffset =0.01;
-        else if (*pressedButton == 's')
-            xoffset = -0.01;
-        else if (*pressedButton == 'a')
-            yoffset = 0.01;
-        else if (*pressedButton == 'd')
-            yoffset = -0.01;
-        else if (*pressedButton == 'r')
-            moveSensitive = 0.1f;
-        else if (*pressedButton == 'f')
-            moveSensitive = -0.1f;
-    }
-    pitch += yoffset;
-    yaw += xoffset;
+    auto rotateAxisYaw = glm::vec3(0.f, 1.f, 0.f);
 
     if(xoffset != 0.f)
         globalPosition = glm::rotate(globalPosition, -xoffset, rotateAxisPitch);
@@ -184,23 +163,50 @@ void ShipControler::ActualizeShipDirection(glm::mat4& globalPosition)
     globalPosition[3].z += movementVector.z;
     currentPosition = glm::vec3(globalPosition[3].x, globalPosition[3].y, globalPosition[3].z);
     //std::cout << globalPosition << std::endl;
+    ResetMoveParams();
 
     
 
     
 }
 
-std::optional<glm::vec3> ShipControler::IsShoting() const
+void ShipControler::ResetMoveParams()
 {
-    if (auto pressedButton = button_.get())
-    {
-        if (*pressedButton == 'k')
-        {
-            auto currentFrontVectorNormal = glm::normalize(currentFrontVector);
-            return std::make_optional(currentPosition + (currentFrontVectorNormal * 10.f));
-        }
-    }
+    xoffset = 0.f;
+    yoffset = 0.f;
+    moveSensitive = 0.f;
+}
+
+std::optional<glm::vec3> ShipControler::IsShoting() 
+{
+
+	if (shoted)
+	{
+        shoted = false;
+		auto currentFrontVectorNormal = glm::normalize(currentFrontVector);
+		return std::make_optional(currentPosition + (currentFrontVectorNormal * 10.f));
+	}
     return std::nullopt;
+}
+
+void ShipControler::SetAction(ShipActions shipRotation)
+{
+    if (shipRotation == ShipActions::PitchUp)
+        xoffset = 0.01f;
+    else if (shipRotation == ShipActions::PitchDown)
+        xoffset = -0.01f;
+    else if (shipRotation == ShipActions::YawUp)
+        yoffset = 0.01f;
+    else if (shipRotation == ShipActions::YawDown)
+        yoffset = -0.01f;
+    else if (shipRotation == ShipActions::Foreward)
+        moveSensitive = 0.1f;
+    else if (shipRotation == ShipActions::Foreward)
+        moveSensitive = 0.1f;
+    else if (shipRotation == ShipActions::Shot)
+        shoted = true;
+
+
 }
 
 void ShipControler::GetNextPosition(std::chrono::duration<double> duration, glm::mat4& globalPosition)

@@ -9,7 +9,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Core", "Core\Core.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ObjectLogic", "ObjectLogic\ObjectLogic.vcxproj", "{ED0041E9-83B0-4694-B76A-073377EC1311}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SwordControler", "SwordControler\SwordControler.vcxproj", "{032F611B-94BB-43F0-86DF-F542256F0DCA}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SharedUtilities", "SharedUtilities\SharedUtilities.vcxproj", "{AE36E8F7-C305-430B-859A-6C59684962C2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ShipControler", "ShipControler\SwordControler.vcxproj", "{032F611B-94BB-43F0-86DF-F542256F0DCA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,16 @@ Global
 		{ED0041E9-83B0-4694-B76A-073377EC1311}.Release|x64.Build.0 = Release|x64
 		{ED0041E9-83B0-4694-B76A-073377EC1311}.Release|x86.ActiveCfg = Release|Win32
 		{ED0041E9-83B0-4694-B76A-073377EC1311}.Release|x86.Build.0 = Release|Win32
+		{AE36E8F7-C305-430B-859A-6C59684962C2}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{AE36E8F7-C305-430B-859A-6C59684962C2}.Debug|x64.ActiveCfg = Debug|x64
+		{AE36E8F7-C305-430B-859A-6C59684962C2}.Debug|x64.Build.0 = Debug|x64
+		{AE36E8F7-C305-430B-859A-6C59684962C2}.Debug|x86.ActiveCfg = Debug|Win32
+		{AE36E8F7-C305-430B-859A-6C59684962C2}.Debug|x86.Build.0 = Debug|Win32
+		{AE36E8F7-C305-430B-859A-6C59684962C2}.Release|Any CPU.ActiveCfg = Release|Win32
+		{AE36E8F7-C305-430B-859A-6C59684962C2}.Release|x64.ActiveCfg = Release|x64
+		{AE36E8F7-C305-430B-859A-6C59684962C2}.Release|x64.Build.0 = Release|x64
+		{AE36E8F7-C305-430B-859A-6C59684962C2}.Release|x86.ActiveCfg = Release|Win32
+		{AE36E8F7-C305-430B-859A-6C59684962C2}.Release|x86.Build.0 = Release|Win32
 		{032F611B-94BB-43F0-86DF-F542256F0DCA}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{032F611B-94BB-43F0-86DF-F542256F0DCA}.Debug|x64.ActiveCfg = Debug|x64
 		{032F611B-94BB-43F0-86DF-F542256F0DCA}.Debug|x64.Build.0 = Debug|x64
