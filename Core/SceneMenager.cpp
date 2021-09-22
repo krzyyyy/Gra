@@ -12,42 +12,13 @@
 SceneMenager::SceneMenager():
 	enemyMenager()
 {
-	bullets = std::vector<std::shared_ptr<IObject>>();
-	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>());
-	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>());
-	//objects.emplace_back(std::make_shared< Object<ModelCreators::SphereCreator>>("Bullet"));
-	//enemies.emplace_back(std::make_shared<LiveObject< ObjectGenerator< ParametricSphere, ParametricSphere>>>(ObjectGenerator< ParametricSphere, ParametricSphere>("Generator", "CilinderModel"),
-	//	Logic::ObjectLogic
-	//	{
-	//		.maxLive = 120,
-	//		.currentLive = 120,
-	//		.damage = 5
-	//	}
-	//));
-	//objects.emplace_back(std::make_shared< Object<ModelCreators::CubeCreator>>("Sword"));
-	//objects.emplace_back(std::make_shared < ObjectGenerator< ModelCreators::CubeCreator, ModelCreators::SphereCreator>>("Generator"));
-	//objects.emplace_back(std::make_unique< Object<RenderObject<ModelCreators::CylinderCreator>>>());
-	//objects[0]->Scale(glm::vec3(0.5, 0.5, 4));
-	//ship = 
-	glm::vec3 cubePositions[] = {
-	glm::vec3(0.0f,  3.0f,  0.0f),
-	glm::vec3(2.0f,  5.0f, -15.0f),
-	glm::vec3(-1.5f, -2.2f, -2.5f),
-	glm::vec3(-3.8f, -2.0f, -12.3f),
-	glm::vec3(2.4f, -0.4f, -3.5f),
-	glm::vec3(-1.7f,  3.0f, -7.5f),
-	};
-	for (int i = 0; i < enemies.size(); ++i)
-	{
-		enemies[i]->Translate(cubePositions[i]);
-	}
-
 	//sword = std::make_shared < Object<ParametricCilinder>>("Model", "SwordModel");
 	//sword->Scale(glm::vec3(0.25, 4, 0.25));
 	lastTime = std::chrono::steady_clock::now();/*
 	generationTimer = Timer(std::chrono::seconds(5));*/
 	enemyCreationTimer = Timer(std::chrono::seconds(10));
 	enemyMenager.LoadEnemyPrototypes();
+	//enemyMenager.InitializeScene(bullets);
 }
 
 void SceneMenager::UpdatePosition(std::chrono::duration<double> deltaT)

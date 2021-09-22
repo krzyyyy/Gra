@@ -114,7 +114,7 @@ int main()
 	Model ship2 = Model("models/ship2/OBJ/Intergalactic_Spaceships_Version_2.obj");
 	//Model shipModel = Model("models/ship/Ship.obj");
 	Model shot = Model("models/shot2/shot2.obj");
-	auto swordModel = Model("models/sword/sword.obj");
+	Model asteroid = Model("models/asteroid/asteroid.obj");
 	renderScene.AddModel(
 		"CubeModel",
 		renderObjectFactory.CreateRenderObjects("CubeModel")
@@ -144,8 +144,8 @@ int main()
 		shot
 	);
 	renderScene.AddModel(
-		"SwordModel",
-		swordModel
+		"AsteroidModel",
+		asteroid
 	);
 	renderScene.InitializeModels();
 

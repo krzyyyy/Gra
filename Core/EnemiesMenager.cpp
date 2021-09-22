@@ -1,6 +1,8 @@
 #include "EnemiesMenager.h"
 #include "WeekEnemyPrototype.h"
 #include "OrbitalEnemyPrototype.h"
+#include "LiveObject.h"
+#include "Object.h"
 #include <random>
 
 EnemiesMenager::EnemiesMenager():
@@ -21,6 +23,16 @@ void EnemiesMenager::LoadEnemyPrototypes()
 	//enemiesPrototype.push(
 	//	std::make_unique<WeekEnemyPrototype>(WeekEnemyPrototype())
 	//);
+}
+
+void EnemiesMenager::InitializeScene(std::vector<std::shared_ptr<IObject>>& objects)
+{
+	auto orbitalModel = MotionModels::OrbitalMotion(0.01f, glm::vec3(), 5, glm::vec3(1.f, 0.f, 1.f));
+	auto bullet = Logic::Bullet{ .Damage = 1000, .Used = false };
+	auto object = Object<ParametricSphere, MotionModels::OrbitalMotion>("Model", "AsteroidModel", orbitalModel);
+	object.Scale(glm::vec3(0.25f, 0.25f, 0.25f));
+	auto liveObject = LiveObject(object, bullet);
+	objects.push_back( std::make_shared<decltype(liveObject)>(std::move(liveObject)));
 }
 
 

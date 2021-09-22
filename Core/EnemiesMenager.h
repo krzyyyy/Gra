@@ -12,6 +12,7 @@ public:
 	EnemiesMenager& operator=(EnemiesMenager&&) = default;
 
 	void LoadEnemyPrototypes();
+	void InitializeScene(std::vector<std::shared_ptr<IObject>>& objects);
 	void AddEnemies(std::vector<std::shared_ptr<IObjectGenerator>>& enemies);
 	bool IsEmpty();
 
