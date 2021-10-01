@@ -14,7 +14,7 @@ public:
 	void LoadEnemyPrototypes();
 	void InitializeScene(std::vector<std::shared_ptr<IObject>>& objects);
 	void AddEnemies(std::vector<std::shared_ptr<IObjectGenerator>>& enemies);
-	bool IsEmpty();
+	bool IsEmpty() const;
 
 private:
 	glm::vec3 RandPosition();

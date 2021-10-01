@@ -49,7 +49,7 @@ void EnemiesMenager::AddEnemies(std::vector<std::shared_ptr<IObjectGenerator>>& 
 	enemiesPrototype.pop();
 }
 
-bool EnemiesMenager::IsEmpty()
+bool EnemiesMenager::IsEmpty() const
 {
 	return enemiesPrototype.empty();
 }

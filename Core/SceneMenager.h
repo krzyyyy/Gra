@@ -25,6 +25,7 @@ public:
 	std::vector<std::shared_ptr<IObject>> GetObjects();
 
 	void SetShipControler(std::shared_ptr<IShipControler> swordControler);
+	bool IsOver() const ;
 private:
 	void EraseUnusedElements();
 	void GenerateNewObjects(glm::vec3 posiotion);

@@ -18,7 +18,7 @@ SceneMenager::SceneMenager():
 	generationTimer = Timer(std::chrono::seconds(5));*/
 	enemyCreationTimer = Timer(std::chrono::seconds(10));
 	enemyMenager.LoadEnemyPrototypes();
-	//enemyMenager.InitializeScene(bullets);
+	enemyMenager.InitializeScene(bullets);
 }
 
 void SceneMenager::UpdatePosition(std::chrono::duration<double> deltaT)
@@ -108,6 +108,11 @@ void SceneMenager::SetShipControler(std::shared_ptr<IShipControler> swordControl
 	};
 	auto liveObject = LiveObject(std::move(objectGenerator), liveParams);
 	ship = std::make_shared<decltype(liveObject)>(std::move(liveObject));
+}
+
+bool SceneMenager::IsOver() const
+{
+	return enemyMenager.IsEmpty() && enemies.empty();
 }
 
 
