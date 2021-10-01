@@ -33,11 +33,11 @@ glm::mat4 Camera::getProjectionMatrix() const
 
 void Camera::SetCameraPosition(glm::mat4 objectOrientation)
 {
-    auto cameraModelFrontVector = glm::normalize(glm::vec4(0.f, -0.4f, 1.f, 0.f));
+    auto cameraModelFrontVector = glm::normalize(glm::vec4(0.f, -0.4f, 1.f, 0.f))*2.f;
     cameraDirection = objectOrientation * cameraModelFrontVector;
     glm::vec3 objectPosition = Math::GetVectorPosition(objectOrientation);
     cameraPosition = objectPosition - (cameraDirection * 2.f);
-
+    cameraUp = objectOrientation * upDirection;
 }
 
 
