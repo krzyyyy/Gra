@@ -15,7 +15,7 @@ struct ParametricSphere
 	{
 		return ParametricSphere{
 			.Center = glm::vec3(objectPosition[3].x, objectPosition[3].y, objectPosition[3].z),
-			.R = 0.5,
+			.R = 0.3,
 		};
 	}
 	glm::vec3 ComputeNewDirection(glm::vec3 collisionPoint, glm::vec3 currentDirection) const

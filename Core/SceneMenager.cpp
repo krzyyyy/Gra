@@ -107,6 +107,7 @@ void SceneMenager::SetShipControler(std::shared_ptr<IShipControler> swordControl
 		.damage = 5
 	};
 	auto liveObject = LiveObject(std::move(objectGenerator), liveParams);
+	liveObject.Translate(glm::vec3(10.f, 10.f, 10.f));
 	ship = std::make_shared<decltype(liveObject)>(std::move(liveObject));
 }
 
