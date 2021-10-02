@@ -56,7 +56,6 @@ int main()
 	auto vertexShaderPath = fs::path("VertexShader.glsl");
 	auto fragmenShaderPath = fs::path("FragmentShader.glsl");
 	auto fragmenShader2Path = fs::path("FragmentShader2.glsl");
-	auto fragmenShaderGeneratorPath = fs::path("GeneratorsFragmentShader.glsl");
 	auto fragmenShaderParametesBar = fs::path("ParametersBarFragmentShader.glsl");
 	auto vertexShaderParametesBar = fs::path("ParametersBarVertexShader.glsl");
 
@@ -107,7 +106,6 @@ int main()
 	renderScene.InitilizeShaders({
 		std::make_tuple("Bullet", vertexShaderPath.string(), fragmenShaderPath.string()),
 		std::make_tuple("Sword", vertexShaderPath.string(), fragmenShader2Path.string()),
-		std::make_tuple("Generator", vertexShaderPath.string(), fragmenShaderGeneratorPath.string()),
 		std::make_tuple("LiveBar", vertexShaderParametesBar.string(), fragmenShaderParametesBar.string()),
 		std::make_tuple("Model", vertexShaderModel.string(), fragmentShaderModel.string())
 		});
@@ -159,7 +157,7 @@ int main()
 	glEnable(GL_DEPTH_TEST);
 
 	// -----------
-	while (!glfwWindowShouldClose(window))
+	while (!(glfwWindowShouldClose(window) || sceneMenager.IsOver()))
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		// input

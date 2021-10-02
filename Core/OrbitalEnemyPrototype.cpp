@@ -36,8 +36,5 @@ std::shared_ptr<IObjectGenerator> OrbitalEnemyPrototype::Clone() const
 		.damage = 5
 	};
 	auto liveObject = LiveObject(std::move(objectGenerator), liveParams);
-	//enemies.emplace_back(std::make_shared<LiveObject< ObjectGenerator< ParametricSphere, ParametricSphere>>>(ObjectGenerator< ParametricSphere, ParametricSphere>("Generator", "CilinderModel"),
-
-	//));
 	return std::make_shared<decltype(liveObject)>(std::move(liveObject));
 }

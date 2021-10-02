@@ -22,7 +22,6 @@ void KeyboardInfo::ProccessCommands()
 	
 	while (auto optionalValue = clickedButtons->Pop())
 	{
-		std::cout << *optionalValue << std::endl;
 		if (commands.find(*optionalValue) == commands.cend())
 			continue;
 		commands[*optionalValue]();
