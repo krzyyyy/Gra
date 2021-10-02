@@ -30,12 +30,18 @@ void EnemiesMenager::InitializeScene(std::vector<std::shared_ptr<IObject>>& obje
 	for (int i = 1; i < 20; ++i)
 	{
 		auto orbitalModel = MotionModels::OrbitalMotion(i*0.01f + 0.05f, glm::vec3(), 5, glm::normalize(glm::vec3((i* 123424)% 10, (i * 345345)% 10, (i* 8678678)% 10)));
-		auto bullet = Logic::Bullet{ .Damage = 1000, .Used = false };
+		auto bullet = Logic::Bullet{ .Damage = 15, .Used = false };
 		auto object = Object<ParametricSphere, MotionModels::OrbitalMotion>("Model", "AsteroidModel", orbitalModel);
 		object.Scale(glm::vec3(0.25f, 0.25f, 0.25f));
 		auto liveObject = LiveObject(object, bullet);
 		objects.push_back(std::make_shared<decltype(liveObject)>(std::move(liveObject)));
 	}
+	auto mainObjectMotionModel = MotionModels::RectilinearMotion(0.f, glm::vec3(0.f, 0.f, 0.f));
+	auto mainObjectBullet = Logic::Bullet{ .Damage = 100, .Used = false };
+	auto mainObject = Object<ParametricSphere, MotionModels::RectilinearMotion>("Model", "ShotModel", mainObjectMotionModel);
+	mainObject.Scale(glm::vec3(3.f, 3.f, 3.f));
+	auto mainLiveObject = LiveObject(mainObject, mainObjectBullet);
+	objects.push_back(std::make_shared<decltype(mainLiveObject)>(std::move(mainLiveObject)));
 
 }
 
