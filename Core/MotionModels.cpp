@@ -50,7 +50,7 @@ namespace MotionModels
 
 	void OrbitalMotion::GetNextPosition(std::chrono::duration<double> duration, glm::mat4& globalPosition)
 	{
-		_angle += _angularVelocity * duration.count();
+		_angle += _angularVelocity * (float)duration.count();
 		auto objectPosition = glm::mat4(1);
 		objectPosition = glm::translate(objectPosition, perpendicularToRotation);
 		auto rotation = glm::rotate(glm::mat4(1), _angle, _rotationAxis);

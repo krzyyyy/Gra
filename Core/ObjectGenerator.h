@@ -9,7 +9,7 @@
 #include "../SharedUtilities/Timer.h"
 
 template<typename Model, typename MotionModel>
-class ObjectGenerator: public IObjectGenerator, public Object<Model, MotionModel>
+class ObjectGenerator: virtual public IObjectGenerator, public Object<Model, MotionModel>
 {
 public:
 	ObjectGenerator() ;
